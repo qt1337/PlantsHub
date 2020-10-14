@@ -85,7 +85,7 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/assets",
-              "sunflower.png"
+              "src/assets/sunflower.png"
             ],
             "styles": [
               "src/styles.css"
@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "PlantsHub"
+    }
+  },
+  "defaultProject": "PlantsHub",
+  "cli": {
+    "analytics": false
+  }
 }
