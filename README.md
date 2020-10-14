@@ -1,3 +1,4 @@
+[![build status](https://github.com/coryrylan/angular-github-actions/workflows/Build/badge.svg)](https://github.com/coryrylan/angular-github-actions/actions)
 # 🌱 🌻 PlantsHub 🌻 🌱 - Keep Your Plants alive!
 
 This is a DHBW-Student Project which allows you to keep track of your "room mates" and satisfy all their needs.
