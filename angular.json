@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "PlantsHub"
+    }
+  },
+  "defaultProject": "PlantsHub",
+  "cli": {
+    "analytics": false
+  }
 }
