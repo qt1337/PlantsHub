@@ -6,5 +6,5 @@ The Project is still in its infancy, but weÄre hoping to provide you our app ve
 
 ## Development server
 
-https://plantshub.herokuapp.com
+https://app.plantshub.de/
 
