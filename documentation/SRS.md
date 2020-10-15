@@ -44,7 +44,7 @@ Version <1.0>
 
 |    Date    | Version | Description | Author |
 |------------|---------|-------------|--------|
-| XX.XX.XXXX |   X.X   |  <details>  | <name> |
+| 15.10.2020 |   1.0   | Template    | David  |
 
 ## 1. Introduction
 [The introduction of the Software Requirements Specification (SRS) should provide an overview of the entire SRS. It should include the purpose, scope, definitions, acronyms, 
