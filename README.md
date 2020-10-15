@@ -6,7 +6,6 @@ This is a <a href="https://www.karlsruhe.dhbw.de/startseite.html">DHBW Karlsruhe
 mates" and satisfy all their needs. The Project is still in its infancy, but
 we are hoping to provide you our app very soon, so stay tuned!
 
-## <a href="https://plantshub.de">Click here to see our app!</a>
-## <a href="https://blog.plantshub.de/">Click here to see our blog!</a>
-## <a href="https://https://github.com/qt1337/PlantsHub/blob/master/documentation/SRS.md"> Click here to see our documentation!</a>
+# Links
+<p style="text-align: center"><a href="https://plantshub.de">App</a> | <a href="https://blog.plantshub.de/">Blog</a> | <a href="https://github.com/qt1337/PlantsHub/wiki">Documentation</a></p>
 
