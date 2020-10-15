@@ -102,8 +102,7 @@ how the document is organized.]
 ## 2. Overall Description
 
 [This section of the SRS should describe the general factors that affect the
-product and its requirements. This section does not state specific
-requirements.
+product and its requirements. This section does not state specific requirements.
 Instead, it provides a background for those requirements, which are defined in
 detail in Section 3, and makes them easier to understand. Include such items as:
 
