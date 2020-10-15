@@ -10,17 +10,17 @@
   from {
     transform: rotate(0);
   }
-  to{
+  to {
     transform: rotate(359deg);
   }
 }
 
 @keyframes spin3D {
   from {
-    transform: rotate3d(.5,.5,.5, 360deg);
+    transform: rotate3d(.5, .5, .5, 360deg);
   }
-  to{
-    transform: rotate3d(0deg);
+  to {
+    transform: rotate3d(1, 1, 1, 0deg);
   }
 }
 
@@ -105,8 +105,8 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background: rgb(63,249,220);
-  background: linear-gradient(0deg, rgba(63,249,220,0.1) 33%, rgba(63,249,220,1) 100%);
+  background: rgb(63, 249, 220);
+  background: linear-gradient(0deg, rgba(63, 249, 220, 0.1) 33%, rgba(63, 249, 220, 1) 100%);
   animation: spin3D 1.8s linear 0s infinite;
 }
 
@@ -148,8 +148,8 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background: rgb(63,249,220);
-  background: linear-gradient(0deg, rgba(63,249,220,0.1) 33%, rgba(63,249,220,1) 100%);
+  background: rgb(63, 249, 220);
+  background: linear-gradient(0deg, rgba(63, 249, 220, 0.1) 33%, rgba(63, 249, 220, 1) 100%);
   animation: spin .8s linear 0s infinite;
 }
 
@@ -182,7 +182,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgb(63,249,220);
+  background: rgb(63, 249, 220);
   transform: rotate(45deg);
   animation: configure-xclockwise 3s ease-in-out 0s infinite alternate;
 }
@@ -212,9 +212,11 @@ body {
 .pulse-bubble-1 {
   animation: pulse .4s ease 0s infinite alternate;
 }
+
 .pulse-bubble-2 {
   animation: pulse .4s ease .2s infinite alternate;
 }
+
 .pulse-bubble-3 {
   animation: pulse .4s ease .4s infinite alternate;
 }
