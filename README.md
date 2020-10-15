@@ -8,3 +8,7 @@ The Project is still in its infancy, but weÄre hoping to provide you our app ve
 
 https://app.plantshub.de/
 
+## Our blog
+
+https://blog.plantshub.de/
+
