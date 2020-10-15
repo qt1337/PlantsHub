@@ -1,0 +1,76 @@
+<mxfile host="app.diagrams.net" modified="2020-10-15T09:10:46.052Z" agent="5.0 (Windows)" etag="XBNDf-KE5hmfmrQGsad-" version="13.8.0" type="github">
+  <diagram id="VJPvlXThsXL5bL5BLkOt" name="Page-1">
+    <mxGraphModel dx="982" dy="540" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="yHLwCRsomZXUTcCq3QII-1" value="Unregistered User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="160" y="150" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yHLwCRsomZXUTcCq3QII-6" value="Registered User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="660" y="150" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-1" value="&lt;div&gt;Sign up&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="210" y="110" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-2" value="Inform about app" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="255" y="170" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-4" value="Invite others" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="550" y="110" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-6" value="See information about plants" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="240" y="240" width="90" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-7" value="Sign up for newsletter" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="280" width="90" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-8" value="&lt;div&gt;Save plants&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="510" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-9" value="See trending plants" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="120" y="110" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-10" value="&lt;div&gt;See marketplace&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-11" value="Get notifications" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="500" y="210" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-12" value="Set up profile" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="620" y="80" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-13" value="Trade plants" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="810" y="120" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-14" value="Everything from unregistered user" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="780" y="230" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-15" value="Donate" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="220" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-16" value="&lt;div&gt;Buy plants&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="170" width="70" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-17" value="Enter forum" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="260" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-18" value="Chat" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="320" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-19" value="See recent price data of plants" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="270" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-20" value="Transfer ownership" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="80" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-21" value="Create calendar" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+          <mxGeometry x="740" y="310" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="0tHk-Ynsow2jLnhvVSDn-24" value="Get forum points" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+          <mxGeometry x="475" y="280" width="110" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
