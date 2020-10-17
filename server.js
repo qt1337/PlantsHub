@@ -20,7 +20,7 @@ server_app.listen(process.env.PORT || 8080, () => {
 // API    VVVV
 
 const api_app = express();
-let port = process.env.PORT || 3000;
+let api_port = 3000;
 const mariadb = require('mariadb');
 const pool = mariadb.createPool(
   {
@@ -37,8 +37,8 @@ api_app.get('/', ((req, res) => {
   res.send("HELLO Wolrd");
 }))
 
-api_app.listen(port, () => {
-  console.log(`Example app is listening on port http://localhost:${port}`);
+api_app.listen(api_port, () => {
+  console.log(`Example app is listening on port http://localhost:${api_port}`);
 })
 
 api_app.post('/api/create-item/:item_id/:item_name', (req, res) => {
