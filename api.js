@@ -26,4 +26,4 @@ function createItem(pool, req, res) {
     });
 }
 
-module.exports = { createItem }
+module.exports = { createItem };
