@@ -1,27 +1,8 @@
 require('dotenv').config();
 
 const express = require('express');
-
-const server_app = express();
-
-server_app.use(express.static('./dist/PlantsHub'));
-
-server_app.get('/*', (req, res) =>
-  res.sendFile('index.html', {root: 'dist/PlantsHub/'}),
-);
-
-server_app.listen(process.env.PORT || 8080, () => {
-  console.log(`Example app is listening on port http://localhost:${process.env.PORT || 8080}`);
-});
-
-
-// SERVER AAAA
-// ===========
-// API    VVVV
-
-const api_app = express();
-let api_port = 3000;
 const mariadb = require('mariadb');
+
 const pool = mariadb.createPool(
   {
     host: process.env.DB_HOST,
@@ -32,16 +13,19 @@ const pool = mariadb.createPool(
   }
 );
 
+const app = express();
 
-api_app.get('/', ((req, res) => {
-  res.send("HELLO Wolrd");
-}))
+app.use(express.static('./dist/PlantsHub'));
 
-api_app.listen(api_port, () => {
-  console.log(`Example app is listening on port http://localhost:${api_port}`);
-})
+app.get('/*', (req, res) =>
+  res.sendFile('index.html', {root: 'dist/PlantsHub/'}),
+);
 
-api_app.post('/api/create-item/:item_id/:item_name', (req, res) => {
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`Server is listening on port ${process.env.PORT || 8080}`);
+});
+
+app.post('/api/create-item/:item_id/:item_name', (req, res) => {
   pool.getConnection()
     .then(conn => {
 
