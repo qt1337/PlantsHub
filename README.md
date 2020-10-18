@@ -1,5 +1,5 @@
 [![build status](https://github.com/qt1337/PlantsHub/workflows/Build/badge.svg)](https://github.com/qt1337/PlantsHub/actions?query=branch%3Amaster)
-
+[![CodeFactor](https://www.codefactor.io/repository/github/qt1337/plantshub/badge)](https://www.codefactor.io/repository/github/qt1337/plantshub)
 # 🌱 🌻 PlantsHub 🌻 🌱 – Keep Your Plants alive!
 
 This is a <a href="https://www.karlsruhe.dhbw.de/startseite.html">DHBW
