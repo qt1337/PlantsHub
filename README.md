@@ -1,4 +1,6 @@
-[![build status](https://github.com/qt1337/PlantsHub/workflows/Build/badge.svg)](https://github.com/qt1337/PlantsHub/actions?query=branch%3Amaster)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/qt1337/PlantsHub/Build/master)
+[![CodeFactor](https://www.codefactor.io/repository/github/qt1337/plantshub/badge)](https://www.codefactor.io/repository/github/qt1337/plantshub)
+![GitHub repo size](https://img.shields.io/github/repo-size/qt1337/PlantsHub)
 
 # 🌱 🌻 PlantsHub 🌻 🌱 – Keep Your Plants alive!
 
