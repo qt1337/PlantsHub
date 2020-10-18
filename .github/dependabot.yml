@@ -5,7 +5,10 @@
 
 version: 2
 updates:
-  - package-ecosystem: "javascript" # See documentation for possible values
+  - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+
+# if they update dependabot ecosystem javascript with package.json could go here as well
+# dependabot v2 does not support javascript currently (v1 does apparently)
