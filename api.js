@@ -17,11 +17,13 @@ function createItem(pool, req, res) {
           conn.end();
         })
         .catch((err) => {
+          console.log(err);
           res.status(200).send("rows could not be created");
           conn.end();
         });
     })
     .catch((err) => {
+      console.log(err);
       // not connected
     });
 }
