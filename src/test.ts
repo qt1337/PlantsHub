@@ -6,7 +6,7 @@ import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
-import {AppComponent} from "./app/app.component";
+import {AppComponent} from './app/app.component';
 
 beforeEach(async(() => {
   TestBed.configureTestingModule({
