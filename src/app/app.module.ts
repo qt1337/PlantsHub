@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     FlexLayoutModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
