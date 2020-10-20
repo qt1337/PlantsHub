@@ -7,15 +7,17 @@ function _window(): any {
 }
 
 
-@Injectable(/* {
- providedIn: 'root'
-}*/)
-
+@Injectable({
+  providedIn: 'root'
+})
 
 export class CordovaService {
 
   private resume: BehaviorSubject<boolean>;
 
+  /* Cordova fires a resume event any time the application resumes from the background.
+   In order to correctly process this event within the Angular application scope,
+   NgZone is used to run the event listener inside the Angular zone.*/
 
   constructor(private zone: NgZone) {
     this.resume = new BehaviorSubject<boolean>(null);
@@ -38,6 +40,8 @@ export class CordovaService {
   public onResume(): void {
     this.resume.next(true);
   }
+
+  /* For opening extern URLs */
 
   public openLinkInBrowser(url: string) {
     _window().SafariViewController.isAvailable(function (available) {

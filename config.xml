@@ -20,8 +20,6 @@
     <allow-intent href="market:*"/>
   </platform>
   <platform name="ios">
-    <hook type="before_prepare" src="www/scripts/01_configuration_switch.js"/>
-
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
     <preference name="target-device" value="universal"/>
