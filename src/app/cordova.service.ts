@@ -1,7 +1,5 @@
 import { Injectable,NgZone } from '@angular/core';
 import {BehaviorSubject, fromEvent} from "rxjs";
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/map';
 import { Observable, of, Subject, Subscription } from 'rxjs';
 import {RouterModule} from "@angular/router";
 
@@ -23,9 +21,14 @@ export class CordovaService {
 
   private resume: BehaviorSubject<boolean>;
 
+
+
+
+
   constructor(private zone: NgZone) {
     this.resume = new BehaviorSubject<boolean>(null);
-    fromEvent(document, 'resume').subscribe(event => { //@TODO Observable
+    const clicks = fromEvent(document, 'resume');
+    clicks.subscribe(event => { //@TODO Observable
       this.zone.run(() => {
         this.onResume();
       });

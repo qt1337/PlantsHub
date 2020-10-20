@@ -34,11 +34,11 @@
     </feature>
     <name>HelloCordova</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
-    </description>
+    A sample Apache Cordova application that responds to the deviceready event.
+  </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
-    </author>
+    Apache Cordova Team
+  </author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -47,6 +47,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <hook src="www/scripts/01_configuration_switch.js" type="before_prepare" />
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
     <preference name="AllowInlineMediaPlayback" value="false" />
