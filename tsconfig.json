@@ -10,7 +10,8 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
+    /* The target is set to es5 because Android devices have issues with other versions*/
+    "target": "es5",
     "module": "es2020",
     "lib": [
       "es2018",
