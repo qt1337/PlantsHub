@@ -1,5 +1,6 @@
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
-import { RouterTestingModule } from '@angular/router/testing';
+
+import {RouterTestingModule} from '@angular/router/testing';
 import 'zone.js/dist/zone-testing';
 import {async, getTestBed, TestBed} from '@angular/core/testing';
 import {
@@ -7,11 +8,13 @@ import {
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 import {AppComponent} from './app/app.component';
+import {CordovaService} from "./app/cordova.service";
 
 beforeEach(async(() => {
   TestBed.configureTestingModule({
     imports: [RouterTestingModule],
-    declarations: [ AppComponent ]
+    declarations: [AppComponent],
+    providers: [CordovaService]
   })
     .compileComponents();
 }));

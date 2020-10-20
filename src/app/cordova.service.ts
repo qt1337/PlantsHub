@@ -1,7 +1,5 @@
-import { Injectable,NgZone } from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {BehaviorSubject, fromEvent} from "rxjs";
-import { Observable, of, Subject, Subscription } from 'rxjs';
-import {RouterModule} from "@angular/router";
 
 function _window(): any {
   // return the global native browser window object
@@ -9,20 +7,14 @@ function _window(): any {
 }
 
 
-
-
 @Injectable(/* {
  providedIn: 'root'
 }*/)
 
 
-
 export class CordovaService {
 
   private resume: BehaviorSubject<boolean>;
-
-
-
 
 
   constructor(private zone: NgZone) {
@@ -38,24 +30,26 @@ export class CordovaService {
   get cordova(): any {
     return _window().cordova;
   }
+
   get onCordova(): Boolean {
     return !!_window().cordova;
   }
+
   public onResume(): void {
     this.resume.next(true);
   }
 
   public openLinkInBrowser(url: string) {
-    _window().SafariViewController.isAvailable(function(available) {
+    _window().SafariViewController.isAvailable(function (available) {
       if (available) {
         _window().SafariViewController.show({
           url: url,
           barColor: '#f7f7f9',
-        tintColor: '#1ca8dd',
-        controlTintColor: '#1ca8dd',
-      });
+          tintColor: '#1ca8dd',
+          controlTintColor: '#1ca8dd',
+        });
       } else {
-        _window().cordova.InAppBrowser.open(url,'_blank');
+        _window().cordova.InAppBrowser.open(url, '_blank');
       }
     })
   }
