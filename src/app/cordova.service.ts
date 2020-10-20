@@ -1,5 +1,5 @@
 import {Injectable, NgZone} from '@angular/core';
-import {BehaviorSubject, fromEvent} from "rxjs";
+import {BehaviorSubject, fromEvent} from 'rxjs';
 
 function _window(): any {
   // return the global native browser window object
@@ -22,7 +22,7 @@ export class CordovaService {
   constructor(private zone: NgZone) {
     this.resume = new BehaviorSubject<boolean>(null);
     const clicks = fromEvent(document, 'resume');
-    clicks.subscribe(event => { //@TODO Observable
+    clicks.subscribe(event => { // @TODO Observable
       this.zone.run(() => {
         this.onResume();
       });
@@ -44,10 +44,10 @@ export class CordovaService {
   /* For opening extern URLs */
 
   public openLinkInBrowser(url: string) {
-    _window().SafariViewController.isAvailable(function (available) {
+    _window().SafariViewController.isAvailable(function(available) {
       if (available) {
         _window().SafariViewController.show({
-          url: url,
+          url,
           barColor: '#f7f7f9',
           tintColor: '#1ca8dd',
           controlTintColor: '#1ca8dd',
@@ -55,7 +55,7 @@ export class CordovaService {
       } else {
         _window().cordova.InAppBrowser.open(url, '_blank');
       }
-    })
+    });
   }
 
 }

@@ -8,7 +8,7 @@ import {
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 import {AppComponent} from './app/app.component';
-import {CordovaService} from "./app/cordova.service";
+import {CordovaService} from './app/cordova.service';
 
 beforeEach(async(() => {
   TestBed.configureTestingModule({

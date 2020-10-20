@@ -13,7 +13,7 @@ platformBrowserDynamic().bootstrapModule(AppModule)
 
 /* The Angular app should only be bootstrapped once the Cordova "deviceready" event is fired.
 This ensures that all resources have been loaded and the Cordova service API is ready to be called */
-let onDeviceReady = () => {
+const onDeviceReady = () => {
   platformBrowserDynamic().bootstrapModule(AppModule);
 };
 document.addEventListener('deviceready', onDeviceReady, false);
