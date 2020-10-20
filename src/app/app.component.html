@@ -1,8 +1,6 @@
-<div style="background-color: black;" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
-
-
-
-  <div fxFlex id="text">
+<router-outlet></router-outlet>
+<div *ngIf="isHomeRoute()" class="container bg-black flex justify-center items-center">
+  <div class="white pa2">
     <div class="spinner-box">
       <div class="blue-orbit leo">
       </div>
