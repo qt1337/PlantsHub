@@ -18,7 +18,7 @@
  specific language governing permissions and limitations
  under the License.
 */
-;(function() {
+(function() {
 var PLATFORM_VERSION_BUILD_LABEL = '9.0.0';
 // file: src/scripts/require.js
 var require;
