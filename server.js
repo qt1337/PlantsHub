@@ -27,3 +27,7 @@ app.listen(process.env.PORT || 8080, () => {
 app.post("/api/create-item/:item_id/:item_name", (req, res) => {
   api.createItem(pool, req, res);
 });
+
+app.post("/api/create-user", (req, res) => {
+  api.createUser(pool, req, res);
+});
