@@ -3,6 +3,7 @@ require("dotenv").config();
 const api = require("./api");
 const express = require("express");
 const mariadb = require("mariadb");
+const cookieParser = require("cookie-parser");
 
 const pool = mariadb.createPool({
   host: process.env.DB_HOST,
@@ -15,6 +16,7 @@ const pool = mariadb.createPool({
 const app = express();
 
 app.use(express.static("./dist/PlantsHub"));
+app.use(cookieParser());
 
 app.get("/*", (req, res) =>
   res.sendFile("index.html", { root: "dist/PlantsHub/" })
