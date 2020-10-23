@@ -23,7 +23,7 @@ function sha512(password, salt) {
   /** Hashing algorithm sha512 */
   hash.update(password);
   let value = hash.digest("hex");
-  return {salt: salt, passwordHash: value};
+  return { salt: salt, passwordHash: value };
 }
 
 /**
@@ -113,7 +113,6 @@ function createUser(pool, req, res) {
  * Check session of user
  */
 function checkUserSession(pool, req, res) {
-
   let account = req.cookies.sessionData.account;
   let sessionId = req.cookies.sessionData.sessionId;
   let hashedSessionId;
@@ -189,7 +188,7 @@ function checkUserCredentials(pool, req, res) {
             account: account,
           };
           res.clearCookie("sessionData");
-          res.cookie("sessionData", sessionData, {maxAge: 86400000});
+          res.cookie("sessionData", sessionData, { maxAge: 86400000 });
           res.status(202).send();
           conn.end();
         })
