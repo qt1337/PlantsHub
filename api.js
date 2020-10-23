@@ -1,5 +1,4 @@
-const crypto = require('crypto');
-
+const crypto = require("crypto");
 
 /**
  * generates random string of characters i.e salt
@@ -7,9 +6,10 @@ const crypto = require('crypto');
  * @param {number} length - Length of the random string.
  */
 function getRandomString(length) {
-  return crypto.randomBytes(Math.ceil(length / 2))
-    .toString('hex')
-    .slice(0, length)
+  return crypto
+    .randomBytes(Math.ceil(length / 2))
+    .toString("hex")
+    .slice(0, length);
 }
 
 /**
@@ -19,16 +19,12 @@ function getRandomString(length) {
  * @param {string} salt - Data to be validated.
  */
 function sha512(password, salt) {
-  let hash = crypto.createHmac('sha512', salt);
+  let hash = crypto.createHmac("sha512", salt);
   /** Hashing algorithm sha512 */
   hash.update(password);
-  let value = hash.digest('hex');
-  return {
-    salt: salt,
-    passwordHash: value
-  };
+  let value = hash.digest("hex");
+  return { salt: salt, passwordHash: value };
 }
-
 
 /**
  * hash password with sha512 and adds salt.
