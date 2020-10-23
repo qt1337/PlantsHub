@@ -41,6 +41,9 @@ function getSaltHashPassword(password) {
   return [salt, passwordData.passwordHash];
 }
 
+/**
+ * Creates a dummy item
+ */
 function createItem(pool, req, res) {
   pool
     .getConnection()
@@ -54,9 +57,9 @@ function createItem(pool, req, res) {
             req.params.item_name,
           ]);
         })
-        .then((resp) => {
+        .then((result) => {
           res.status(200).send("rows have been created");
-          console.log(resp);
+          console.log(result);
           conn.end();
         })
         .catch((err) => {
@@ -71,6 +74,9 @@ function createItem(pool, req, res) {
     });
 }
 
+/**
+ * Creates a user
+ */
 function createUser(pool, req, res) {
   let [salt, hashedPassword] = getSaltHashPassword(req.query.user_password);
 
@@ -87,9 +93,9 @@ function createUser(pool, req, res) {
           req.query.user_birthday,
           salt
         ])
-        .then((resp) => {
-          res.status(200).send("rows have been created");
-          console.log(resp);
+        .then((result) => {
+          res.status(202).send("rows have been created");
+          console.log(result);
           connection.end();
         })
         .catch((err) => {
@@ -104,7 +110,107 @@ function createUser(pool, req, res) {
     });
 }
 
+
+/**
+ * Check session of user
+ */
+function checkUserSession(pool, req, res) {
+  let account = req.query.account;
+  let sessionId = req.query.sessionId;
+  let hashedSessionId;
+
+  pool
+    .getConnection()
+    .then((conn) => {
+      conn
+        .query("SELECT salt FROM User WHERE username = (?) OR email = (?)", [
+          account,
+          account
+        ])
+        .then((row) => {
+          let salt = row[0].salt;
+
+          hashedSessionId = sha512(sessionId, salt).passwordHash;
+
+          return conn.query("SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and sessionId = (?)", [
+            account,
+            account,
+            hashedSessionId
+          ]);
+        })
+        .then((result) => {
+          console.log(result);
+          res.status(202).send("sessionId correct");
+          conn.end();
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(200).send("sessionId not correct");
+          conn.end();
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      // not connected
+    });
+}
+
+/**
+ * Check credentials of user
+ */
+function checkUserCredentials(pool, req, res) {
+  let account = req.query.account;
+  let password = req.query.password;
+  let sessionId = getRandomString(64);
+  let hashedPassword;
+  let hashedSessionId;
+
+  pool
+    .getConnection()
+    .then((conn) => {
+      conn
+        .query("SELECT salt FROM User WHERE username = (?) OR email = (?)", [
+          account,
+          account
+        ])
+        .then((row) => {
+          let salt = row[0].salt;
+
+          hashedPassword = sha512(password, salt).passwordHash;
+          hashedSessionId = sha512(sessionId, salt).passwordHash;
+
+          return conn.query("UPDATE User SET sessionId = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)", [
+            hashedSessionId,
+            account,
+            account,
+            hashedPassword
+          ]);
+        })
+        .then((result) => {
+          console.log(result);
+          res.status(202).send(
+            {
+              'sessionId': sessionId,
+              'account': account
+            }
+          ); // save to cookie
+          conn.end();
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(200).send("credentials not correct");
+          conn.end();
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      // not connected
+    });
+}
+
 module.exports = {
   createItem,
-  createUser
+  createUser,
+  checkUserCredentials,
+  checkUserSession
 };
