@@ -164,8 +164,8 @@ function checkUserSession(pool, req, res) {
  * Check credentials of user
  */
 function checkUserCredentials(pool, req, res) {
-  let account = req.query.account;
-  let password = req.query.password;
+  let account = req.body.account;
+  let password = req.body.password;
   let sessionId = getRandomString(64);
   let hashedPassword;
   let hashedSessionId;

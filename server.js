@@ -4,6 +4,8 @@ const api = require("./api");
 const express = require("express");
 const mariadb = require("mariadb");
 const cookieParser = require("cookie-parser");
+const bodyParser = require('body-parser');
+
 
 const pool = mariadb.createPool({
   host: process.env.DB_HOST,
@@ -17,9 +19,10 @@ const app = express();
 
 app.use(express.static("./dist/PlantsHub"));
 app.use(cookieParser());
+app.use(bodyParser());
 
 app.get("/*", (req, res) =>
-  res.sendFile("index.html", { root: "dist/PlantsHub/" })
+  res.sendFile("index.html", {root: "dist/PlantsHub/"})
 );
 
 app.listen(process.env.PORT || 8080, () => {
