@@ -23,7 +23,7 @@ function sha512(password, salt) {
   /** Hashing algorithm sha512 */
   hash.update(password);
   let value = hash.digest("hex");
-  return { salt: salt, passwordHash: value };
+  return {salt: salt, passwordHash: value};
 }
 
 /**
@@ -54,13 +54,13 @@ function createItem(pool, req, res) {
           ]);
         })
         .then((result) => {
-          res.status(200).send("rows have been created");
+          res.status(202).send("rows have been created");
           console.log(result);
           conn.end();
         })
         .catch((err) => {
           console.log(err);
-          res.status(200).send("rows could not be created");
+          res.status(401).send("rows could not be created");
           conn.end();
         });
     })
@@ -99,7 +99,7 @@ function createUser(pool, req, res) {
         })
         .catch((err) => {
           console.log(err);
-          res.status(200).send("rows could not be created");
+          res.status(401).send("rows could not be created");
           connection.end();
         });
     })
@@ -113,6 +113,10 @@ function createUser(pool, req, res) {
  * Check session of user
  */
 function checkUserSession(pool, req, res) {
+  if (typeof req.cookies.sessionData === 'undefined' || typeof req.cookies.sessionData.account === 'undefined' || req.cookies.sessionData.sessionId === 'undefined') {
+    res.status(401).send('no active session');
+    return;
+  }
   let account = req.cookies.sessionData.account;
   let sessionId = req.cookies.sessionData.sessionId;
   let hashedSessionId;
@@ -136,13 +140,17 @@ function checkUserSession(pool, req, res) {
           );
         })
         .then((result) => {
-          console.log(result);
-          res.status(202).send("sessionId correct");
+          console.log(result[0]['username'] === account);
+          if (result[0]['username'] === account) {
+            res.status(202).send("sessionId correct");
+          } else {
+            res.status(401).send("sessionId not correct");
+          }
           conn.end();
         })
         .catch((err) => {
           console.log(err);
-          res.status(200).send("sessionId not correct");
+          res.status(401).send("sessionId not correct");
           conn.end();
         });
     })
@@ -182,19 +190,25 @@ function checkUserCredentials(pool, req, res) {
           );
         })
         .then((result) => {
-          console.log(result);
+          console.log(result['affectedRows']);
+          if (result['affectedRows'] !== 1) {
+            res.clearCookie("sessionData");
+            res.status(401).send();
+            conn.end();
+            return;
+          }
           let sessionData = {
             sessionId: sessionId,
             account: account,
           };
           res.clearCookie("sessionData");
-          res.cookie("sessionData", sessionData, { maxAge: 86400000 });
+          res.cookie("sessionData", sessionData, {maxAge: 604800});
           res.status(202).send();
           conn.end();
         })
         .catch((err) => {
           console.log(err);
-          res.status(200).send("credentials not correct");
+          res.status(401).send("credentials not correct");
           conn.end();
         });
     })
