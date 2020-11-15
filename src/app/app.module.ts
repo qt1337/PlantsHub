@@ -4,9 +4,9 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {AppComponent} from './app.component';
 import {SignInComponent} from './_components/sign-in/sign-in.component';
 import {AppRoutingModule} from './app-routing.module';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { HomepageComponent } from './homepage/homepage.component';
+import {HomepageComponent} from './homepage/homepage.component';
 
 @NgModule({
   declarations: [
@@ -19,10 +19,13 @@ import { HomepageComponent } from './homepage/homepage.component';
     FlexLayoutModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
-    ],
+    HttpClientModule,
+    FormsModule
+  ],
   bootstrap: [AppComponent]
 })
 
