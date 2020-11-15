@@ -4,21 +4,34 @@
     <div class="f2 tc fw5">PlantsHub</div>
     <div id="seedlingEmoji" class="tc f1 pa2">&#x1F331;</div>
     <main class="pa4 black-80">
-      <form class="measure center" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <form class="measure center" [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
           <legend class="f4 fw6 ph0 mh0">Sign In</legend>
+          <div *ngIf="error" class="invalid-feedback">
+            Username / Email or Password is wrong!
+          </div>
           <div class="mt3">
             <label class="db fw6 lh-copy f6" for="email-address">Email or Username</label>
-            <input class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3" formControlName="username" type="text"
-                   name="email-address" id="email-address">
+            <input class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3"
+                   formControlName="username" type="text"
+                   name="email-address" id="email-address"
+                   [ngClass]="{ 'is-invalid': submitted && form.username.errors }">
+            <div *ngIf="submitted && form.username.errors" class="invalid-feedback">
+              <div *ngIf="form.username.errors.required">Username is required</div>
+            </div>
           </div>
           <div class="mv3">
             <label class="db fw6 lh-copy f6" for="password">Password</label>
-            <input class="b pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3" formControlName="password" type="password"
-                   name="password" id="password">
+            <input class="b pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3"
+                   formControlName="password" type="password"
+                   name="password" id="password"
+                   [ngClass]="{ 'is-invalid': submitted && form.password.errors }">
+            <div *ngIf="submitted && form.password.errors" class="invalid-feedback">
+              <div *ngIf="form.password.errors.required">Password is required</div>
+            </div>
           </div>
           <div class="flex justify-between">
-            <label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox"> Remember me</label>
+            <!--<label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox"> Remember me</label>-->
             <a href="#0" class="f6 link dim black db pa4-xs">Forgot Password?</a>
           </div>
         </fieldset>

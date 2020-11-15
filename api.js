@@ -140,7 +140,6 @@ function checkUserSession(pool, req, res) {
           );
         })
         .then((result) => {
-          console.log(result[0]['username'] === account);
           if (result[0]['username'] === account) {
             res.status(202).send("sessionId correct");
           } else {
@@ -179,42 +178,51 @@ function checkUserCredentials(pool, req, res) {
           account,
         ])
         .then((row) => {
-          let salt = row[0].salt;
+            let salt = row[0].salt;
 
-          hashedPassword = sha512(password, salt).passwordHash;
-          hashedSessionId = sha512(sessionId, salt).passwordHash;
+            hashedPassword = sha512(password, salt).passwordHash;
+            hashedSessionId = sha512(sessionId, salt).passwordHash;
 
-          return conn.query(
-            "UPDATE User SET sessionId = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
-            [hashedSessionId, account, account, hashedPassword]
-          );
-        })
-        .then((result) => {
-          console.log(result['affectedRows']);
-          if (result['affectedRows'] !== 1) {
-            res.clearCookie("sessionData");
-            res.status(401).send();
-            conn.end();
-            return;
+            conn.query(
+              "UPDATE User SET sessionId = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
+              [hashedSessionId, account, account, hashedPassword]
+            ).then((result) => {
+              if (result['affectedRows'] === 0) {
+                res.clearCookie("sessionData");
+                res.status(404).send("credentials not correct");
+                conn.end();
+                return;
+              }
+              let sessionData = {
+                sessionId: sessionId,
+                account: account,
+              };
+              res.clearCookie("sessionData");
+              res.cookie("sessionData", sessionData, {maxAge: 604800});
+              return conn.query(
+                "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and password = (?)",
+                [account, account, hashedPassword])
+                .then((result) => {
+                  res.status(202).json(result);
+                  console.log(result[0].username + " logged in.");
+                  conn.end();
+                }).catch((err) => {
+                  console.log(err);
+                  res.status(400).send("error occurred");
+                  conn.end();
+                })
+            })
           }
-          let sessionData = {
-            sessionId: sessionId,
-            account: account,
-          };
-          res.clearCookie("sessionData");
-          res.cookie("sessionData", sessionData, {maxAge: 604800});
-          res.status(202).send();
-          conn.end();
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(401).send("credentials not correct");
-          conn.end();
-        });
+        ).catch((err) => {
+        console.log(err);
+        res.status(404).send("credentials not correct");
+        conn.end();
+      })
     })
     .catch((err) => {
       console.log(err);
-      // not connected
+      res.status(401).send("credentials not correct");
+      conn.end();
     });
 }
 
