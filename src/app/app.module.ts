@@ -6,7 +6,7 @@ import {SignInComponent} from './_components/sign-in/sign-in.component';
 import {AppRoutingModule} from './app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {HomepageComponent} from './homepage/homepage.component';
+import {HomepageComponent} from './_components/homepage/homepage.component';
 
 @NgModule({
   declarations: [
