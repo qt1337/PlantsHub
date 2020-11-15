@@ -12,11 +12,11 @@ export class AuthenticationService {
   }
 
   login(username, password): void {
-    console.log(this.http.post<any>(`http://localhost:8080/api/check-credentials/users/authenticate`,
+    this.http.post(`https://plantshub.herokuapp.com/api/check-credentials/users/authenticate`,
       {username, password}
-      ).subscribe(response => {
+    ).subscribe(response => {
         return 'test'; // response.status;
-      })
+      }
     );
   }
 }
