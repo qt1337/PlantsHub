@@ -4,32 +4,37 @@
     <div class="f2 tc fw5">PlantsHub</div>
     <div id="seedlingEmoji" class="tc f1 pa2">&#x1F331;</div>
     <main class="pa4 black-80">
-      <form class="measure center">
+      <form class="measure center" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
           <legend class="f4 fw6 ph0 mh0">Sign In</legend>
           <div class="mt3">
-            <label class="db fw6 lh-copy f6" for="email-address">Email</label>
-            <input class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3" type="email"
+            <label class="db fw6 lh-copy f6" for="email-address">Email or Username</label>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3" formControlName="username" type="text"
                    name="email-address" id="email-address">
           </div>
           <div class="mv3">
             <label class="db fw6 lh-copy f6" for="password">Password</label>
-            <input class="b pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3" type="password"
+            <input class="b pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3" formControlName="password" type="password"
                    name="password" id="password">
           </div>
           <div class="flex justify-between">
-          <label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox"> Remember me</label>
-          <a href="#0" class="f6 link dim black db pa4-xs">Forgot Password?</a>
+            <label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox"> Remember me</label>
+            <a href="#0" class="f6 link dim black db pa4-xs">Forgot Password?</a>
           </div>
         </fieldset>
         <div class="flex justify-between">
-          <input value="Sign In" type="submit" class="input-reset f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-green" href="#0"/>
-          <input value="Register" type="submit" class="input-reset f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-blue" href="#0"/>
+          <button [disabled]="loading" class="input-reset f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-green">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Sign In
+          </button>
+          <button class="input-reset f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-blue">Register
+          </button>
         </div>
         <div class="lh-copy mt3 flex justify-center">
           <a href="https://blog.plantshub.de/" target="_blank" class="f6 link dim black db pa3 pa4-xs">Blog</a>
-          <a href="https://github.com/qt1337/PlantsHub" target="_blank" class="f6 link dim black db pa3 pa4-xs">GitHub</a>
-          <a href="#0" class="f6 link dim black db pa3 pa4-xs">Impressum</a>
+          <a href="https://github.com/qt1337/PlantsHub" target="_blank"
+             class="f6 link dim black db pa3 pa4-xs">GitHub</a>
+          <a href="#" class="f6 link dim black db pa3 pa4-xs">Impressum</a>
         </div>
       </form>
     </main>
