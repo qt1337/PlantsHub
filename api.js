@@ -23,7 +23,7 @@ function sha512(password, salt) {
   /** Hashing algorithm sha512 */
   hash.update(password);
   let value = hash.digest("hex");
-  return {salt: salt, passwordHash: value};
+  return { salt: salt, passwordHash: value };
 }
 
 /**
@@ -114,8 +114,12 @@ function createUser(pool, req, res) {
  * Check session of user
  */
 function checkUserSession(pool, req, res) {
-  if (typeof req.cookies.sessionData === 'undefined' || typeof req.cookies.sessionData.username === 'undefined' || req.cookies.sessionData.sessionId === 'undefined') {
-    res.status(401).send('no active session');
+  if (
+    typeof req.cookies.sessionData === "undefined" ||
+    typeof req.cookies.sessionData.username === "undefined" ||
+    req.cookies.sessionData.sessionId === "undefined"
+  ) {
+    res.status(401).send("no active session");
     return;
   }
   let username = req.cookies.sessionData.username;
@@ -141,7 +145,7 @@ function checkUserSession(pool, req, res) {
           );
         })
         .then((result) => {
-          if (result[0]['username'] === username) {
+          if (result[0]["username"] === username) {
             res.status(202).send("sessionId correct");
           } else {
             res.status(401).send("sessionId not correct");
@@ -179,16 +183,18 @@ function checkUserCredentials(pool, req, res) {
           username,
         ])
         .then((row) => {
-            let salt = row[0].salt;
+          let salt = row[0].salt;
 
-            hashedPassword = sha512(password, salt).passwordHash;
-            hashedSessionId = sha512(sessionId, salt).passwordHash;
+          hashedPassword = sha512(password, salt).passwordHash;
+          hashedSessionId = sha512(sessionId, salt).passwordHash;
 
-            conn.query(
+          conn
+            .query(
               "UPDATE User SET sessionId = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
               [hashedSessionId, username, username, hashedPassword]
-            ).then((result) => {
-              if (result['affectedRows'] === 0) {
+            )
+            .then((result) => {
+              if (result["affectedRows"] === 0) {
                 res.clearCookie("sessionData");
                 res.status(404).send("credentials not correct");
                 conn.end();
@@ -199,26 +205,29 @@ function checkUserCredentials(pool, req, res) {
                 username: username,
               };
               res.clearCookie("sessionData");
-              res.cookie("sessionData", sessionData, {maxAge: 604800});
-              return conn.query(
-                "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and password = (?)",
-                [username, username, hashedPassword])
+              res.cookie("sessionData", sessionData, { maxAge: 604800 });
+              return conn
+                .query(
+                  "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and password = (?)",
+                  [username, username, hashedPassword]
+                )
                 .then((result) => {
                   res.status(202).json(result);
                   console.log(result[0].username + " logged in.");
                   conn.end();
-                }).catch((err) => {
+                })
+                .catch((err) => {
                   console.log(err);
                   res.status(400).send("error occurred");
                   conn.end();
-                })
-            })
-          }
-        ).catch((err) => {
-        console.log(err);
-        res.status(404).send("credentials not correct");
-        conn.end();
-      })
+                });
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(404).send("credentials not correct");
+          conn.end();
+        });
     })
     .catch((err) => {
       console.log(err);
