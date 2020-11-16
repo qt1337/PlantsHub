@@ -5,6 +5,7 @@ const express = require("express");
 const mariadb = require("mariadb");
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 
 const pool = mariadb.createPool({
@@ -20,6 +21,19 @@ const app = express();
 app.use(express.static("./dist/PlantsHub"));
 app.use(cookieParser());
 app.use(bodyParser());
+app.use(cors());
+
+app.use(
+  function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "https://plantshub.de"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Origin", "https://app.plantshub.de"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Origin", "https://plantshub.herokuapp.com/"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Origin", "http://localhost:8080"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  }
+)
 
 app.get("/*", (req, res) =>
   res.sendFile("index.html", {root: "dist/PlantsHub/"})

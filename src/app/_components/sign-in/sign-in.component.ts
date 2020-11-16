@@ -54,6 +54,7 @@ export class SignInComponent implements OnInit {
             this.router.navigateByUrl(returnUrl);
           },
           error: error => {
+            console.log('Wrong credentials or Server error');
             this.loading = false;
             this.error = true;
           }

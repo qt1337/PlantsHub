@@ -74,7 +74,7 @@ function createItem(pool, req, res) {
  * Creates a user
  */
 function createUser(pool, req, res) {
-  let [salt, hashedPassword] = getSaltHashPassword(req.query.user_password);
+  let [salt, hashedPassword] = getSaltHashPassword(req.body.password);
 
   pool
     .getConnection()
@@ -83,19 +83,20 @@ function createUser(pool, req, res) {
         .query(
           "INSERT INTO User(username, email, password, forename, surname, birthday, salt) value (?, ?, ?, ?, ?, ?, ?)",
           [
-            req.query.user_username,
-            req.query.user_email,
+            req.body.username,
+            req.body.email,
             hashedPassword,
-            req.query.user_forename,
-            req.query.user_surname,
-            req.query.user_birthday,
+            req.body.forename,
+            req.body.surname,
+            req.body.birthday,
             salt,
           ]
         )
         .then((result) => {
-          res.status(202).send("rows have been created");
-          console.log(result);
-          connection.end();
+          if (result === 0) {
+            return;
+          }
+          return checkUserCredentials(pool, req, res);
         })
         .catch((err) => {
           console.log(err);
@@ -113,11 +114,11 @@ function createUser(pool, req, res) {
  * Check session of user
  */
 function checkUserSession(pool, req, res) {
-  if (typeof req.cookies.sessionData === 'undefined' || typeof req.cookies.sessionData.account === 'undefined' || req.cookies.sessionData.sessionId === 'undefined') {
+  if (typeof req.cookies.sessionData === 'undefined' || typeof req.cookies.sessionData.username === 'undefined' || req.cookies.sessionData.sessionId === 'undefined') {
     res.status(401).send('no active session');
     return;
   }
-  let account = req.cookies.sessionData.account;
+  let username = req.cookies.sessionData.username;
   let sessionId = req.cookies.sessionData.sessionId;
   let hashedSessionId;
 
@@ -126,8 +127,8 @@ function checkUserSession(pool, req, res) {
     .then((conn) => {
       conn
         .query("SELECT salt FROM User WHERE username = (?) OR email = (?)", [
-          account,
-          account,
+          username,
+          username,
         ])
         .then((row) => {
           let salt = row[0].salt;
@@ -136,11 +137,11 @@ function checkUserSession(pool, req, res) {
 
           return conn.query(
             "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and sessionId = (?)",
-            [account, account, hashedSessionId]
+            [username, username, hashedSessionId]
           );
         })
         .then((result) => {
-          if (result[0]['username'] === account) {
+          if (result[0]['username'] === username) {
             res.status(202).send("sessionId correct");
           } else {
             res.status(401).send("sessionId not correct");
@@ -163,7 +164,7 @@ function checkUserSession(pool, req, res) {
  * Check credentials of user
  */
 function checkUserCredentials(pool, req, res) {
-  let account = req.body.account;
+  let username = req.body.username;
   let password = req.body.password;
   let sessionId = getRandomString(64);
   let hashedPassword;
@@ -174,8 +175,8 @@ function checkUserCredentials(pool, req, res) {
     .then((conn) => {
       conn
         .query("SELECT salt FROM User WHERE username = (?) OR email = (?)", [
-          account,
-          account,
+          username,
+          username,
         ])
         .then((row) => {
             let salt = row[0].salt;
@@ -185,7 +186,7 @@ function checkUserCredentials(pool, req, res) {
 
             conn.query(
               "UPDATE User SET sessionId = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
-              [hashedSessionId, account, account, hashedPassword]
+              [hashedSessionId, username, username, hashedPassword]
             ).then((result) => {
               if (result['affectedRows'] === 0) {
                 res.clearCookie("sessionData");
@@ -195,13 +196,13 @@ function checkUserCredentials(pool, req, res) {
               }
               let sessionData = {
                 sessionId: sessionId,
-                account: account,
+                username: username,
               };
               res.clearCookie("sessionData");
               res.cookie("sessionData", sessionData, {maxAge: 604800});
               return conn.query(
                 "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and password = (?)",
-                [account, account, hashedPassword])
+                [username, username, hashedPassword])
                 .then((result) => {
                   res.status(202).json(result);
                   console.log(result[0].username + " logged in.");
