@@ -5,7 +5,7 @@ const express = require("express");
 const mariadb = require("mariadb");
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
-const cors = require('cors');
+// const cors = require('cors');
 
 
 const pool = mariadb.createPool({
@@ -21,7 +21,7 @@ const app = express();
 app.use(express.static("./dist/PlantsHub"));
 app.use(cookieParser());
 app.use(bodyParser());
-app.use(cors());
+// app.use(cors());
 
 app.get("/*", (req, res) =>
   res.sendFile("index.html", {root: "dist/PlantsHub/"})
