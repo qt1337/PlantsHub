@@ -27,7 +27,7 @@ export class AuthenticationService {
 
   public login(username, password): Observable<User> {
     return this.http.post<User>(
-      'https://plantshub.de/api/check-credentials',
+      '/api/check-credentials',
       {
         username,
         password
@@ -50,7 +50,7 @@ export class AuthenticationService {
 
   public register(username, email, password, forename, surname, birthday): Observable<User> {
     return this.http.post<User>(
-      'https://plantshub.de/api/check-credentials',
+      '/api/check-credentials',
       {
         username,
         email,
