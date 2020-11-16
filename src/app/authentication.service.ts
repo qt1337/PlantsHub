@@ -26,7 +26,9 @@ export class AuthenticationService {
   }
 
   public loginViaSessionId(): Observable<User> {
-    if (this.user) {
+    if (this.userValue) {
+      console.log(this.userValue);
+      console.log(this.user);
       console.log('user has active session');
       return this.user;
     }

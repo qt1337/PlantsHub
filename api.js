@@ -208,7 +208,8 @@ function checkUserCredentials(pool, req, res) {
               res.cookie("sessionData", sessionData,
                 {
                   maxAge: 604800,
-                  secure: true
+                  secure: true,
+                  sameSite: "strict"
                 }
               );
               return conn
