@@ -23,7 +23,7 @@ function sha512(password, salt) {
   /** Hashing algorithm sha512 */
   hash.update(password);
   let value = hash.digest("hex");
-  return {salt: salt, passwordHash: value};
+  return { salt: salt, passwordHash: value };
 }
 
 /**
@@ -205,12 +205,10 @@ function checkUserCredentials(pool, req, res) {
                 username: username,
               };
               res.clearCookie("sessionData");
-              res.cookie("sessionData", sessionData,
-                {
-                  maxAge: 604800,
-                  secure: true
-                }
-              );
+              res.cookie("sessionData", sessionData, {
+                maxAge: 604800,
+                secure: true,
+              });
               return conn
                 .query(
                   "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and password = (?)",
