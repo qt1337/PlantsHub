@@ -4,6 +4,8 @@ const api = require("./api");
 const express = require("express");
 const mariadb = require("mariadb");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+// const cors = require('cors');
 
 const pool = mariadb.createPool({
   host: process.env.DB_HOST,
@@ -17,6 +19,16 @@ const app = express();
 
 app.use(express.static("./dist/PlantsHub"));
 app.use(cookieParser());
+app.use(bodyParser());
+// app.use(cors());
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 app.get("/*", (req, res) =>
   res.sendFile("index.html", { root: "dist/PlantsHub/" })

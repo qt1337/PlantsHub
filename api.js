@@ -54,13 +54,13 @@ function createItem(pool, req, res) {
           ]);
         })
         .then((result) => {
-          res.status(200).send("rows have been created");
+          res.status(202).send("rows have been created");
           console.log(result);
           conn.end();
         })
         .catch((err) => {
           console.log(err);
-          res.status(200).send("rows could not be created");
+          res.status(401).send("rows could not be created");
           conn.end();
         });
     })
@@ -74,7 +74,7 @@ function createItem(pool, req, res) {
  * Creates a user
  */
 function createUser(pool, req, res) {
-  let [salt, hashedPassword] = getSaltHashPassword(req.query.user_password);
+  let [salt, hashedPassword] = getSaltHashPassword(req.body.password);
 
   pool
     .getConnection()
@@ -83,23 +83,24 @@ function createUser(pool, req, res) {
         .query(
           "INSERT INTO User(username, email, password, forename, surname, birthday, salt) value (?, ?, ?, ?, ?, ?, ?)",
           [
-            req.query.user_username,
-            req.query.user_email,
+            req.body.username,
+            req.body.email,
             hashedPassword,
-            req.query.user_forename,
-            req.query.user_surname,
-            req.query.user_birthday,
+            req.body.forename,
+            req.body.surname,
+            req.body.birthday,
             salt,
           ]
         )
         .then((result) => {
-          res.status(202).send("rows have been created");
-          console.log(result);
-          connection.end();
+          if (result === 0) {
+            return;
+          }
+          return checkUserCredentials(pool, req, res);
         })
         .catch((err) => {
           console.log(err);
-          res.status(200).send("rows could not be created");
+          res.status(401).send("rows could not be created");
           connection.end();
         });
     })
@@ -113,7 +114,15 @@ function createUser(pool, req, res) {
  * Check session of user
  */
 function checkUserSession(pool, req, res) {
-  let account = req.cookies.sessionData.account;
+  if (
+    typeof req.cookies.sessionData === "undefined" ||
+    typeof req.cookies.sessionData.username === "undefined" ||
+    req.cookies.sessionData.sessionId === "undefined"
+  ) {
+    res.status(401).send("no active session");
+    return;
+  }
+  let username = req.cookies.sessionData.username;
   let sessionId = req.cookies.sessionData.sessionId;
   let hashedSessionId;
 
@@ -122,8 +131,8 @@ function checkUserSession(pool, req, res) {
     .then((conn) => {
       conn
         .query("SELECT salt FROM User WHERE username = (?) OR email = (?)", [
-          account,
-          account,
+          username,
+          username,
         ])
         .then((row) => {
           let salt = row[0].salt;
@@ -132,17 +141,20 @@ function checkUserSession(pool, req, res) {
 
           return conn.query(
             "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and sessionId = (?)",
-            [account, account, hashedSessionId]
+            [username, username, hashedSessionId]
           );
         })
         .then((result) => {
-          console.log(result);
-          res.status(202).send("sessionId correct");
+          if (result[0]["username"] === username) {
+            res.status(202).send("sessionId correct");
+          } else {
+            res.status(401).send("sessionId not correct");
+          }
           conn.end();
         })
         .catch((err) => {
           console.log(err);
-          res.status(200).send("sessionId not correct");
+          res.status(401).send("sessionId not correct");
           conn.end();
         });
     })
@@ -156,8 +168,8 @@ function checkUserSession(pool, req, res) {
  * Check credentials of user
  */
 function checkUserCredentials(pool, req, res) {
-  let account = req.query.account;
-  let password = req.query.password;
+  let username = req.body.username;
+  let password = req.body.password;
   let sessionId = getRandomString(64);
   let hashedPassword;
   let hashedSessionId;
@@ -167,8 +179,8 @@ function checkUserCredentials(pool, req, res) {
     .then((conn) => {
       conn
         .query("SELECT salt FROM User WHERE username = (?) OR email = (?)", [
-          account,
-          account,
+          username,
+          username,
         ])
         .then((row) => {
           let salt = row[0].salt;
@@ -176,31 +188,54 @@ function checkUserCredentials(pool, req, res) {
           hashedPassword = sha512(password, salt).passwordHash;
           hashedSessionId = sha512(sessionId, salt).passwordHash;
 
-          return conn.query(
-            "UPDATE User SET sessionId = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
-            [hashedSessionId, account, account, hashedPassword]
-          );
-        })
-        .then((result) => {
-          console.log(result);
-          let sessionData = {
-            sessionId: sessionId,
-            account: account,
-          };
-          res.clearCookie("sessionData");
-          res.cookie("sessionData", sessionData, { maxAge: 86400000 });
-          res.status(202).send();
-          conn.end();
+          conn
+            .query(
+              "UPDATE User SET sessionId = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
+              [hashedSessionId, username, username, hashedPassword]
+            )
+            .then((result) => {
+              if (result["affectedRows"] === 0) {
+                res.clearCookie("sessionData");
+                res.status(404).send("credentials not correct");
+                conn.end();
+                return;
+              }
+              let sessionData = {
+                sessionId: sessionId,
+                username: username,
+              };
+              res.clearCookie("sessionData");
+              res.cookie("sessionData", sessionData, {
+                maxAge: 604800,
+                secure: true,
+              });
+              return conn
+                .query(
+                  "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and password = (?)",
+                  [username, username, hashedPassword]
+                )
+                .then((result) => {
+                  res.status(202).json(result);
+                  console.log(result[0].username + " logged in.");
+                  conn.end();
+                })
+                .catch((err) => {
+                  console.log(err);
+                  res.status(400).send("error occurred");
+                  conn.end();
+                });
+            });
         })
         .catch((err) => {
           console.log(err);
-          res.status(200).send("credentials not correct");
+          res.status(404).send("credentials not correct");
           conn.end();
         });
     })
     .catch((err) => {
       console.log(err);
-      // not connected
+      res.status(401).send("credentials not correct");
+      conn.end();
     });
 }
 
