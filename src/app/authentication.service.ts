@@ -69,7 +69,7 @@ export class AuthenticationService {
 
   public register(username, email, password, forename, surname, birthday): Observable<User> {
     return this.http.post<User>(
-      '/api/check-credentials',
+      '/api/create-user',
       {
         username,
         email,
@@ -80,7 +80,7 @@ export class AuthenticationService {
       },
       {responseType: 'json'}
     ).pipe(map(user => {
-        localStorage.setItem('account', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
         return user;
       })

@@ -1,0 +1,77 @@
+<meta charset="UTF-8">
+<div class="fl w-100 h-100 pa2 flex items-center justify-center">
+  <article class="w-40-l w-100 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10">
+    <div class="f2 tc fw5">PlantsHub</div>
+    <div id="seedlingEmoji" class="tc f1 pa2">&#x1F331;</div>
+    <main class="pa4 black-80">
+      <form class="measure center" [formGroup]="loginForm" (ngSubmit)="onRegister()">
+        <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
+          <legend class="f4 fw6 ph0 mh0">Sign In</legend>
+          <div *ngIf="error" class="invalid-feedback">
+            Username / Email or Password is already taken!
+          </div>
+          <div class="mt3">
+            <label class="db fw6 lh-copy f6" for="forename">First Name</label>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3"
+                   formControlName="forename" type="text"
+                   name="forename" id="forename">
+          </div>
+          <div class="mt3">
+            <label class="db fw6 lh-copy f6" for="surname">Last Name</label>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3"
+                   formControlName="surname" type="text"
+                   name="surname" id="surname">
+          </div>
+          <div class="mt3">
+            <label class="db fw6 lh-copy f6" for="birthday">Birthday</label>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3"
+                   formControlName="birthday" type="date"
+                   name="birthday" id="birthday">
+          </div>
+          <div class="mt3">
+            <label class="db fw6 lh-copy f6" for="username">Username</label>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3"
+                   formControlName="username" type="text"
+                   name="username" id="username"
+                   [ngClass]="{ 'is-invalid': submitted && form.username.errors }">
+            <div *ngIf="submitted && form.username.errors" class="invalid-feedback">
+              <div *ngIf="form.username.errors.required">Username is required</div>
+            </div>
+          </div>
+          <div class="mt3">
+            <label class="db fw6 lh-copy f6" for="email">Email</label>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3"
+                   formControlName="email" type="email"
+                   name="email" id="email">
+          </div>
+          <div class="mv3">
+            <label class="db fw6 lh-copy f6" for="password">Password</label>
+            <input class="b pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3"
+                   formControlName="password" type="password"
+                   name="password" id="password"
+                   [ngClass]="{ 'is-invalid': submitted && form.password.errors }">
+            <div *ngIf="submitted && form.password.errors" class="invalid-feedback">
+              <div *ngIf="form.password.errors.required">Password is required</div>
+            </div>
+          </div>
+          <div class="flex justify-between">
+            <!--<label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox"> Remember me</label>-->
+            <a routerLink="/signin" class="f6 link dim black db pa4-xs">Already have an account?</a>
+          </div>
+        </fieldset>
+        <div class="flex justify-between">
+          <button [disabled]="loading" class="input-reset f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-blue">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Sign Up
+          </button>
+        </div>
+        <div class="lh-copy mt3 flex justify-center">
+          <a href="https://blog.plantshub.de/" target="_blank" class="f6 link dim black db pa3 pa4-xs">Blog</a>
+          <a href="https://github.com/qt1337/PlantsHub" target="_blank"
+             class="f6 link dim black db pa3 pa4-xs">GitHub</a>
+          <a href="#" class="f6 link dim black db pa3 pa4-xs">Impressum</a>
+        </div>
+      </form>
+    </main>
+  </article>
+</div>

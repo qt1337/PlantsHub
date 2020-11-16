@@ -7,12 +7,14 @@ import {AppRoutingModule} from './app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {HomepageComponent} from './_components/homepage/homepage.component';
+import { SignUpComponent } from './_components/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignInComponent,
     HomepageComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,
