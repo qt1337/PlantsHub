@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from './_models/user';
@@ -25,11 +25,11 @@ export class AuthenticationService {
     return this.userSubject.value;
   }
 
-  public login(account, password): Observable<User> {
+  public login(username, password): Observable<User> {
     return this.http.post<User>(
       'https://plantshub.de/api/check-credentials',
       {
-        account,
+        username,
         password
       },
       {responseType: 'json'}
