@@ -25,6 +25,23 @@ export class AuthenticationService {
     return this.userSubject.value;
   }
 
+  public loginViaSessionId(): Observable<User> {
+    if (this.user) {
+      console.log('user has active session');
+      return this.user;
+    }
+    return this.http.post<User>(
+      '/api/check-session',
+      {},
+      {responseType: 'json'}
+    ).pipe(map(user => {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.userSubject.next(user);
+        return user;
+      })
+    );
+  }
+
   public login(username, password): Observable<User> {
     return this.http.post<User>(
       '/api/check-credentials',
@@ -34,7 +51,7 @@ export class AuthenticationService {
       },
       {responseType: 'json'}
     ).pipe(map(user => {
-        localStorage.setItem('account', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
         return user;
       })

@@ -20,6 +20,7 @@ export class SignInComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.checkForSession();
   }
 
   constructor(
@@ -33,6 +34,22 @@ export class SignInComponent implements OnInit {
   // tslint:disable-next-line:typedef
   get form() {
     return this.loginForm.controls;
+  }
+
+  checkForSession(): void {
+    this.authenticationService.loginViaSessionId().pipe(first())
+      .subscribe({
+          next: () => {
+            // get return url from query parameters or default to home page
+            const returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+            this.router.navigateByUrl(returnUrl);
+          },
+          error: error => {
+            console.log(error);
+            console.log('No active session');
+          }
+        }
+      );
   }
 
   onLogin(): void {
@@ -54,6 +71,7 @@ export class SignInComponent implements OnInit {
             this.router.navigateByUrl(returnUrl);
           },
           error: error => {
+            console.log(error);
             console.log('Wrong credentials or Server error');
             this.loading = false;
             this.error = true;
