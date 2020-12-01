@@ -26,22 +26,24 @@ export class AuthenticationService {
   }
 
   public loginViaSessionId(): Observable<User> {
-    if (this.userValue) {
-      console.log(this.userValue);
-      console.log(this.user);
-      console.log('user has active session');
-      return this.user;
+    try {
+      if (this.userValue && this.userValue[0]) {
+        console.log('user has active session');
+        return this.user;
+      }
+      return this.http.post<User>(
+        '/api/check-session',
+        {},
+        {responseType: 'json'}
+      ).pipe(map(user => {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.userSubject.next(user);
+          return user;
+        })
+      );
+    } catch (error) {
+      console.log(error);
     }
-    return this.http.post<User>(
-      '/api/check-session',
-      {},
-      {responseType: 'json'}
-    ).pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
-        return user;
-      })
-    );
   }
 
   public login(username, password): Observable<User> {

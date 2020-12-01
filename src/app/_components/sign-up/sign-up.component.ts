@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {first} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
+import {FIELDS} from './fields';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,6 +15,7 @@ export class SignUpComponent implements OnInit {
   loading = false;
   submitted = false;
   error: boolean;
+  fields = FIELDS;
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
