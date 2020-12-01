@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {PLANTS} from "./plants";
+import {Component, OnInit} from '@angular/core';
+import {PLANTS} from './plants';
 
 @Component({
   selector: 'app-plantcard',
@@ -8,21 +8,20 @@ import {PLANTS} from "./plants";
 })
 export class PlantcardComponent implements OnInit {
 
+  constructor() {
+  }
+
   plants = PLANTS;
   icons = [
-    { name: 'heart', class: 'big fill-red' },
-    { name: 'book', class: 'big fill-red' }
+    {name: 'heart', class: 'big fill-red'},
+    {name: 'book', class: 'big fill-red'}
 
-  ]
-
-  constructor() { }
+  ];
 
   ngOnInit(): void {
   }
 
-
-  status: boolean = false;
-  clickEvent(){
-    this.status = !this.status;
+  clickEvent(plant): void {
+    plant.status = !plant.status;
   }
 }
