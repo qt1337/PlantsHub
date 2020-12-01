@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {User} from '../../_models/user';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {PlantcardComponent} from "../plantcard/plantcard.component";
 
 @Component({
   selector: 'app-home',
