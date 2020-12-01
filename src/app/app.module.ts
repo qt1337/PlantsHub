@@ -6,15 +6,15 @@ import {SignInComponent} from './_components/sign-in/sign-in.component';
 import {AppRoutingModule} from './app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {HomepageComponent} from './_components/homepage/homepage.component';
-import { SignUpComponent } from './_components/sign-up/sign-up.component';
+import {SignUpComponent} from './_components/sign-up/sign-up.component';
+import {HomeComponent} from './_components/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignInComponent,
-    HomepageComponent,
     SignUpComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
