@@ -1,8 +1,8 @@
 <meta charset="UTF-8">
 <div class="fl w-100 h-100 pa2 flex items-center justify-center">
-  <article class="w-40-l w-100 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10">
+  <article class="w-40-l w-100 center bg-white pa3 pa4-ns mv3 b--black-10">
     <div class="f2 tc fw5">PlantsHub</div>
-    <div id="seedlingEmoji" class="tc f1 pa2">&#x1F331;</div>
+    <div class="tc f1 pa2"><img id="potted-plant-img" src="assets/potted-plant.svg"/></div>
     <main class="pa4 black-80">
       <form class="measure center" [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
@@ -12,7 +12,7 @@
           </div>
           <div class="mt3">
             <label class="db fw6 lh-copy f6" for="email-address">Email or Username</label>
-            <input class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3"
+            <input class="pa2 input-reset ba bg-transparent w-100 br3"
                    formControlName="username" type="text"
                    name="email-address" id="email-address"
                    [ngClass]="{ 'is-invalid': submitted && form.username.errors }">
@@ -22,10 +22,12 @@
           </div>
           <div class="mv3">
             <label class="db fw6 lh-copy f6" for="password">Password</label>
-            <input class="b pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white w-100 br3"
+            <input class="b pa2 input-reset ba bg-transparent w-100 br3"
                    formControlName="password" type="password"
                    name="password" id="password"
+
                    [ngClass]="{ 'is-invalid': submitted && form.password.errors }">
+
             <div *ngIf="submitted && form.password.errors" class="invalid-feedback">
               <div *ngIf="form.password.errors.required">Password is required</div>
             </div>
