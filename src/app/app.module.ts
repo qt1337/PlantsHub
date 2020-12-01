@@ -9,6 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {SignUpComponent} from './_components/sign-up/sign-up.component';
 import {HomeComponent} from './_components/home/home.component';
 import {PageNotFoundComponent} from './_components/page-not-found/page-not-found.component';
+import { PlantcardComponent } from './_components/plantcard/plantcard.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {PageNotFoundComponent} from './_components/page-not-found/page-not-found
     SignInComponent,
     SignUpComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PlantcardComponent
   ],
   imports: [
     BrowserModule,
