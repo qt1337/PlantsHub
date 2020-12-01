@@ -20,6 +20,9 @@ export class PlantcardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  goRed() {
+
+  status: boolean = false;
+  clickEvent(){
+    this.status = !this.status;
   }
 }
