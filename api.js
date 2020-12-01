@@ -205,13 +205,11 @@ function checkUserCredentials(pool, req, res) {
                 username: username,
               };
               res.clearCookie("sessionData");
-              res.cookie("sessionData", sessionData,
-                {
-                  maxAge: 604800,
-                  secure: true,
-                  sameSite: "strict"
-                }
-              );
+              res.cookie("sessionData", sessionData, {
+                maxAge: 604800,
+                secure: true,
+                sameSite: "strict",
+              });
               return conn
                 .query(
                   "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and password = (?)",

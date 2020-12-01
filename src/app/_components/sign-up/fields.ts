@@ -6,4 +6,3 @@ export const FIELDS = [
   {id: 5, name: 'surname'},
   {id: 6, name: 'birthday'}
 ];
-
