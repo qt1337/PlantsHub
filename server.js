@@ -53,3 +53,7 @@ app.post("/api/check-credentials", (req, res) => {
 app.post("/api/check-session", (req, res) => {
   api.checkUserSession(pool, req, res);
 });
+
+app.post("/api/create-plant", (req, res) => {
+  api.createPlant(pool, req, res);
+});
