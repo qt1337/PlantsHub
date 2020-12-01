@@ -9,9 +9,17 @@ import {PLANTS} from "./plants";
 export class PlantcardComponent implements OnInit {
 
   plants = PLANTS;
+  icons = [
+    { name: 'heart', class: 'big fill-red' },
+    { name: 'book', class: 'big fill-red' }
+
+  ]
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  goRed() {
+  }
 }
