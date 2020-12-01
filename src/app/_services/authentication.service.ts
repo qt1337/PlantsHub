@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {User} from './_models/user';
+import {User} from '../_models/user';
 import {Router} from '@angular/router';
 
 
@@ -26,7 +26,9 @@ export class AuthenticationService {
   }
 
   public loginViaSessionId(): Observable<User> {
-    if (this.user) {
+    if (this.userValue) {
+      console.log(this.userValue);
+      console.log(this.user);
       console.log('user has active session');
       return this.user;
     }
@@ -67,7 +69,7 @@ export class AuthenticationService {
 
   public register(username, email, password, forename, surname, birthday): Observable<User> {
     return this.http.post<User>(
-      '/api/check-credentials',
+      '/api/create-user',
       {
         username,
         email,
@@ -78,7 +80,7 @@ export class AuthenticationService {
       },
       {responseType: 'json'}
     ).pipe(map(user => {
-        localStorage.setItem('account', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
         return user;
       })
