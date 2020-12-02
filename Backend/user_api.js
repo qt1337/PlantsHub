@@ -1,80 +1,10 @@
-const crypto = require("crypto");
-
-/**
- * generates random string of characters i.e salt
- * @function
- * @param {number} length - Length of the random string.
- */
-function getRandomString(length) {
-  return crypto
-    .randomBytes(Math.ceil(length / 2))
-    .toString("hex")
-    .slice(0, length);
-}
-
-/**
- * hash password with sha512.
- * @function
- * @param {string} password - List of required fields.
- * @param {string} salt - Data to be validated.
- */
-function sha512(password, salt) {
-  let hash = crypto.createHmac("sha512", salt);
-  /** Hashing algorithm sha512 */
-  hash.update(password);
-  let value = hash.digest("hex");
-  return { salt: salt, passwordHash: value };
-}
-
-/**
- * hash password with sha512 and adds salt.
- * @param password
- * @returns {string} hashed password
- */
-function getSaltHashPassword(password) {
-  let salt = getRandomString(16);
-  let passwordData = sha512(password, salt);
-  return [salt, passwordData.passwordHash];
-}
-
-/**
- * Creates a dummy item
- */
-function createItem(pool, req, res) {
-  pool
-    .getConnection()
-    .then((conn) => {
-      conn
-        .query("SELECT 1 as val")
-        .then((rows) => {
-          console.log(rows);
-          return conn.query("INSERT INTO myTable value (?, ?)", [
-            req.params.item_id,
-            req.params.item_name,
-          ]);
-        })
-        .then((result) => {
-          res.status(202).send("rows have been created");
-          console.log(result);
-          conn.end();
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(401).send("rows could not be created");
-          conn.end();
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-      // not connected
-    });
-}
+const utility = require("./utility");
 
 /**
  * Creates a user
  */
 function createUser(pool, req, res) {
-  let [salt, hashedPassword] = getSaltHashPassword(req.body.password);
+  let [salt, hashedPassword] = utility.getSaltHashPassword(req.body.password);
 
   pool
     .getConnection()
@@ -94,20 +24,23 @@ function createUser(pool, req, res) {
         )
         .then((result) => {
           if (result === 0) {
+            connection.end();
             return;
           }
+
+          connection.end();
           return checkUserCredentials(pool, req, res);
         })
         .catch((err) => {
           console.log(err);
           res.status(401).send("rows could not be created");
-          connection.end();
         });
     })
     .catch((err) => {
       console.log(err);
       // not connected
     });
+  connection.end();
 }
 
 /**
@@ -120,6 +53,7 @@ function checkUserSession(pool, req, res) {
     req.cookies.sessionData.sessionId === "undefined"
   ) {
     res.status(401).send("no active session");
+    connection.end();
     return;
   }
   let username = req.cookies.sessionData.username;
@@ -137,8 +71,8 @@ function checkUserSession(pool, req, res) {
         .then((row) => {
           let salt = row[0].salt;
 
-          hashedSessionId = sha512(sessionId, salt).passwordHash;
-
+          hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
+          connection.end();
           return conn.query(
             "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and sessionId = (?)",
             [username, username, hashedSessionId]
@@ -150,18 +84,18 @@ function checkUserSession(pool, req, res) {
           } else {
             res.status(401).send("sessionId not correct");
           }
-          conn.end();
         })
         .catch((err) => {
           console.log(err);
           res.status(401).send("sessionId not correct");
-          conn.end();
         });
     })
     .catch((err) => {
       console.log(err);
       // not connected
     });
+
+  connection.end();
 }
 
 /**
@@ -170,7 +104,7 @@ function checkUserSession(pool, req, res) {
 function checkUserCredentials(pool, req, res) {
   let username = req.body.username;
   let password = req.body.password;
-  let sessionId = getRandomString(64);
+  let sessionId = utility.getRandomString(64);
   let hashedPassword;
   let hashedSessionId;
 
@@ -185,8 +119,8 @@ function checkUserCredentials(pool, req, res) {
         .then((row) => {
           let salt = row[0].salt;
 
-          hashedPassword = sha512(password, salt).passwordHash;
-          hashedSessionId = sha512(sessionId, salt).passwordHash;
+          hashedPassword = utility.sha512(password, salt).passwordHash;
+          hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
 
           conn
             .query(
@@ -197,7 +131,7 @@ function checkUserCredentials(pool, req, res) {
               if (result["affectedRows"] === 0) {
                 res.clearCookie("sessionData");
                 res.status(404).send("credentials not correct");
-                conn.end();
+                connection.end();
                 return;
               }
               let sessionData = {
@@ -206,41 +140,44 @@ function checkUserCredentials(pool, req, res) {
               };
               res.clearCookie("sessionData");
               res.cookie("sessionData", sessionData, {
-                maxAge: 604800,
+                maxAge: 6048000,
                 secure: true,
+                sameSite: "strict",
               });
+              connection.end();
               return conn
                 .query(
                   "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and password = (?)",
                   [username, username, hashedPassword]
                 )
                 .then((result) => {
+                  result[0].sessionId = sessionId;
+                  delete result[0].password;
+                  delete result[0].salt;
+                  delete result[0].userId;
+
                   res.status(202).json(result);
                   console.log(result[0].username + " logged in.");
-                  conn.end();
                 })
                 .catch((err) => {
                   console.log(err);
                   res.status(400).send("error occurred");
-                  conn.end();
                 });
             });
         })
         .catch((err) => {
           console.log(err);
           res.status(404).send("credentials not correct");
-          conn.end();
         });
     })
     .catch((err) => {
       console.log(err);
       res.status(401).send("credentials not correct");
-      conn.end();
     });
+  connection.end();
 }
 
 module.exports = {
-  createItem,
   createUser,
   checkUserCredentials,
   checkUserSession,

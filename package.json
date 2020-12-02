@@ -11,7 +11,8 @@
     "test:watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:ci": "npm run clean && npm run test && npm run build:prod"
+    "build:ci": "npm run clean && npm run test && npm run build:prod",
+    "start:local": "node -r dotenv/config server.js dotenv_config_path=./process.env"
   },
   "private": true,
   "dependencies": {
@@ -26,6 +27,7 @@
     "@angular/platform-browser": "^10.2.3",
     "@angular/platform-browser-dynamic": "^10.2.3",
     "@angular/router": "^10.2.3",
+    "angular-feather": "^6.0.10",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
@@ -43,7 +45,7 @@
     "@angular/compiler-cli": "^10.2.3",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^12.19.4",
+    "@types/node": "^12.19.8",
     "codelyzer": "^6.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -56,9 +58,9 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "protractor": "~7.0.0",
-    "puppeteer": "^5.4.1",
+    "puppeteer": "^5.5.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "^4.0.5"
+    "typescript": "^3.9.7"
   }
 }

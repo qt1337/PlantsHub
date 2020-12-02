@@ -1,0 +1,6 @@
+<div class="p-4">
+  <div class="container" *ngIf="user">
+    <h1>Hi {{user.forename}}!</h1>
+    <button (click)="authenticationService.logout()">Logout</button>
+  </div>
+</div>

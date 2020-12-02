@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {User} from './_models/user';
+import {User} from '../_models/user';
 import {Router} from '@angular/router';
 
 
@@ -26,20 +26,24 @@ export class AuthenticationService {
   }
 
   public loginViaSessionId(): Observable<User> {
-    if (this.user) {
-      console.log('user has active session');
-      return this.user;
+    try {
+      if (this.userValue && this.userValue[0]) {
+        console.log('user has active session');
+        return this.user;
+      }
+      return this.http.post<User>(
+        '/api/check-session',
+        {},
+        {responseType: 'json'}
+      ).pipe(map(user => {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.userSubject.next(user);
+          return user;
+        })
+      );
+    } catch (error) {
+      console.log(error);
     }
-    return this.http.post<User>(
-      '/api/check-session',
-      {},
-      {responseType: 'json'}
-    ).pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
-        return user;
-      })
-    );
   }
 
   public login(username, password): Observable<User> {
@@ -67,7 +71,7 @@ export class AuthenticationService {
 
   public register(username, email, password, forename, surname, birthday): Observable<User> {
     return this.http.post<User>(
-      '/api/check-credentials',
+      '/api/create-user',
       {
         username,
         email,
@@ -78,7 +82,7 @@ export class AuthenticationService {
       },
       {responseType: 'json'}
     ).pipe(map(user => {
-        localStorage.setItem('account', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
         return user;
       })

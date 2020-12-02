@@ -3,22 +3,28 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {first} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
+import {FIELDS} from './fields';
 
 @Component({
-  selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.css']
 })
-export class SignInComponent implements OnInit {
+export class SignUpComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
   error: boolean;
+  fields = FIELDS;
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      forename: ['', Validators.required],
+      surname: ['', Validators.required],
+      email: ['', Validators.required],
+      birthday: ['', Validators.required]
     });
     this.checkForSession();
   }
@@ -52,7 +58,7 @@ export class SignInComponent implements OnInit {
       );
   }
 
-  onLogin(): void {
+  onRegister(): void {
     this.submitted = true;
     this.error = false;
 
@@ -63,7 +69,11 @@ export class SignInComponent implements OnInit {
     this.loading = true;
     const username = this.form.username.value;
     const password = this.form.password.value;
-    this.authenticationService.login(username, password).pipe(first())
+    const forename = this.form.forename.value;
+    const surname = this.form.surname.value;
+    const email = this.form.email.value;
+    const birthday = this.form.birthday.value;
+    this.authenticationService.register(username, email, password, forename, surname, birthday).pipe(first())
       .subscribe({
           next: () => {
             // get return url from query parameters or default to home page
