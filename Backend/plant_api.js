@@ -52,24 +52,22 @@ function createPlant(pool, req, res) {
               )
               .then((result) => {
                 res.status(202).json(result);
-                connection.end();
               })
               .catch((err) => {
                 console.log(err);
                 res.status(401).send("rows could not be created");
-                connection.end();
               });
           })
           .catch((err) => {
             console.log(err);
             res.status(401).send("rows could not be found");
-            connection.end();
           });
       })
       .catch((err) => {
         console.log(err);
         // not connected
       });
+    connection.end();
   });
 }
 
@@ -127,24 +125,24 @@ function updatePlant(pool, req, res) {
                 ]
               )
               .then(() => {
+                connection.end();
                 return this.getPlants(pool, req, res);
               })
               .catch((err) => {
                 console.log(err);
                 res.status(401).send("rows could not be updated");
-                connection.end();
               });
           })
           .catch((err) => {
             console.log(err);
             res.status(401).send("rows could not be found");
-            connection.end();
           });
       })
       .catch((err) => {
         console.log(err);
         // not connected
       });
+    connection.end();
   });
 }
 
@@ -180,24 +178,23 @@ function getPlants(pool, req, res) {
               .query("SELECT * FROM Plant WHERE userId = (?)", [userId])
               .then((result) => {
                 res.status(202).json(result);
-                connection.end();
               })
               .catch((err) => {
                 console.log(err);
                 res.status(401).send("rows could not be updated");
-                connection.end();
               });
           })
           .catch((err) => {
             console.log(err);
             res.status(401).send("rows could not be found");
-            connection.end();
           });
       })
       .catch((err) => {
         console.log(err);
         // not connected
       });
+
+    connection.end();
   });
 }
 
