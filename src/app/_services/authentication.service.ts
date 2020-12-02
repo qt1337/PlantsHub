@@ -47,19 +47,23 @@ export class AuthenticationService {
   }
 
   public login(username, password): Observable<User> {
-    return this.http.post<User>(
-      '/api/check-credentials',
-      {
-        username,
-        password
-      },
-      {responseType: 'json'}
-    ).pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
-        return user;
-      })
-    );
+    try {
+      return this.http.post<User>(
+        '/api/check-credentials',
+        {
+          username,
+          password
+        },
+        {responseType: 'json'}
+      ).pipe(map(user => {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.userSubject.next(user);
+          return user;
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   public logout(): void {
@@ -70,22 +74,26 @@ export class AuthenticationService {
   }
 
   public register(username, email, password, forename, surname, birthday): Observable<User> {
-    return this.http.post<User>(
-      '/api/create-user',
-      {
-        username,
-        email,
-        password,
-        forename,
-        surname,
-        birthday
-      },
-      {responseType: 'json'}
-    ).pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
-        return user;
-      })
-    );
+    try {
+      return this.http.post<User>(
+        '/api/create-user',
+        {
+          username,
+          email,
+          password,
+          forename,
+          surname,
+          birthday
+        },
+        {responseType: 'json'}
+      ).pipe(map(user => {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.userSubject.next(user);
+          return user;
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

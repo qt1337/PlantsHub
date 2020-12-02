@@ -24,23 +24,20 @@ function createUser(pool, req, res) {
         )
         .then((result) => {
           if (result === 0) {
-            connection.end();
             return;
           }
-
-          connection.end();
           return checkUserCredentials(pool, req, res);
         })
         .catch((err) => {
           console.log(err);
           res.status(401).send("rows could not be created");
+          connection.end();
         });
     })
     .catch((err) => {
       console.log(err);
       // not connected
     });
-  connection.end();
 }
 
 /**
@@ -53,7 +50,6 @@ function checkUserSession(pool, req, res) {
     req.cookies.sessionData.sessionId === "undefined"
   ) {
     res.status(401).send("no active session");
-    connection.end();
     return;
   }
   let username = req.cookies.sessionData.username;
@@ -72,7 +68,7 @@ function checkUserSession(pool, req, res) {
           let salt = row[0].salt;
 
           hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
-          connection.end();
+          conn.end();
           return conn.query(
             "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and sessionId = (?)",
             [username, username, hashedSessionId]
@@ -84,18 +80,18 @@ function checkUserSession(pool, req, res) {
           } else {
             res.status(401).send("sessionId not correct");
           }
+          conn.end();
         })
         .catch((err) => {
           console.log(err);
           res.status(401).send("sessionId not correct");
+          conn.end();
         });
     })
     .catch((err) => {
       console.log(err);
       // not connected
     });
-
-  connection.end();
 }
 
 /**
@@ -131,7 +127,7 @@ function checkUserCredentials(pool, req, res) {
               if (result["affectedRows"] === 0) {
                 res.clearCookie("sessionData");
                 res.status(404).send("credentials not correct");
-                connection.end();
+                conn.end();
                 return;
               }
               let sessionData = {
@@ -144,7 +140,7 @@ function checkUserCredentials(pool, req, res) {
                 secure: true,
                 sameSite: "strict",
               });
-              connection.end();
+              conn.end();
               return conn
                 .query(
                   "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and password = (?)",
@@ -158,23 +154,25 @@ function checkUserCredentials(pool, req, res) {
 
                   res.status(202).json(result);
                   console.log(result[0].username + " logged in.");
+                  conn.end();
                 })
                 .catch((err) => {
                   console.log(err);
                   res.status(400).send("error occurred");
+                  conn.end();
                 });
             });
         })
         .catch((err) => {
           console.log(err);
           res.status(404).send("credentials not correct");
+          conn.end();
         });
     })
     .catch((err) => {
       console.log(err);
       res.status(401).send("credentials not correct");
     });
-  connection.end();
 }
 
 module.exports = {
