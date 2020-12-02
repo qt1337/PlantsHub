@@ -18,4 +18,3 @@ const icons = {
   ]
 })
 export class IconsModule { }
-
