@@ -1,6 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PlantcardComponent } from './plantcard.component';
+import {PlantcardComponent} from './plantcard.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('PlantcardComponent', () => {
   let component: PlantcardComponent;
@@ -8,9 +10,14 @@ describe('PlantcardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlantcardComponent ]
+      declarations: [PlantcardComponent],
+      imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule
+      ],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
