@@ -1,80 +1,10 @@
-const crypto = require("crypto");
-
-/**
- * generates random string of characters i.e salt
- * @function
- * @param {number} length - Length of the random string.
- */
-function getRandomString(length) {
-  return crypto
-    .randomBytes(Math.ceil(length / 2))
-    .toString("hex")
-    .slice(0, length);
-}
-
-/**
- * hash password with sha512.
- * @function
- * @param {string} password - List of required fields.
- * @param {string} salt - Data to be validated.
- */
-function sha512(password, salt) {
-  let hash = crypto.createHmac("sha512", salt);
-  /** Hashing algorithm sha512 */
-  hash.update(password);
-  let value = hash.digest("hex");
-  return { salt: salt, passwordHash: value };
-}
-
-/**
- * hash password with sha512 and adds salt.
- * @param password
- * @returns {string} hashed password
- */
-function getSaltHashPassword(password) {
-  let salt = getRandomString(16);
-  let passwordData = sha512(password, salt);
-  return [salt, passwordData.passwordHash];
-}
-
-/**
- * Creates a dummy item
- */
-function createItem(pool, req, res) {
-  pool
-    .getConnection()
-    .then((conn) => {
-      conn
-        .query("SELECT 1 as val")
-        .then((rows) => {
-          console.log(rows);
-          return conn.query("INSERT INTO myTable value (?, ?)", [
-            req.params.item_id,
-            req.params.item_name,
-          ]);
-        })
-        .then((result) => {
-          res.status(202).send("rows have been created");
-          console.log(result);
-          conn.end();
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(401).send("rows could not be created");
-          conn.end();
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-      // not connected
-    });
-}
+const utility = require("./utility");
 
 /**
  * Creates a user
  */
 function createUser(pool, req, res) {
-  let [salt, hashedPassword] = getSaltHashPassword(req.body.password);
+  let [salt, hashedPassword] = utility.getSaltHashPassword(req.body.password);
 
   pool
     .getConnection()
@@ -137,7 +67,7 @@ function checkUserSession(pool, req, res) {
         .then((row) => {
           let salt = row[0].salt;
 
-          hashedSessionId = sha512(sessionId, salt).passwordHash;
+          hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
 
           return conn.query(
             "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and sessionId = (?)",
@@ -170,8 +100,7 @@ function checkUserSession(pool, req, res) {
 function checkUserCredentials(pool, req, res) {
   let username = req.body.username;
   let password = req.body.password;
-  let sessionId = getRandomString(64);
-  console.log(sessionId);
+  let sessionId = utility.getRandomString(64);
   let hashedPassword;
   let hashedSessionId;
 
@@ -186,8 +115,8 @@ function checkUserCredentials(pool, req, res) {
         .then((row) => {
           let salt = row[0].salt;
 
-          hashedPassword = sha512(password, salt).passwordHash;
-          hashedSessionId = sha512(sessionId, salt).passwordHash;
+          hashedPassword = utility.sha512(password, salt).passwordHash;
+          hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
 
           conn
             .query(
@@ -217,6 +146,11 @@ function checkUserCredentials(pool, req, res) {
                   [username, username, hashedPassword]
                 )
                 .then((result) => {
+                  result[0].sessionId = sessionId;
+                  delete result[0].password;
+                  delete result[0].salt;
+                  delete result[0].userId;
+
                   res.status(202).json(result);
                   console.log(result[0].username + " logged in.");
                   conn.end();
@@ -241,90 +175,8 @@ function checkUserCredentials(pool, req, res) {
     });
 }
 
-/**
- * Creates a plant
- */
-function createPlant(pool, req, res) {
-  let username = req.body.username;
-  let sessionId = req.body.sessionId;
-  let plantName = req.body.plantName;
-  let wateringInterval = req.body.wateringInterval || null;
-  let fertilizingInterval = req.body.fertilizingInterval || null;
-  let plantBirthday = req.body.plantBirthday || null;
-  let plantDeathday = req.body.plantDeathday || null;
-  let family = req.body.family || null;
-  let type = req.body.type || null;
-  let species = req.body.species || null;
-  let image = req.body.image || null;
-  let lux = req.body.lux || null;
-
-  pool.getConnection().then((connection) => {
-    connection
-      .query("SELECT salt FROM User WHERE username = (?)", [username])
-      .then((row) => {
-        let salt = row[0].salt;
-
-        hashedSessionId = sha512(sessionId, salt).passwordHash;
-
-        connection
-          .query(
-            "SELECT userId FROM User WHERE username = (?) and sessionId = (?)",
-            [username, hashedSessionId]
-          )
-          .then((result) => {
-            console.log(result[0]);
-            let userId = result[0].userId;
-            console.log(userId);
-
-            if (result[0].userId) {
-              console.log("good");
-            }
-
-            connection
-              .query(
-                "INSERT INTO Plant (plantName,userId,wateringInterval,fertilizingInterval,plantBirthday,plantDeathday,family,type,species,image,lux) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-                [
-                  plantName,
-                  userId,
-                  wateringInterval,
-                  fertilizingInterval,
-                  plantBirthday,
-                  plantDeathday,
-                  family,
-                  type,
-                  species,
-                  image,
-                  lux,
-                ]
-              )
-              .then((result) => {
-                console.log(result);
-                res.status(202).json(result);
-                connection.end();
-              })
-              .catch((err) => {
-                console.log(err);
-                res.status(401).send("rows could not be created");
-                connection.end();
-              });
-          })
-          .catch((err) => {
-            console.log(err);
-            res.status(401).send("rows could not be found");
-            connection.end();
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        // not connected
-      });
-  });
-}
-
 module.exports = {
-  createItem,
   createUser,
   checkUserCredentials,
   checkUserSession,
-  createPlant,
 };

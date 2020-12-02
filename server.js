@@ -1,10 +1,11 @@
 require("dotenv").config();
 
-const api = require("./api");
 const express = require("express");
 const mariadb = require("mariadb");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const user_api = require("./Backend/user_api");
+const plant_api = require("./Backend/plant_api");
 // const cors = require('cors');
 
 const pool = mariadb.createPool({
@@ -12,7 +13,7 @@ const pool = mariadb.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  connectionLimit: 5,
+  connectionLimit: 10,
 });
 
 const app = express();
@@ -38,22 +39,32 @@ app.listen(process.env.PORT || 8080, () => {
   console.log(`Server is listening on port ${process.env.PORT || 8080}`);
 });
 
-app.post("/api/create-item/:item_id/:item_name", (req, res) => {
-  api.createItem(pool, req, res);
-});
-
+/**
+ * USER API
+ */
 app.post("/api/create-user", (req, res) => {
-  api.createUser(pool, req, res);
+  user_api.createUser(pool, req, res);
 });
 
 app.post("/api/check-credentials", (req, res) => {
-  api.checkUserCredentials(pool, req, res);
+  user_api.checkUserCredentials(pool, req, res);
 });
 
 app.post("/api/check-session", (req, res) => {
-  api.checkUserSession(pool, req, res);
+  user_api.checkUserSession(pool, req, res);
 });
 
+/**
+ * PLANT API
+ */
 app.post("/api/create-plant", (req, res) => {
-  api.createPlant(pool, req, res);
+  plant_api.createPlant(pool, req, res);
+});
+
+app.post("/api/update-plant", (req, res) => {
+  plant_api.updatePlant(pool, req, res);
+});
+
+app.post("/api/get-plants", (req, res) => {
+  plant_api.getPlants(pool, req, res);
 });
