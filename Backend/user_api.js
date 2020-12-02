@@ -41,7 +41,6 @@ function createUser(pool, req, res) {
       // not connected
     });
   connection.end();
-
 }
 
 /**
