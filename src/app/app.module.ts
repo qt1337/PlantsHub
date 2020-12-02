@@ -10,7 +10,7 @@ import {SignUpComponent} from './_components/sign-up/sign-up.component';
 import {HomeComponent} from './_components/home/home.component';
 import {PageNotFoundComponent} from './_components/page-not-found/page-not-found.component';
 import { PlantcardComponent } from './_components/plantcard/plantcard.component';
-import {IconsModule} from "./_modules/icons/icons.module";
+import {IconsModule} from './_modules/icons/icons.module';
 
 @NgModule({
   declarations: [
