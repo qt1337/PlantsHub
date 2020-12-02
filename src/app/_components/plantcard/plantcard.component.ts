@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {PLANTS} from './plants';
+import {PlantService} from '../../_services/plant.service';
+import {AuthenticationService} from '../../_services/authentication.service';
 
 @Component({
   selector: 'app-plantcard',
@@ -8,10 +9,14 @@ import {PLANTS} from './plants';
 })
 export class PlantcardComponent implements OnInit {
 
-  constructor() {
+  constructor(
+    private plantService: PlantService,
+    private authenticationService: AuthenticationService,
+  ) {
   }
 
-  plants = PLANTS;
+  plants: any;
+
   icons = [
     {name: 'heart', class: 'big fill-red'},
     {name: 'book', class: 'big fill-red'}
@@ -19,9 +24,33 @@ export class PlantcardComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.getPlants();
+  }
+
+  getPlants(): void {
+    this.plantService
+      .getPlants(
+        this.authenticationService.userValue[0].username,
+        this.authenticationService.userValue[0].sessionId
+      )
+      .subscribe(plants => {
+        this.plants = plants;
+      });
+  }
+
+  updatePlantFavourite(plant): void {
+
+    this.plantService.updatePlantFavourite(
+      this.authenticationService.userValue[0].username,
+      this.authenticationService.userValue[0].sessionId,
+      plant.plantId,
+      !plant.favourite
+    ).subscribe(plants => {
+      this.plants = plants;
+    });
   }
 
   clickEvent(plant): void {
-    plant.status = !plant.status;
+    this.updatePlantFavourite(plant);
   }
 }
