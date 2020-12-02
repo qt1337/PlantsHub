@@ -9,6 +9,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {SignUpComponent} from './_components/sign-up/sign-up.component';
 import {HomeComponent} from './_components/home/home.component';
 import {PageNotFoundComponent} from './_components/page-not-found/page-not-found.component';
+import { NavigationComponent } from './_components/navigation/navigation.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import {PageNotFoundComponent} from './_components/page-not-found/page-not-found
     SignInComponent,
     SignUpComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +29,7 @@ import {PageNotFoundComponent} from './_components/page-not-found/page-not-found
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSidenavModule,
   ],
   providers: [
     HttpClientModule,
