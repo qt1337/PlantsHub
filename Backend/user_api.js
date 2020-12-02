@@ -136,7 +136,7 @@ function checkUserCredentials(pool, req, res) {
               };
               res.clearCookie("sessionData");
               res.cookie("sessionData", sessionData, {
-                maxAge: 604800,
+                maxAge: 6048000,
                 secure: true,
                 sameSite: "strict",
               });
