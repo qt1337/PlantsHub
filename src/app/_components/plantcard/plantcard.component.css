@@ -3,8 +3,8 @@
   grid-template-columns: repeat(3, auto);
 }
 
-.red {
-  color: red;
+.fill-red {
+  fill: red;
 }
 
 .no-red {

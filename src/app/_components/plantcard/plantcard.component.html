@@ -6,7 +6,7 @@
     <h1 class="f3 mb2">{{plant.name}}</h1>
     <h2 class="f5 fw4 gray mt0">{{plant.family}}</h2>
     <div class="icon-container flex justify-between">
-    <i-feather id="heart-icon-{{ plant.id }}" name="heart" (click)="clickEvent(plant)" [ngClass]="plant.status ? 'red' : 'no-red'" class="big grow"></i-feather>
+    <i-feather id="heart-icon-{{ plant.id }}" name="heart" (click)="clickEvent(plant)" [ngClass]="plant.status ? 'fill-red' : 'no-red'" class="big grow"></i-feather>
     <i-feather name="book"></i-feather>
     </div>
   </div>
