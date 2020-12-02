@@ -6,9 +6,10 @@ const crypto = require("crypto");
  * @param {number} length - Length of the random string.
  */
 function getRandomString(length) {
-  return crypto.randomBytes(Math.ceil(length / 2))
-      .toString("hex")
-      .slice(0, length);
+  return crypto
+    .randomBytes(Math.ceil(length / 2))
+    .toString("hex")
+    .slice(0, length);
 }
 
 /**
@@ -22,7 +23,7 @@ function sha512(password, salt) {
   /** Hashing algorithm sha512 */
   hash.update(password);
   let value = hash.digest("hex");
-  return {salt : salt, passwordHash : value};
+  return { salt: salt, passwordHash: value };
 }
 
 /**
@@ -33,11 +34,11 @@ function sha512(password, salt) {
 function getSaltHashPassword(password) {
   let salt = getRandomString(16);
   let passwordData = sha512(password, salt);
-  return [ salt, passwordData.passwordHash ];
+  return [salt, passwordData.passwordHash];
 }
 
 module.exports = {
   getRandomString,
   sha512,
-  getSaltHashPassword
+  getSaltHashPassword,
 };

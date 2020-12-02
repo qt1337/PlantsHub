@@ -18,56 +18,59 @@ function createPlant(pool, req, res) {
   let lux = req.body.lux || null;
 
   pool.getConnection().then((connection) => {
-    connection.query("SELECT salt FROM User WHERE username = (?)", [ username ])
-        .then((row) => {
-          let salt = row[0].salt;
+    connection
+      .query("SELECT salt FROM User WHERE username = (?)", [username])
+      .then((row) => {
+        let salt = row[0].salt;
 
-          let hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
+        let hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
 
-          connection
+        connection
+          .query(
+            "SELECT userId FROM User WHERE username = (?) and sessionId = (?)",
+            [username, hashedSessionId]
+          )
+          .then((result) => {
+            let userId = result[0].userId;
+
+            connection
               .query(
-                  "SELECT userId FROM User WHERE username = (?) and sessionId = (?)",
-                  [ username, hashedSessionId ])
+                "INSERT INTO Plant (plantName,userId,wateringInterval,fertilizingInterval,plantBirthday,plantDeathday,family,type,species,image,lux) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                [
+                  plantName,
+                  userId,
+                  wateringInterval,
+                  fertilizingInterval,
+                  plantBirthday,
+                  plantDeathday,
+                  family,
+                  type,
+                  species,
+                  image,
+                  lux,
+                ]
+              )
               .then((result) => {
-                let userId = result[0].userId;
-
-                connection
-                    .query(
-                        "INSERT INTO Plant (plantName,userId,wateringInterval,fertilizingInterval,plantBirthday,plantDeathday,family,type,species,image,lux) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-                        [
-                          plantName,
-                          userId,
-                          wateringInterval,
-                          fertilizingInterval,
-                          plantBirthday,
-                          plantDeathday,
-                          family,
-                          type,
-                          species,
-                          image,
-                          lux,
-                        ])
-                    .then((result) => {
-                      console.log(result);
-                      res.status(202).json(result);
-                      connection.end();
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                      res.status(401).send("rows could not be created");
-                      connection.end();
-                    });
+                console.log(result);
+                res.status(202).json(result);
+                connection.end();
               })
               .catch((err) => {
                 console.log(err);
-                res.status(401).send("rows could not be found");
+                res.status(401).send("rows could not be created");
                 connection.end();
               });
-        })
-        .catch((err) => {
-          console.log(err);
-          // not connected
-        });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(401).send("rows could not be found");
+            connection.end();
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        // not connected
+      });
   });
 }
 
@@ -91,48 +94,61 @@ function updatePlant(pool, req, res) {
   let favourite = req.body.favourite || null;
 
   pool.getConnection().then((connection) => {
-    connection.query("SELECT salt FROM User WHERE username = (?)", [ username ])
-        .then((row) => {
-          let salt = row[0].salt;
+    connection
+      .query("SELECT salt FROM User WHERE username = (?)", [username])
+      .then((row) => {
+        let salt = row[0].salt;
 
-          let hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
+        let hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
 
-          connection
+        connection
+          .query(
+            "SELECT userId FROM User WHERE username = (?) and sessionId = (?)",
+            [username, hashedSessionId]
+          )
+          .then((result) => {
+            let userId = result[0].userId;
+
+            connection
               .query(
-                  "SELECT userId FROM User WHERE username = (?) and sessionId = (?)",
-                  [ username, hashedSessionId ])
+                "UPDATE Plant SET plantName = COALESCE(plantName,(?)),userId = COALESCE(userId,(?)),wateringInterval = COALESCE(wateringInterval,(?)),fertilizingInterval = COALESCE(fertilizingInterval,(?)),plantBirthday = COALESCE(plantBirthday,(?)),plantDeathday = COALESCE(plantDeathday,(?)),family = COALESCE(family,(?)),type = COALESCE(type,(?)),species = COALESCE(species,(?)),image = COALESCE(image,(?)),lux = COALESCE(lux,(?)), favourite = COALESCE(favourite,(?)) WHERE plantId = (?)",
+                [
+                  plantName,
+                  userId,
+                  wateringInterval,
+                  fertilizingInterval,
+                  plantBirthday,
+                  plantDeathday,
+                  family,
+                  type,
+                  species,
+                  image,
+                  lux,
+                  favourite,
+                  plantId,
+                ]
+              )
               .then((result) => {
-                let userId = result[0].userId;
-
-                connection
-                    .query(
-                        "UPDATE Plant SET plantName = COALESCE(plantName,(?)),userId = COALESCE(userId,(?)),wateringInterval = COALESCE(wateringInterval,(?)),fertilizingInterval = COALESCE(fertilizingInterval,(?)),plantBirthday = COALESCE(plantBirthday,(?)),plantDeathday = COALESCE(plantDeathday,(?)),family = COALESCE(family,(?)),type = COALESCE(type,(?)),species = COALESCE(species,(?)),image = COALESCE(image,(?)),lux = COALESCE(lux,(?)), favourite = COALESCE(favourite,(?)) WHERE plantId = (?)",
-                        [
-                          plantName, userId, wateringInterval,
-                          fertilizingInterval, plantBirthday, plantDeathday,
-                          family, type, species, image, lux, favourite, plantId
-                        ])
-                    .then((result) => {
-                      console.log(result);
-                      res.status(202).json(result);
-                      connection.end();
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                      res.status(401).send("rows could not be updated");
-                      connection.end();
-                    });
+                console.log(result);
+                res.status(202).json(result);
+                connection.end();
               })
               .catch((err) => {
                 console.log(err);
-                res.status(401).send("rows could not be found");
+                res.status(401).send("rows could not be updated");
                 connection.end();
               });
-        })
-        .catch((err) => {
-          console.log(err);
-          // not connected
-        });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(401).send("rows could not be found");
+            connection.end();
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        // not connected
+      });
   });
 }
 
@@ -144,47 +160,49 @@ function getPlants(pool, req, res) {
   let sessionId = req.body.sessionId;
 
   pool.getConnection().then((connection) => {
-    connection.query("SELECT salt FROM User WHERE username = (?)", [ username ])
-        .then((row) => {
-          let salt = row[0].salt;
+    connection
+      .query("SELECT salt FROM User WHERE username = (?)", [username])
+      .then((row) => {
+        let salt = row[0].salt;
 
-          let hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
+        let hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
 
-          connection
-              .query(
-                  "SELECT userId FROM User WHERE username = (?) and sessionId = (?)",
-                  [ username, hashedSessionId ])
+        connection
+          .query(
+            "SELECT userId FROM User WHERE username = (?) and sessionId = (?)",
+            [username, hashedSessionId]
+          )
+          .then((result) => {
+            let userId = result[0].userId;
+
+            connection
+              .query("SELECT * FROM Plant WHERE userId = (?)", [userId])
               .then((result) => {
-                let userId = result[0].userId;
-
-                connection
-                    .query("SELECT * FROM Plant WHERE userId = (?)", [ userId ])
-                    .then((result) => {
-                      console.log(result);
-                      res.status(202).json(result);
-                      connection.end();
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                      res.status(401).send("rows could not be updated");
-                      connection.end();
-                    });
+                console.log(result);
+                res.status(202).json(result);
+                connection.end();
               })
               .catch((err) => {
                 console.log(err);
-                res.status(401).send("rows could not be found");
+                res.status(401).send("rows could not be updated");
                 connection.end();
               });
-        })
-        .catch((err) => {
-          console.log(err);
-          // not connected
-        });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(401).send("rows could not be found");
+            connection.end();
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        // not connected
+      });
   });
 }
 
 module.exports = {
   createPlant,
   updatePlant,
-  getPlants
+  getPlants,
 };
