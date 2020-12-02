@@ -11,7 +11,8 @@
     "test:watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:ci": "npm run clean && npm run test && npm run build:prod"
+    "build:ci": "npm run clean && npm run test && npm run build:prod",
+    "start:local": "node -r dotenv/config server.js dotenv_config_path=./process.env"
   },
   "private": true,
   "dependencies": {
