@@ -13,7 +13,7 @@ const pool = mariadb.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  connectionLimit: 5,
+  connectionLimit: 10,
 });
 
 const app = express();
@@ -32,13 +32,16 @@ app.use(function (req, res, next) {
 });
 
 app.get("/*", (req, res) =>
-  res.sendFile("index.html", { root: "dist/PlantsHub/" })
+  res.sendFile("index.html", {root: "dist/PlantsHub/"})
 );
 
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Server is listening on port ${process.env.PORT || 8080}`);
 });
 
+/**
+ * USER API
+ */
 app.post("/api/create-user", (req, res) => {
   user_api.createUser(pool, req, res);
 });
@@ -51,6 +54,17 @@ app.post("/api/check-session", (req, res) => {
   user_api.checkUserSession(pool, req, res);
 });
 
+/**
+ * PLANT API
+ */
 app.post("/api/create-plant", (req, res) => {
   plant_api.createPlant(pool, req, res);
+});
+
+app.post("/api/update-plant", (req, res) => {
+  plant_api.updatePlant(pool, req, res);
+});
+
+app.post("/api/get-plants", (req, res) => {
+  plant_api.getPlants(pool, req, res);
 });

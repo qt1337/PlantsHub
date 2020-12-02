@@ -101,7 +101,6 @@ function checkUserCredentials(pool, req, res) {
   let username = req.body.username;
   let password = req.body.password;
   let sessionId = utility.getRandomString(64);
-  console.log(sessionId);
   let hashedPassword;
   let hashedSessionId;
 
@@ -147,6 +146,11 @@ function checkUserCredentials(pool, req, res) {
                   [username, username, hashedPassword]
                 )
                 .then((result) => {
+                  result[0].sessionId = sessionId;
+                  delete result[0].password;
+                  delete result[0].salt;
+                  delete result[0].userId;
+
                   res.status(202).json(result);
                   console.log(result[0].username + " logged in.");
                   conn.end();
