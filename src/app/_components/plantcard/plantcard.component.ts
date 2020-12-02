@@ -28,6 +28,9 @@ export class PlantcardComponent implements OnInit {
   }
 
   getPlants(): void {
+    if (!this.authenticationService.userValue) {
+      return;
+    }
     this.plantService
       .getPlants(
         this.authenticationService.userValue[0].username,
