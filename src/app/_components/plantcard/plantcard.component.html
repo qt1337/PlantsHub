@@ -1,16 +1,20 @@
 <div class="item flex flex-row flex-wrap justify-center">
   <div *ngFor="let plant of plants">
-    <article class="ma2 bg-white br3 pa3 pa4-ns mv3 ba b--black-10 tc">
-      <div class="tc">
-        <img src="{{plant.image || 'https://images.pexels.com/photos/2302503/pexels-photo-2302503.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}}" class="h4 w4 dib b--black-05" title="{{plant.plantName}}">
-        <h1 class="f3 mb2">{{plant.plantName}}</h1>
-        <h2 class="f5 fw4 gray mt0">{{plant.family}}</h2>
-        <div class="icon-container flex justify-between">
-          <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="clickEvent(plant)"
-                     [ngClass]="plant.favourite ? 'fill-red' : 'no-red'" class="big grow"></i-feather>
-          <i-feather name="book"></i-feather>
+    <div *ngIf="plant">
+      <article class="ma2 bg-white br3 pa3 pa4-ns mv3 ba b--black-10 tc">
+        <div class="tc">
+          <img
+            src="{{plant.image || 'https://images.pexels.com/photos/2302503/pexels-photo-2302503.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}}"
+            class="h4 w4 dib b--black-05" title="{{plant.plantName}}">
+          <h1 class="f3 mb2">{{plant.plantName}}</h1>
+          <h2 class="f5 fw4 gray mt0">{{plant.family}}</h2>
+          <div class="icon-container flex justify-between">
+            <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="clickEvent(plant)"
+                       [ngClass]="plant.favourite ? 'fill-red' : 'no-red'" class="big grow"></i-feather>
+            <i-feather name="book"></i-feather>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </div>
   </div>
 </div>
