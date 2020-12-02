@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
 });
 
 app.get("/*", (req, res) =>
-  res.sendFile("index.html", {root: "dist/PlantsHub/"})
+  res.sendFile("index.html", { root: "dist/PlantsHub/" })
 );
 
 app.listen(process.env.PORT || 8080, () => {

@@ -125,7 +125,7 @@ function updatePlant(pool, req, res) {
                   image,
                   lux,
                   favourite,
-                  plantId
+                  plantId,
                 ]
               )
               .then((result) => {
@@ -152,7 +152,6 @@ function updatePlant(pool, req, res) {
   });
 }
 
-
 /**
  * Get all plants a user owns
  */
@@ -177,10 +176,7 @@ function getPlants(pool, req, res) {
             let userId = result[0].userId;
 
             connection
-              .query(
-                "SELECT * FROM Plant WHERE userId = (?)",
-                [userId]
-              )
+              .query("SELECT * FROM Plant WHERE userId = (?)", [userId])
               .then((result) => {
                 console.log(result);
                 res.status(202).json(result);
@@ -208,5 +204,5 @@ function getPlants(pool, req, res) {
 module.exports = {
   createPlant,
   updatePlant,
-  getPlants
+  getPlants,
 };

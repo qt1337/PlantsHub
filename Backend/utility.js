@@ -23,7 +23,7 @@ function sha512(password, salt) {
   /** Hashing algorithm sha512 */
   hash.update(password);
   let value = hash.digest("hex");
-  return {salt: salt, passwordHash: value};
+  return { salt: salt, passwordHash: value };
 }
 
 /**
@@ -40,5 +40,5 @@ function getSaltHashPassword(password) {
 module.exports = {
   getRandomString,
   sha512,
-  getSaltHashPassword
+  getSaltHashPassword,
 };
