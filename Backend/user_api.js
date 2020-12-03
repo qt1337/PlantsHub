@@ -44,47 +44,48 @@ function createUser(pool, req, res) {
  * Check session of user
  */
 function checkUserSession(pool, req, res) {
-  if (
-    typeof req.cookies.sessionData === "undefined" ||
-    typeof req.cookies.sessionData.username === "undefined" ||
-    req.cookies.sessionData.sessionId === "undefined"
-  ) {
-    res.status(401).send("no active session");
-    return;
-  }
-  let username = req.cookies.sessionData.username;
-  let sessionId = req.cookies.sessionData.sessionId;
+  let username = req.body.username;
+  let sessionId = req.body.sessionId;
   let hashedSessionId;
+  let now;
 
   pool
     .getConnection()
     .then((conn) => {
       conn
-        .query("SELECT salt FROM User WHERE username = (?) OR email = (?)", [
-          username,
-          username,
+        .query("SELECT salt FROM User WHERE username = (?)", [
+          username
         ])
         .then((row) => {
           let salt = row[0].salt;
 
           hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
+          now = new Date();
+
           conn.end();
           return conn.query(
-            "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and sessionId = (?)",
-            [username, username, hashedSessionId]
+            "SELECT * FROM User WHERE username = (?) and sessionId = (?) and sessionCreated > (?)",
+            [username, hashedSessionId, now]
           );
         })
         .then((result) => {
-          if (result[0]["username"] === username) {
-            res.status(202).send("sessionId correct");
-          } else {
-            res.status(401).send("sessionId not correct");
+          if (!result[0]) {
+            res.status(401).send("session not valid");
+            conn.end();
+            return;
           }
+          result[0].sessionId = sessionId;
+          delete result[0].password;
+          delete result[0].salt;
+          delete result[0].userId;
+
+          res.status(202).json(result);
+          console.log(result[0].username + " logged in via sessionId.");
           conn.end();
         })
         .catch((err) => {
           console.log(err);
-          res.status(401).send("sessionId not correct");
+          res.status(401).send("session not valid");
           conn.end();
         });
     })
@@ -103,6 +104,7 @@ function checkUserCredentials(pool, req, res) {
   let sessionId = utility.getRandomString(64);
   let hashedPassword;
   let hashedSessionId;
+  let sessionExpiringDate;
 
   pool
     .getConnection()
@@ -118,10 +120,15 @@ function checkUserCredentials(pool, req, res) {
           hashedPassword = utility.sha512(password, salt).passwordHash;
           hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
 
+          let daysUntilExpiring = 7;
+
+          sessionExpiringDate = new Date();
+          sessionExpiringDate.setDate(sessionExpiringDate.getDate() + daysUntilExpiring);
+
           conn
             .query(
-              "UPDATE User SET sessionId = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
-              [hashedSessionId, username, username, hashedPassword]
+              "UPDATE User SET sessionId = (?), sessionCreated = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
+              [hashedSessionId, sessionExpiringDate, username, username, hashedPassword]
             )
             .then((result) => {
               if (result["affectedRows"] === 0) {

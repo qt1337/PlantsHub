@@ -28,19 +28,25 @@ export class AuthenticationService {
   public loginViaSessionId(): Observable<User> {
     try {
       if (this.userValue && this.userValue[0]) {
-        console.log('user has active session');
-        return this.user;
+        console.log('check for active session...');
+
+        const sessionId = this.userValue[0].sessionId;
+        const username = this.userValue[0].username;
+
+        return this.http.post<User>(
+          '/api/check-session',
+          {
+            sessionId,
+            username
+          },
+          {responseType: 'json'}
+        ).pipe(map(user => {
+            localStorage.setItem('user', JSON.stringify(user));
+            this.userSubject.next(user);
+            return user;
+          })
+        );
       }
-      return this.http.post<User>(
-        '/api/check-session',
-        {},
-        {responseType: 'json'}
-      ).pipe(map(user => {
-          localStorage.setItem('user', JSON.stringify(user));
-          this.userSubject.next(user);
-          return user;
-        })
-      );
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +76,7 @@ export class AuthenticationService {
     // remove user from local storage and set current user to null
     localStorage.removeItem('user');
     this.userSubject.next(null);
-    this.router.navigate(['/account/login']);
+    this.router.navigate(['/signin']);
   }
 
   public register(username, email, password, forename, surname, birthday): Observable<User> {
