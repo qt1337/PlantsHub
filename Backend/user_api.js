@@ -53,9 +53,7 @@ function checkUserSession(pool, req, res) {
     .getConnection()
     .then((conn) => {
       conn
-        .query("SELECT salt FROM User WHERE username = (?)", [
-          username
-        ])
+        .query("SELECT salt FROM User WHERE username = (?)", [username])
         .then((row) => {
           let salt = row[0].salt;
 
@@ -123,12 +121,20 @@ function checkUserCredentials(pool, req, res) {
           let daysUntilExpiring = 7;
 
           sessionExpiringDate = new Date();
-          sessionExpiringDate.setDate(sessionExpiringDate.getDate() + daysUntilExpiring);
+          sessionExpiringDate.setDate(
+            sessionExpiringDate.getDate() + daysUntilExpiring
+          );
 
           conn
             .query(
               "UPDATE User SET sessionId = (?), sessionCreated = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
-              [hashedSessionId, sessionExpiringDate, username, username, hashedPassword]
+              [
+                hashedSessionId,
+                sessionExpiringDate,
+                username,
+                username,
+                hashedPassword,
+              ]
             )
             .then((result) => {
               if (result["affectedRows"] === 0) {
