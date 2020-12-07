@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {first, map} from 'rxjs/operators';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../_models/user';
 import {Router} from '@angular/router';
@@ -23,6 +23,52 @@ export class AuthenticationService {
 
   public get userValue(): User {
     return this.userSubject.value;
+  }
+
+  public checkForActiveSession(): void {
+    try {
+      this.loginViaSessionId().pipe(first())
+        .subscribe({
+            next: () => {
+              this.routeToHome();
+            },
+            error: error => {
+              console.log(error);
+              console.log('No active session');
+            }
+          }
+        );
+    } catch (e) {
+      console.log('No active session');
+    }
+  }
+
+  public checkForInactiveSession(): void {
+    try {
+      this.loginViaSessionId().pipe(first())
+        .subscribe({
+            next: (user) => {
+              console.log('session is valid.');
+              this.userSubject.next(user);
+            },
+            error: () => {
+              this.routeToSignIn();
+            }
+          }
+        );
+    } catch (e) {
+      this.routeToSignIn();
+    }
+  }
+
+  private routeToHome(): void {
+    const returnUrl = '/';
+    this.router.navigateByUrl(returnUrl);
+  }
+
+  private routeToSignIn(): void {
+    const returnUrl = '/signin';
+    this.router.navigateByUrl(returnUrl);
   }
 
   public loginViaSessionId(): Observable<User> {
