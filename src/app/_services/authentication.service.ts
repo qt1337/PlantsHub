@@ -28,12 +28,38 @@ export class AuthenticationService {
   public loginViaSessionId(): Observable<User> {
     try {
       if (this.userValue && this.userValue[0]) {
-        console.log('user has active session');
-        return this.user;
+        console.log('check for active session...');
+
+        const sessionId = this.userValue[0].sessionId;
+        const username = this.userValue[0].username;
+
+        return this.http.post<User>(
+          '/api/check-session',
+          {
+            sessionId,
+            username
+          },
+          {responseType: 'json'}
+        ).pipe(map(user => {
+            localStorage.setItem('user', JSON.stringify(user));
+            this.userSubject.next(user);
+            return user;
+          })
+        );
       }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public login(username, password): Observable<User> {
+    try {
       return this.http.post<User>(
-        '/api/check-session',
-        {},
+        '/api/check-credentials',
+        {
+          username,
+          password
+        },
         {responseType: 'json'}
       ).pipe(map(user => {
           localStorage.setItem('user', JSON.stringify(user));
@@ -46,46 +72,34 @@ export class AuthenticationService {
     }
   }
 
-  public login(username, password): Observable<User> {
-    return this.http.post<User>(
-      '/api/check-credentials',
-      {
-        username,
-        password
-      },
-      {responseType: 'json'}
-    ).pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
-        return user;
-      })
-    );
-  }
-
   public logout(): void {
     // remove user from local storage and set current user to null
     localStorage.removeItem('user');
     this.userSubject.next(null);
-    this.router.navigate(['/account/login']);
+    this.router.navigate(['/signin']);
   }
 
   public register(username, email, password, forename, surname, birthday): Observable<User> {
-    return this.http.post<User>(
-      '/api/create-user',
-      {
-        username,
-        email,
-        password,
-        forename,
-        surname,
-        birthday
-      },
-      {responseType: 'json'}
-    ).pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
-        return user;
-      })
-    );
+    try {
+      return this.http.post<User>(
+        '/api/create-user',
+        {
+          username,
+          email,
+          password,
+          forename,
+          surname,
+          birthday
+        },
+        {responseType: 'json'}
+      ).pipe(map(user => {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.userSubject.next(user);
+          return user;
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

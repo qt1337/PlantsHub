@@ -43,19 +43,23 @@ export class SignUpComponent implements OnInit {
   }
 
   checkForSession(): void {
-    this.authenticationService.loginViaSessionId().pipe(first())
-      .subscribe({
-          next: () => {
-            // get return url from query parameters or default to home page
-            const returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
-            this.router.navigateByUrl(returnUrl);
-          },
-          error: error => {
-            console.log(error);
-            console.log('No active session');
+    try {
+      this.authenticationService.loginViaSessionId().pipe(first())
+        .subscribe({
+            next: () => {
+              // get return url from query parameters or default to home page
+              const returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+              this.router.navigateByUrl(returnUrl);
+            },
+            error: error => {
+              console.log(error);
+              console.log('No active session');
+            }
           }
-        }
-      );
+        );
+    } catch (e) {
+      console.log('No active session');
+    }
   }
 
   onRegister(): void {

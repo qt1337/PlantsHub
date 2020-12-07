@@ -15,14 +15,6 @@ export class SignInComponent implements OnInit {
   submitted = false;
   error: boolean;
 
-  ngOnInit(): void {
-    this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-    this.checkForSession();
-  }
-
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -31,25 +23,37 @@ export class SignInComponent implements OnInit {
   ) {
   }
 
+  ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+    this.checkForSession();
+  }
+
   // tslint:disable-next-line:typedef
   get form() {
     return this.loginForm.controls;
   }
 
   checkForSession(): void {
-    this.authenticationService.loginViaSessionId().pipe(first())
-      .subscribe({
-          next: () => {
-            // get return url from query parameters or default to home page
-            const returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
-            this.router.navigateByUrl(returnUrl);
-          },
-          error: error => {
-            console.log(error);
-            console.log('No active session');
+    try {
+      this.authenticationService.loginViaSessionId().pipe(first())
+        .subscribe({
+            next: () => {
+              // get return url from query parameters or default to home page
+              const returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+              this.router.navigateByUrl(returnUrl);
+            },
+            error: error => {
+              console.log(error);
+              console.log('No active session');
+            }
           }
-        }
-      );
+        );
+    } catch (e) {
+      console.log('No active session');
+    }
   }
 
   onLogin(): void {
