@@ -24,7 +24,7 @@ import {IconsModule} from './_modules/icons/icons.module';
     HomeComponent,
     PageNotFoundComponent,
     PlantDialogueComponent,
-    PlantcardComponent
+    PlantcardComponent,
   ],
   imports: [
     BrowserModule,

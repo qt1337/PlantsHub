@@ -11,7 +11,7 @@ import { PlantDialogueComponent} from "./_components/plant-dialogue/plant-dialog
 
 export class AppComponent implements OnInit {
   title = 'PlantsHub';
-
+  showFiller = false;
   constructor(private router: Router) {
   }
 
@@ -20,5 +20,13 @@ export class AppComponent implements OnInit {
 
   isHomeRoute(): boolean {
     return this.router.url === '/';
+  }
+
+  isSignInRoute(): boolean {
+    return this.router.url === '/signin';
+  }
+
+  isSignUpRoute(): boolean {
+    return this.router.url === '/signup';
   }
 }

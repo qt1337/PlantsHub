@@ -1,5 +1,12 @@
+.app-header {
+  background-color: #00b894;
+}
 .container {
   height: 100vh;
+}
+
+.nav-container {
+  background-color: white;
 }
 
 /* KEYFRAMES */
