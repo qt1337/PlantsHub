@@ -13,7 +13,6 @@ import {PageNotFoundComponent} from './_components/page-not-found/page-not-found
 import {PlantDialogueComponent} from './_components/plant-dialogue/plant-dialogue.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PlantcardComponent} from './_components/plantcard/plantcard.component';
-import {NavigationComponent} from './_components/navigation/navigation.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +22,6 @@ import {NavigationComponent} from './_components/navigation/navigation.component
     PageNotFoundComponent,
     PlantDialogueComponent,
     PlantcardComponent,
-    NavigationComponent
   ],
   imports: [
     BrowserModule,
