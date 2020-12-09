@@ -1,6 +1,7 @@
 .app-header {
   background-color: #00b894;
   position: sticky;
+  display: flex;
 }
 .container {
   max-height: 100vh;
