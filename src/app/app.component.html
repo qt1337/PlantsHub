@@ -3,6 +3,9 @@
   <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with logout icon">
+    <mat-icon>logout</mat-icon>
+  </button>
   <span>{{title}}</span>
 </mat-toolbar>
 <mat-drawer-container class="nav-container" autosize>
@@ -18,28 +21,4 @@
   </mat-drawer>
 
 <router-outlet></router-outlet>
-
-<div *ngIf="isHomeRoute()" class="container bg-black flex justify-center items-center">
-
-  <div class="white pa2">
-    <div class="spinner-box">
-      <div class="blue-orbit leo">
-      </div>
-
-      <div class="green-orbit leo">
-      </div>
-
-      <div class="red-orbit leo">
-      </div>
-
-      <div class="white-orbit w1 leo">
-      </div>
-      <div class="white-orbit w2 leo">
-      </div>
-      <div class="white-orbit w3 leo">
-      </div>
-    </div>
-    Something is going on. Stay tuned.
-  </div>
-</div>
 </mat-drawer-container>
