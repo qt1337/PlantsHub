@@ -1,11 +1,21 @@
+<mat-drawer-container class="nav-container" autosize>
+
 <mat-toolbar class="app-header">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
   <span>PlantsHub</span>
 </mat-toolbar>
+  <mat-drawer #drawer class="side-nav w5" mode="side">
+    <p>Link 1</p>
+    <p>Link 2</p>
+    <p>Link 3</p>
+    <p>Link 4</p>
+    <p>Link 5</p>
+  </mat-drawer>
 
 <router-outlet></router-outlet>
+
 <div *ngIf="isHomeRoute()" class="container bg-black flex justify-center items-center">
 
   <div class="white pa2">
@@ -29,3 +39,4 @@
     Something is going on. Stay tuned.
   </div>
 </div>
+</mat-drawer-container>

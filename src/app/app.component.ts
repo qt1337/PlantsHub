@@ -11,7 +11,7 @@ import { PlantDialogueComponent} from "./_components/plant-dialogue/plant-dialog
 
 export class AppComponent implements OnInit {
   title = 'PlantsHub';
-
+  showFiller = false;
   constructor(private router: Router) {
   }
 
