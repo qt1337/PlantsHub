@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  max-width: 50%;
+}
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+td {
+  padding-right: 8px;
+}
+
+.button-menu {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#cancel-button {
+  background-color: #d63031;
+  color: white;
+}
+
+#add-button {
+  background-color: #00b894;
+  color: white;
+}

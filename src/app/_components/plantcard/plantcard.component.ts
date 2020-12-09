@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PlantService} from '../../_services/plant.service';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {User} from '../../_models/user';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-plantcard',
@@ -15,10 +16,14 @@ export class PlantcardComponent implements OnInit {
   constructor(
     private plantService: PlantService,
     private authenticationService: AuthenticationService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.authenticationService.checkForInactiveSession();
     if (this.authenticationService.userValue) {
       this.user = this.authenticationService.userValue[0];
+    } else {
+      this.router.navigate(['/signin']);
     }
   }
 

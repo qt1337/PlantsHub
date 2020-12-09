@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import { PlantDialogueComponent} from "./_components/plant-dialogue/plant-dialogue.component";
 
 @Component({
   selector: 'app-root',
