@@ -1,13 +1,14 @@
 .app-header {
   background-color: #00b894;
-  position: sticky;
   display: flex;
 }
 .container {
-  max-height: 100vh;
+  height: 100vh;
+  overflow: visible;
 }
 
 .nav-container {
   background-color: white;
-  max-height: 100vh;
+  height: 100vh;
+  overflow: visible;
 }

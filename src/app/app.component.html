@@ -1,10 +1,10 @@
 <mat-toolbar *ngIf="authGuard.isLoggedIn()" class="app-header flex">
   <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
-          aria-label="Example icon-button with menu icon">
+          aria-label="icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
   <span>{{title}}</span>
-  <button mat-icon-button class="logout-button tr items-end" aria-label="Example icon-button with logout icon"
+  <button mat-icon-button class="logout-button" aria-label="icon-button with logout icon"
           (click)="authenticationService.logout()">
     <mat-icon>logout</mat-icon>
   </button>
