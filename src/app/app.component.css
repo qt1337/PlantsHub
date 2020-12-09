@@ -5,6 +5,10 @@
   height: 100vh;
 }
 
+body {
+  height: 100vh;
+}
+
 .nav-container {
   background-color: white;
 }
