@@ -4,14 +4,14 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {AppComponent} from './app.component';
 import {SignInComponent} from './_components/sign-in/sign-in.component';
 import {AppRoutingModule} from './app-routing.module';
+import {DemoMaterialModule} from "./material.module";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {SignUpComponent} from './_components/sign-up/sign-up.component';
 import {HomeComponent} from './_components/home/home.component';
 import {PageNotFoundComponent} from './_components/page-not-found/page-not-found.component';
-import { PlantcardComponent } from './_components/plantcard/plantcard.component';
-import {IconsModule} from './_modules/icons/icons.module';
-
+import { PlantDialogueComponent } from './_components/plant-dialogue/plant-dialogue.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +19,7 @@ import {IconsModule} from './_modules/icons/icons.module';
     SignUpComponent,
     HomeComponent,
     PageNotFoundComponent,
-    PlantcardComponent
+    PlantDialogueComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +29,8 @@ import {IconsModule} from './_modules/icons/icons.module';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    IconsModule,
+    BrowserAnimationsModule,
+    DemoMaterialModule
   ],
   providers: [
     HttpClientModule,
