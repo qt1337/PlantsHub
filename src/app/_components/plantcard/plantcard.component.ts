@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PlantService} from '../../_services/plant.service';
 import {AuthenticationService} from '../../_services/authentication.service';
+import {User} from '../../_models/user';
 
 @Component({
   selector: 'app-plantcard',
@@ -9,10 +10,16 @@ import {AuthenticationService} from '../../_services/authentication.service';
 })
 export class PlantcardComponent implements OnInit {
 
+  user: User;
+
   constructor(
     private plantService: PlantService,
     private authenticationService: AuthenticationService,
   ) {
+    this.authenticationService.checkForInactiveSession();
+    if (this.authenticationService.userValue) {
+      this.user = this.authenticationService.userValue[0];
+    }
   }
 
   plants: any;
@@ -33,8 +40,8 @@ export class PlantcardComponent implements OnInit {
     }
     this.plantService
       .getPlants(
-        this.authenticationService.userValue[0].username,
-        this.authenticationService.userValue[0].sessionId
+        this.user.username,
+        this.user.sessionId
       )
       .subscribe(plants => {
         this.plants = plants;
@@ -42,10 +49,9 @@ export class PlantcardComponent implements OnInit {
   }
 
   updatePlantFavourite(plant): void {
-
     this.plantService.updatePlantFavourite(
-      this.authenticationService.userValue[0].username,
-      this.authenticationService.userValue[0].sessionId,
+      this.user.username,
+      this.user.sessionId,
       plant.plantId,
       !plant.favourite
     ).subscribe(plants => {
