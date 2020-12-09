@@ -13,6 +13,8 @@ import {PageNotFoundComponent} from './_components/page-not-found/page-not-found
 import {PlantDialogueComponent} from './_components/plant-dialogue/plant-dialogue.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PlantcardComponent} from './_components/plantcard/plantcard.component';
+import {FeatherModule} from 'angular-feather';
+import {IconsModule} from './_modules/icons/icons.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import {PlantcardComponent} from './_components/plantcard/plantcard.component';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    DemoMaterialModule
+    DemoMaterialModule,
+    FeatherModule,
+    IconsModule
   ],
   providers: [
     HttpClientModule,
