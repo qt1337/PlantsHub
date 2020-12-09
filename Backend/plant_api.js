@@ -51,8 +51,8 @@ function createPlant(pool, req, res) {
                 ]
               )
               .then((result) => {
-                connection.end()
-                return this.getPlants(pool, req, res)
+                connection.end();
+                return this.getPlants(pool, req, res);
               })
               .catch((err) => {
                 console.log(err);
