@@ -1,7 +1,7 @@
 export class Plant {
   plantName: string;
-  wateringInterval: string;
-  fertilizingInterval: string;
+  wateringInterval: number;
+  fertilizingInterval: number;
   plantBirthday: string;
   plantDeathday: string;
   family: string;

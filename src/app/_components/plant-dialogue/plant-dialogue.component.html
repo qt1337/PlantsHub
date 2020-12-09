@@ -1,46 +1,55 @@
-<mat-card class="container">
+<ng-container>
   <h2>ADD PLANT</h2>
   <!-- Family Input Field -->
   <mat-form-field appearance="fill">
     <mat-label>Plant Family</mat-label>
-    <mat-select>
-      <mat-option value="option">Option</mat-option>
-    </mat-select>
+    <input matInput type="text" [(ngModel)]="newPlant.family">
+    <button mat-button *ngIf="newPlant.family" matSuffix mat-icon-button aria-label="Clear"
+            (click)="newPlant.family=''">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
   <br>
   <!-- Name Input Field -->
   <mat-form-field appearance="fill">
     <mat-label>Plant Name</mat-label>
-    <mat-select>
-      <mat-option value="option">Option</mat-option>
-    </mat-select>
+    <input matInput type="text" [(ngModel)]="newPlant.plantName">
+    <button mat-button *ngIf="newPlant.plantName" matSuffix mat-icon-button aria-label="Clear"
+            (click)="newPlant.plantName=''">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
   <br>
   <!-- Watering Intervals -->
   <mat-form-field appearance="fill">
-    <mat-label>Watering Intervals</mat-label>
-    <mat-select>
-      <mat-option value="option">Option</mat-option>
-    </mat-select>
+    <mat-label>Watering Intervals (in days)</mat-label>
+    <input matInput type="number" [(ngModel)]="newPlant.wateringInterval" [defaultValue]="0">
+    <button mat-button *ngIf="newPlant.wateringInterval" matSuffix mat-icon-button aria-label="Clear"
+            (click)="newPlant.wateringInterval=0">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
   <!-- Fertilizing Intervals -->
   <mat-form-field appearance="fill">
-    <mat-label>Fertilizing Intervals</mat-label>
-    <mat-select>
-      <mat-option value="option">Option</mat-option>
-    </mat-select>
+    <mat-label>Fertilizing Intervals (in days)</mat-label>
+    <input matInput type="number" [(ngModel)]="newPlant.fertilizingInterval" [defaultValue]="0">
+    <button mat-button *ngIf="newPlant.fertilizingInterval" matSuffix mat-icon-button aria-label="Clear"
+            (click)="newPlant.fertilizingInterval=0">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <!-- Date Picker Buy Date-->
-    <mat-label>When did you buy your plant?</mat-label>
-    <input matInput [matDatepicker]="picker">
+    <!-- Birthday -->
+    <mat-label>Birthday of the Plant</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="newPlant.plantBirthday">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
   <div class="button-menu">
-  <button mat-flat-button id="cancel-button" class="grow">Cancel</button>
-  <button mat-flat-button id="add-button" class="grow">Add Plant</button>
+    <button mat-flat-button id="cancel-button" class="grow" [mat-dialog-close]="true">Cancel</button>
+    <button mat-flat-button id="add-button" class="grow" [mat-dialog-close]="true" (click)="addPlant()">Add Plant
+    </button>
   </div>
-</mat-card>
+</ng-container>

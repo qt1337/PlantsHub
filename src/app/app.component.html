@@ -1,23 +1,25 @@
-<router-outlet></router-outlet>
-<div *ngIf="isHomeRoute()" class="container bg-black flex justify-center items-center">
-  <div class="white pa2">
-    <div class="spinner-box">
-      <div class="blue-orbit leo">
-      </div>
-
-      <div class="green-orbit leo">
-      </div>
-
-      <div class="red-orbit leo">
-      </div>
-
-      <div class="white-orbit w1 leo">
-      </div>
-      <div class="white-orbit w2 leo">
-      </div>
-      <div class="white-orbit w3 leo">
-      </div>
+<mat-toolbar *ngIf="authGuard.isLoggedIn()" class="app-header flex">
+  <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
+          aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>{{title}}</span>
+  <button mat-icon-button class="logout-button tr items-end" aria-label="Example icon-button with logout icon"
+          (click)="authenticationService.logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-drawer-container class="nav-container" autosize>
+  <mat-drawer #drawer class="side-nav w5" mode="side">
+    <div class="f3 pb3">
+      <p>ADD PLANT</p>
+      <p>Plant Products</p>
+      <p>Link 3</p>
+      <p>Link 4</p>
+      <p>Link 5</p>
     </div>
-    Something is going on. Stay tuned.
-  </div>
-</div>
+
+  </mat-drawer>
+
+  <router-outlet></router-outlet>
+</mat-drawer-container>

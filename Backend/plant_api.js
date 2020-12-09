@@ -51,7 +51,8 @@ function createPlant(pool, req, res) {
                 ]
               )
               .then((result) => {
-                res.status(202).json(result);
+                connection.end();
+                return this.getPlants(pool, req, res);
               })
               .catch((err) => {
                 console.log(err);

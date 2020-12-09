@@ -87,6 +87,7 @@ export class AuthenticationService {
         );
       }
     } catch (error) {
+      localStorage.removeItem('user');
       console.log(error);
     }
   }

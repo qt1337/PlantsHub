@@ -3,6 +3,8 @@ import {PlantService} from '../../_services/plant.service';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {User} from '../../_models/user';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
 
 @Component({
   selector: 'app-plantcard',
@@ -12,22 +14,21 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class PlantcardComponent implements OnInit {
 
   user: User;
+  plants: any;
 
   constructor(
     private plantService: PlantService,
     private authenticationService: AuthenticationService,
     private router: Router,
     private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {
     this.authenticationService.checkForInactiveSession();
     if (this.authenticationService.userValue) {
       this.user = this.authenticationService.userValue[0];
     } else {
-      this.router.navigate(['/signin']);
     }
   }
-
-  plants: any;
 
   icons = [
     {name: 'heart', class: 'big fill-red'},
@@ -51,6 +52,14 @@ export class PlantcardComponent implements OnInit {
       .subscribe(plants => {
         this.plants = plants;
       });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PlantDialogueComponent);
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.getPlants();
+    });
   }
 
   updatePlantFavourite(plant): void {

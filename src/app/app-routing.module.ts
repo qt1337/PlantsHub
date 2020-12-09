@@ -3,18 +3,20 @@ import {Router, RouterModule, Routes} from '@angular/router';
 import {SignInComponent} from './_components/sign-in/sign-in.component';
 import {SignUpComponent} from './_components/sign-up/sign-up.component';
 import {HomeComponent} from './_components/home/home.component';
-import {AppComponent} from './app.component';
 import {PageNotFoundComponent} from './_components/page-not-found/page-not-found.component';
-import {PlantDialogueComponent} from "./_components/plant-dialogue/plant-dialogue.component";
+import {PlantcardComponent} from './_components/plantcard/plantcard.component';
+import {AuthGuard} from './auth.guard';
 
 const routes: Routes = [
+  {path: '', component: HomeComponent},
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'plants', component: PlantcardComponent, canActivate: [AuthGuard]},
   {path: 'signin', component: SignInComponent},
   {path: 'signup', component: SignUpComponent},
-  {path: 'home', component: HomeComponent},
-  {path: '', component: HomeComponent},
   {path: '404', component: PageNotFoundComponent},
-  {path: 'addplant', component: PlantDialogueComponent},
-  {path: '**', redirectTo: '/404'}
+
+  // '**' has to be last!
+  {path: '**', redirectTo: '/404'},
 ];
 
 @NgModule({

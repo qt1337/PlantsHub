@@ -3,6 +3,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {PlantcardComponent} from './plantcard.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {MatDialogModule} from '@angular/material/dialog';
+import {RouterModule} from '@angular/router';
 
 describe('PlantcardComponent', () => {
   let component: PlantcardComponent;
@@ -14,7 +16,9 @@ describe('PlantcardComponent', () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
-        HttpClientModule
+        HttpClientModule,
+        MatDialogModule,
+        RouterModule
       ],
     })
       .compileComponents();

@@ -72,4 +72,35 @@ export class PlantService {
       console.log(e);
     }
   }
+
+  addPlant(username, sessionId, plant): Observable<Plant[]> {
+    try {
+      const plantName = plant.plantName || null;
+      const family = plant.family || null;
+      const wateringInterval = plant.wateringInterval || null;
+      const fertilizingInterval = plant.fertilizingInterval || null;
+      const plantBirthday = plant.plantBirthday || null;
+      return this.http.post<Plant[]>(
+        '/api/create-plant',
+        {
+          username,
+          sessionId,
+          plantName,
+          family,
+          wateringInterval,
+          fertilizingInterval,
+          plantBirthday
+        },
+        {responseType: 'json'}
+      ).pipe(map(plants => {
+          localStorage.removeItem('plants');
+          localStorage.setItem('plants', JSON.stringify(plants));
+          this.plantsSubject.next(plants);
+          return plants;
+        })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

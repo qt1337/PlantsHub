@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {Plant} from '../../_models/plant';
+import {AuthenticationService} from '../../_services/authentication.service';
+import {PlantService} from '../../_services/plant.service';
 
 @Component({
   selector: 'app-plant-dialogue',
@@ -7,10 +10,27 @@ import {Component, OnInit} from '@angular/core';
 })
 export class PlantDialogueComponent implements OnInit {
 
+  newPlant = new Plant();
+  plants: Plant[];
 
-  constructor() {
+  constructor(
+    private authenticationService: AuthenticationService,
+    private plantService: PlantService
+  ) {
   }
 
+  addPlant(): void {
+    if (!this.authenticationService.userValue) {
+      return;
+    }
+    this.plantService.addPlant(
+      this.authenticationService.userValue[0].username,
+      this.authenticationService.userValue[0].sessionId,
+      this.newPlant)
+      .subscribe(plants => {
+        this.plants = plants;
+      });
+  }
 
   ngOnInit(): void {
   }
