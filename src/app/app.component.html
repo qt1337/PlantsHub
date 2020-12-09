@@ -1,4 +1,3 @@
-<mat-drawer-container class="nav-container" autosize>
 
 <mat-toolbar class="app-header">
   <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
@@ -6,12 +5,16 @@
   </button>
   <span>{{title}}</span>
 </mat-toolbar>
+<mat-drawer-container class="nav-container" autosize>
   <mat-drawer #drawer class="side-nav w5 pa4" mode="side">
-    <p>Add Plant</p>
-    <p>Plant Products</p>
-    <p>Link 3</p>
-    <p>Link 4</p>
-    <p>Link 5</p>
+    <div class="f3 pb3">
+      <p>ADD PLANT</p>
+      <p>Plant Products</p>
+      <p>Link 3</p>
+      <p>Link 4</p>
+      <p>Link 5</p>
+    </div>
+
   </mat-drawer>
 
 <router-outlet></router-outlet>
