@@ -37,7 +37,7 @@ import {IconsModule} from './_modules/icons/icons.module';
     BrowserAnimationsModule,
     DemoMaterialModule,
     FeatherModule,
-    IconsModule
+    IconsModule,
   ],
   providers: [
     HttpClientModule,

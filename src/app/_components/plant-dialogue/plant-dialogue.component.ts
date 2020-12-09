@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Plant} from '../../_models/plant';
 
 @Component({
   selector: 'app-plant-dialogue',
@@ -7,6 +8,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class PlantDialogueComponent implements OnInit {
 
+  newPlant: Plant;
 
   constructor() {
   }
