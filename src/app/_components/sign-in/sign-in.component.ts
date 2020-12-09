@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {first} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
+import {PlantDialogueComponent} from "../plant-dialogue/plant-dialogue.component";
 
 @Component({
   selector: 'app-sign-in',
@@ -28,32 +29,11 @@ export class SignInComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-    this.checkForSession();
+    this.authenticationService.checkForActiveSession();
   }
 
-  // tslint:disable-next-line:typedef
-  get form() {
+  get form(): { [p: string]: AbstractControl } {
     return this.loginForm.controls;
-  }
-
-  checkForSession(): void {
-    try {
-      this.authenticationService.loginViaSessionId().pipe(first())
-        .subscribe({
-            next: () => {
-              // get return url from query parameters or default to home page
-              const returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
-              this.router.navigateByUrl(returnUrl);
-            },
-            error: error => {
-              console.log(error);
-              console.log('No active session');
-            }
-          }
-        );
-    } catch (e) {
-      console.log('No active session');
-    }
   }
 
   onLogin(): void {

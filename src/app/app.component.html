@@ -1,5 +1,11 @@
+<mat-toolbar class="app-header">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>PlantsHub</span>
+</mat-toolbar>
+
 <router-outlet></router-outlet>
-<app-navigation></app-navigation>
 <div *ngIf="isHomeRoute()" class="container bg-black flex justify-center items-center">
 
   <div class="white pa2">

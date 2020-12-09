@@ -1,0 +1,47 @@
+<mat-card class="container">
+  <h2>ADD PLANT</h2>
+  <!-- Family Input Field -->
+  <mat-form-field appearance="fill">
+    <mat-label>Plant Family</mat-label>
+    <mat-select>
+      <mat-option value="option">Option</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <!-- Name Input Field -->
+  <mat-form-field appearance="fill">
+    <mat-label>Plant Name</mat-label>
+    <mat-select>
+      <mat-option value="option">Option</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <!-- Watering Intervals -->
+  <mat-form-field appearance="fill">
+    <mat-label>Watering Intervals</mat-label>
+    <mat-select>
+      <mat-option value="option">Option</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- Fertilizing Intervals -->
+  <mat-form-field appearance="fill">
+    <mat-label>Fertilizing Intervals</mat-label>
+    <mat-select>
+      <mat-option value="option">Option</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <!-- Date Picker Buy Date-->
+    <mat-label>When did you buy your plant?</mat-label>
+    <input matInput [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <div class="button-menu">
+  <button mat-flat-button id="cancel-button" class="grow">Cancel</button>
+  <button mat-flat-button id="add-button" class="grow">Add Plant</button>
+  </div>
+</mat-card>
+
