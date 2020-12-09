@@ -5,6 +5,7 @@ import {SignUpComponent} from './_components/sign-up/sign-up.component';
 import {HomeComponent} from './_components/home/home.component';
 import {AppComponent} from './app.component';
 import {PageNotFoundComponent} from './_components/page-not-found/page-not-found.component';
+import {PlantDialogueComponent} from "./_components/plant-dialogue/plant-dialogue.component";
 
 const routes: Routes = [
   {path: 'signin', component: SignInComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: '', component: HomeComponent},
   {path: '404', component: PageNotFoundComponent},
+  {path: 'addplant', component: PlantDialogueComponent},
   {path: '**', redirectTo: '/404'}
 ];
 

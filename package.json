@@ -30,7 +30,7 @@
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mariadb": "^2.5.1",
+    "mariadb": "^2.5.2",
     "node-emoji": "^1.10.0",
     "rxjs": "~6.6.0",
     "tachyons": "^4.12.0",
@@ -59,6 +59,6 @@
     "puppeteer": "^5.5.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.7"
   }
 }
