@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const user_api = require("./Backend/user_api");
 const plant_api = require("./Backend/plant_api");
+const rateLimit = require("express-rate-limit");
 // const cors = require('cors');
 
 const pool = mariadb.createPool({
@@ -16,8 +17,14 @@ const pool = mariadb.createPool({
   connectionLimit: 3,
 });
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
+
 const app = express();
 
+app.use(limiter)
 app.use(express.static("./dist/PlantsHub"));
 app.use(cookieParser());
 app.use(bodyParser());
@@ -32,7 +39,7 @@ app.use(function (req, res, next) {
 });
 
 app.get("/*", (req, res) =>
-  res.sendFile("index.html", { root: "dist/PlantsHub/" })
+  res.sendFile("index.html", {root: "dist/PlantsHub/"})
 );
 
 app.listen(process.env.PORT || 8080, () => {
