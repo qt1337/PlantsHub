@@ -18,7 +18,9 @@ export class HomeComponent implements OnInit {
     public authenticationService: AuthenticationService
   ) {
     this.authenticationService.checkForInactiveSession();
-    this.user = this.authenticationService.userValue[0];
+    if (this.authenticationService.userValue) {
+      this.user = this.authenticationService.userValue[0];
+    }
   }
 
   ngOnInit(): void {

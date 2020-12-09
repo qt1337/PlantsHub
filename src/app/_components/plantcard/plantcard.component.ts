@@ -17,7 +17,9 @@ export class PlantcardComponent implements OnInit {
     private authenticationService: AuthenticationService,
   ) {
     this.authenticationService.checkForInactiveSession();
-    this.user = this.authenticationService.userValue[0];
+    if (this.authenticationService.userValue) {
+      this.user = this.authenticationService.userValue[0];
+    }
   }
 
   plants: any;
