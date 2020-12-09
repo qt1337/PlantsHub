@@ -1,12 +1,12 @@
 
-<mat-toolbar *ngIf="!isSignInRoute() && !isSignUpRoute()" class="app-header">
+<mat-toolbar *ngIf="!isSignInRoute() && !isSignUpRoute()" class="app-header flex">
   <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with logout icon">
+  <span>{{title}}</span>
+  <button mat-icon-button class="logout-button tr items-end" aria-label="Example icon-button with logout icon">
     <mat-icon>logout</mat-icon>
   </button>
-  <span>{{title}}</span>
 </mat-toolbar>
 <mat-drawer-container class="nav-container" autosize>
   <mat-drawer #drawer class="side-nav w5" mode="side">
