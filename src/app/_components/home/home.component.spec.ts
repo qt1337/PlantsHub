@@ -3,6 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {RouterModule} from '@angular/router';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -14,7 +15,8 @@ describe('HomeComponent', () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterModule
       ],
     })
       .compileComponents();

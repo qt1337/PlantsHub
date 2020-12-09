@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PlantDialogueComponent } from './plant-dialogue.component';
+import {PlantDialogueComponent} from './plant-dialogue.component';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('PlantDialogueComponent', () => {
   let component: PlantDialogueComponent;
@@ -8,9 +9,10 @@ describe('PlantDialogueComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlantDialogueComponent ]
+      imports: [HttpClientModule],
+      declarations: [PlantDialogueComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

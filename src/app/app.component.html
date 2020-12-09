@@ -1,10 +1,11 @@
-
-<mat-toolbar *ngIf="!isSignInRoute() && !isSignUpRoute()" class="app-header">
-  <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+<mat-toolbar *ngIf="authGuard.isLoggedIn()" class="app-header flex">
+  <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
+          aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
   <span>{{title}}</span>
-  <button mat-icon-button class="logout-button tr items-end" aria-label="Example icon-button with logout icon">
+  <button mat-icon-button class="logout-button tr items-end" aria-label="Example icon-button with logout icon"
+          (click)="authenticationService.logout()">
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
@@ -20,5 +21,5 @@
 
   </mat-drawer>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </mat-drawer-container>

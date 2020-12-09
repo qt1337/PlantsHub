@@ -27,7 +27,6 @@ export class PlantcardComponent implements OnInit {
     if (this.authenticationService.userValue) {
       this.user = this.authenticationService.userValue[0];
     } else {
-      this.router.navigate(['/signin']);
     }
   }
 

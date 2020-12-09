@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import { PlantDialogueComponent} from "./_components/plant-dialogue/plant-dialogue.component";
+import {AuthGuard} from './auth.guard';
+import {AuthenticationService} from './_services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,12 @@ import { PlantDialogueComponent} from "./_components/plant-dialogue/plant-dialog
 export class AppComponent implements OnInit {
   title = 'PlantsHub';
   showFiller = false;
-  constructor(private router: Router) {
+
+  constructor(
+    private router: Router,
+    public authGuard: AuthGuard,
+    public authenticationService: AuthenticationService
+  ) {
   }
 
   ngOnInit(): void {

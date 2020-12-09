@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit {
     if (this.authenticationService.userValue) {
       this.user = this.authenticationService.userValue[0];
     } else {
-      this.router.navigate(['/signin']);
     }
   }
 

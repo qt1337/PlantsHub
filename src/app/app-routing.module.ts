@@ -5,11 +5,12 @@ import {SignUpComponent} from './_components/sign-up/sign-up.component';
 import {HomeComponent} from './_components/home/home.component';
 import {PageNotFoundComponent} from './_components/page-not-found/page-not-found.component';
 import {PlantcardComponent} from './_components/plantcard/plantcard.component';
+import {AuthGuard} from './auth.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'plants', component: PlantcardComponent},
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'plants', component: PlantcardComponent, canActivate: [AuthGuard]},
   {path: 'signin', component: SignInComponent},
   {path: 'signup', component: SignUpComponent},
   {path: '404', component: PageNotFoundComponent},
