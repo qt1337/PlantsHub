@@ -3,10 +3,10 @@
   position: sticky;
 }
 .container {
-  height: 100vh;
+  max-height: 100vh;
 }
 
 .nav-container {
   background-color: white;
-  height: 100vh;
+  max-height: 100vh;
 }
