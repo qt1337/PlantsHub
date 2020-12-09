@@ -10,7 +10,7 @@ import {PlantService} from '../../_services/plant.service';
 })
 export class PlantDialogueComponent implements OnInit {
 
-  newPlant: Plant;
+  newPlant = new Plant();
 
   constructor(
     private authenticationService: AuthenticationService,
