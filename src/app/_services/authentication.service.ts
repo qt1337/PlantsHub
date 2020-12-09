@@ -52,22 +52,15 @@ export class AuthenticationService {
               this.userSubject.next(user);
             },
             error: () => {
-              this.routeToSignIn();
             }
           }
         );
     } catch (e) {
-      this.routeToSignIn();
     }
   }
 
   private routeToHome(): void {
     const returnUrl = '/';
-    this.router.navigateByUrl(returnUrl);
-  }
-
-  private routeToSignIn(): void {
-    const returnUrl = '/signin';
     this.router.navigateByUrl(returnUrl);
   }
 
