@@ -21,4 +21,12 @@ export class AppComponent implements OnInit {
   isHomeRoute(): boolean {
     return this.router.url === '/';
   }
+
+  isSignInRoute(): boolean {
+    return this.router.url === '/signin';
+  }
+
+  isSignUpRoute(): boolean {
+    return this.router.url === '/signup';
+  }
 }

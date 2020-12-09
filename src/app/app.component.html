@@ -1,5 +1,5 @@
 
-<mat-toolbar class="app-header">
+<mat-toolbar *ngIf="!isSignInRoute() && !isSignUpRoute()" class="app-header">
   <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
