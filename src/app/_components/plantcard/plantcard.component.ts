@@ -5,7 +5,6 @@ import {User} from '../../_models/user';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
-import {Plant} from '../../_models/plant';
 
 @Component({
   selector: 'app-plantcard',
@@ -59,8 +58,8 @@ export class PlantcardComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(PlantDialogueComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe(() => {
+      this.getPlants();
     });
   }
 

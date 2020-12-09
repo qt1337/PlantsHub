@@ -11,6 +11,7 @@ import {PlantService} from '../../_services/plant.service';
 export class PlantDialogueComponent implements OnInit {
 
   newPlant = new Plant();
+  plants: Plant[];
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -25,7 +26,10 @@ export class PlantDialogueComponent implements OnInit {
     this.plantService.addPlant(
       this.authenticationService.userValue[0].username,
       this.authenticationService.userValue[0].sessionId,
-      this.newPlant);
+      this.newPlant)
+      .subscribe(plants => {
+        this.plants = plants;
+      });
   }
 
   ngOnInit(): void {
