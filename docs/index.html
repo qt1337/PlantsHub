@@ -43,133 +43,406 @@
 
 -->
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Rooter</title>
+    <title>reveal.js</title>
 
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme">
 
-		<link rel="stylesheet" type="text/css" href="./css/navi.scss" media="screen" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	</head>
-	<body>
-		<script>
-			var Expand = (function() {
-				var tile = $('.strips__strip');
-				var tileLink = $('.strips__strip > .strip__content');
-				var tileText = tileLink.find('.strip__inner-text');
-				var stripClose = $('.strip__close');
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
 
-				var expanded  = false;
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="scriptsVARIABLES">
+    <script>
+        let maintainer = "&#128295;"; // 🔧
+        let headOfIT = "&#128081;"; // 👑
+        let buisnessClient = "&#128188;"; // 💼
+        let clientUser = "&#128118;"; // 👶
+    </script>
+</div>
+<div class="reveal">
+    <!-- Footer && <Header -->
+    <style>
+        .reveal .footer {
+            position: absolute;
+            bottom: 1em;
+            left: 1em;
+            font-size: 0.5em;
+        }
 
-				var open = function() {
+        .header {
+            position: absolute;
+            top: 1em;
+            right: 1em;
+        }
 
-					var tile = $(this).parent();
+        h1, h2, h3, h4, h5, h6 {
+            padding-top: 2%;
+        }
+    </style>
+    <div class='footer'>
+        TINF19B4 <br>
+        10.12.2020 <br>
+        Lisa Kletsko, Paul Wolf, David Huh
+    </div>
+    <div id="header" class="header">
+    </div>
+    <!-- Slides -->
+    <div class="slides" id="introduction">
+        <!-- Introduction -->
+        <section>
+            <h2>Welcome to our Midterm - Presentation</h2>
+            <p>
+            <h1>PLANTSHUB 🌱</h1>
+            <!--<img style="width: 30%" src="https://taskhub854228916.files.wordpress.com/2020/10/cropped-unknown-1-1.png">-->
+            </p>
+        </section>
+        <!-- Disclaimer -->
+        <section>
+            <h2>Disclaimer</h2>
+            <p>
+                This Template was created by and for the Groups of <u><a
+                    href="https://taskhub854228916.wordpress.com/">TaskHub</a></u>, <u><a
+                    href="https://blog.betterzon.xyz">Betterzon</a></u> and <u><a href="https://blog.plantshub.de">PlantsHub</a></u>.
+            </p>
+        </section>
+        <!-- ToC -->
+        <section>
+            <h2 style="padding-top: 1%">Table of Contents</h2>
+            <ol type="1" style="font-size:60%;">
+              <li><b style="color: red;">Understanding Business Needs</b></li>
+                <ol>
+                    <li>Our Project</li>
+                    <ol>
+                        <li>Our Vision</li>
+                        <li>Use Cases (incl. Scopes)</li>
+                        <li>SRS</li>
+                        <li>nonfunctional</li>
+                    </ol>
+                  <li><b style="color: red">Project Methodology </b></li>
+                  <li><b style="color: red">Project Management</b></li>
+                    <ol>
+                        <li>RUP + Burndown</li>
+                        <li>Scrumming</li>
+                        <li>Iterative Process</li>
+                    </ol>
+                </ol>
+              <li><b style="color: red;">Technologies</b></li>
+                <ol>
+                    <li>Tools</li>
+                    <li>Frontend</li>
+                    <li>Backend</li>
+                </ol>
+              <li><b style="color: red;">Quality</b></li>
+                <ol>
+                    <li>Architecture</li>
+                    <li>Testing</li>
+                </ol>
+            </ol>
+        </section>
+        <!-- Dividing -->
+        <section>
+            <h3>Separation</h3>
+            <p>
+                Every Symbol stands for one Person in this Room and is mostly addressed for one of these persons and is
+                shown &#8599;
+            <ul style="list-style-type: none">
+                <li>
+                    <script>document.write(maintainer)</script> &#8594; Maintaining your Code
+                </li>
+                <li>
+                    <script>document.write(headOfIT)</script> &#8594; Head of IT
+                </li>
+                <li>
+                    <script>document.write(buisnessClient)</script> &#8594; Business Client
+                </li>
+                <li>
+                    <script>document.write(clientUser)</script> &#8594; Client User
+                </li>
+            </ul>
+            </p>
+        </section>
+    </div>
+    <!--
+     _______  ______  __________________   _______  _______
+    (  ____ \(  __  \ \__   __/\__   __/  (       )(  ____ \
+    | (    \/| (  \  )   ) (      ) (     | () () || (    \/
+    | (__    | |   ) |   | |      | |     | || || || (__
+    |  __)   | |   | |   | |      | |     | |(_)| ||  __)
+    | (      | |   ) |   | |      | |     | |   | || (
+    | (____/\| (__/  )___) (___   | |     | )   ( || (____/\
+    (_______/(______/ \_______/   )_(     |/     \|(_______/
+    -->
+    <div class="slides" id="Understand your business needs">
+        <section>
+            <h1>1. Understanding Business Needs</h1>
+        </section>
+        <section>
+            <section>
+                <h2>1.1 Our Project</h2>
+            </section>
+            <section>
+                <h2><a href="https://blog.plantshub.de/2020/10/1-hello-world/">1.1.1 Our Vision
+                    &#128302;</a></h2>
+                <br>
+                <ul>
+                    <li>Plant App for Organizing and keep track of your Plants</li>
+                    <li>Doesn't matter if you are a beginner or a Pro</li>
+                    <li>Water and Fertilizing Reminder</li>
+                    <li>Get Product Suggestions </li>
+                    <li>Swap Plants with other People</li>
+                </ul>
+            </section>
+            <section>
+                <h2>
+                    <a href="https://blog.plantshub.de/2020/10/3-what-can-you-do-with-plantshub/">1.1.2
+                        Use Cases</a></h2>
+                <a href="https://blog.plantshub.de/wp-content/uploads/2020/10/Bildschirmfoto-2020-10-15-um-12.02.30-768x598.png">
+                    <img
+                            src="resources/usecases.png">
+                </a>
+            </section>
+            <section>
+                <h2>
+                    <a href="https://github.com/qt1337/PlantsHub/wiki/General">1.1.3
+                        SRS</a></h2>
+                <a href="https://github.com/qt1337/PlantsHub/wiki/General"><img src="resources/srs.png"></a>
+            </section>
+            <section>
+                <h2>1.1.4 non-functional</h2>
+                <ul>
+                    <li class="fragment" data-fragment-index="1">Easy to use</li>
+                    <li class="fragment" data-fragment-index="2">Only important Features</li>
+                    <li class="fragment" data-fragment-index="3">Modern UI</li>
+                    <li class="fragment" data-fragment-index="4">24 / 7 Reliable</li>
+                    <li class="fragment" data-fragment-index="5">High Performance</li>
+                    <li class="fragment" data-fragment-index="6">Minimalistic</li>
+                </ul>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>1.2. Project Methodology</h2>
+            </section>
+            <section>
+                <h2>Scrum</h2>
+                <p>
+                    For our Project Methodology we use the commonly used Methodology of <u>Scrum</u>
+                </p>
+                <img class="fragment" data-fragment-index="2" style="width: 80%"
+                     src="https://bvik.org/wp-content/uploads/2019/08/SCRUM-Methode.jpg">
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>1.3 Project Management</h2>
+                <br>
+                <img style="width: 20%"
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/YouTrack_Logo.svg/1200px-YouTrack_Logo.svg.png">
+            </section>
+            <section>
+                <h2>1.3.1 RUP + Burndown</h2>
+                <img style="width: 40%" src="resources/Burndown.png"> <img width="50%" src="resources/rup.png">
+            </section>
+            <section>
+                <h2>1.3.2 Scrumming</h2>
+                <img width="80%" src="resources/scrum.png">
+            </section>
+            <section>
+                <h2>1.3.3 Iterative Process</h2>
+                <p>With Scrum we are following an iterative Process, which adjusts itself on every Elaboration</p>
+                <img src="https://www.geckoboard.com/blog/content/images/the-dashboard-iteration-process.png">
+            </section>
+        </section>
+    </div>
+    <div class="slides" id="Technical ability">
+        <section>
+            <h1>2. Technologies</h1>
+        </section>
+        <section>
+            <h2>2.1 Tools</h2>
+            <div style="display: flex; justify-content: center; padding-right: 1em">
+                <img style="width: 10%; height: 20%;" src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png"/>
 
-					if (!expanded) {
-						tile.addClass('strips__strip--expanded');
-						// add delay to inner text
-						tileText.css('transition', 'all .5s .3s cubic-bezier(0.23, 1, 0.32, 1)');
-						stripClose.addClass('strip__close--show');
-						stripClose.css('transition', 'all .6s 1s cubic-bezier(0.23, 1, 0.32, 1)');
-						expanded = true;
-					}
-				};
+                <img style="width: 10%; height: 20%"
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/IntelliJ_IDEA_Logo.svg/1024px-IntelliJ_IDEA_Logo.svg.png"/>
+                  <img style="width: 10%; height: 20%" src="https://resources.jetbrains.com/storage/products/webstorm/img/meta/webstorm_logo_300x300.png" />
 
-				var close = function() {
-					if (expanded) {
-						tile.removeClass('strips__strip--expanded');
-						// remove delay from inner text
-						tileText.css('transition', 'all 0.15s 0 cubic-bezier(0.23, 1, 0.32, 1)');
-						stripClose.removeClass('strip__close--show');
-						stripClose.css('transition', 'all 0.2s 0s cubic-bezier(0.23, 1, 0.32, 1)')
-						expanded = false;
-					}
-				}
+                <img style="width: 10%; height: 20%"
+                                   src="https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_angular_icon_130754.png"/>
 
-				var bindActions = function() {
-					tileLink.on('click', open);
-					stripClose.on('click', close);
-				};
+               <img style="width: 10%; height: 10%;"
+                                 src="https://miro.medium.com/max/512/1*fVBL9mtLJmHIH6YpU7WvHQ.png"/>
+              <img style="width: 7%; height: 5%;"
+                                 src="https://cdn.worldvectorlogo.com/logos/heroku.svg"/>
 
-				var init = function() {
-					bindActions();
-				};
-
-				return {
-					init: init
-				};
-
-			}());
-
-			Expand.init();
-		</script>
-		<section class="strips">
-			<article class="strips__strip">
-				<div class="strip__content">
-					<h1 class="strip__title" data-name="Lorem">Awesome</h1>
-					<div class="strip__inner-text">
-						<h2>Ettrics</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia sapiente deserunt consectetur, quod reiciendis corrupti quo ea aliquid! Repellendus numquam quo, voluptate. Suscipit soluta omnis quibusdam facilis, illo voluptates odit!</p>
-						<p>
-							<a href="https://twitter.com/ettrics" target="_blank"><i class="fa fa-twitter"></i></a>
-						</p>
-					</div>
-
-				</div>
-			</article>
-			<article class="strips__strip">
-				<div class="strip__content">
-					<h1 class="strip__title" data-name="Ipsum">Words</h1>
-					<div class="strip__inner-text">
-						<h2>Ettrics</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia sapiente deserunt consectetur, quod reiciendis corrupti quo ea aliquid! Repellendus numquam quo, voluptate. Suscipit soluta omnis quibusdam facilis, illo voluptates odit!</p>
-						<p>
-							<a href="https://twitter.com/ettrics" target="_blank"><i class="fa fa-twitter"></i></a>
-						</p>
-					</div>
-				</div>
-			</article>
-			<article class="strips__strip">
-				<div class="strip__content">
-					<h1 class="strip__title" data-name="Dolor">Go</h1>
-					<div class="strip__inner-text">
-						<h2>Ettrics</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia sapiente deserunt consectetur, quod reiciendis corrupti quo ea aliquid! Repellendus numquam quo, voluptate. Suscipit soluta omnis quibusdam facilis, illo voluptates odit!</p>
-						<p>
-							<a href="https://twitter.com/ettrics" target="_blank"><i class="fa fa-twitter"></i></a>
-						</p>
-					</div>
-				</div>
-			</article>
-			<article class="strips__strip">
-				<div class="strip__content">
-					<h1 class="strip__title" data-name="Sit">Inside</h1>
-					<div class="strip__inner-text">
-						<h2>Ettrics</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia sapiente deserunt consectetur, quod reiciendis corrupti quo ea aliquid! Repellendus numquam quo, voluptate. Suscipit soluta omnis quibusdam facilis, illo voluptates odit!</p>
-						<p>
-							<a href="https://twitter.com/ettrics" target="_blank"><i class="fa fa-twitter"></i></a>
-						</p>
-					</div>
-				</div>
-			</article>
-			<article class="strips__strip">
-				<div class="strip__content">
-					<h1 class="strip__title" data-name="Amet">Here</h1>
-					<div class="strip__inner-text">
-						<h2>Ettrics</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia sapiente deserunt consectetur, quod reiciendis corrupti quo ea aliquid! Repellendus numquam quo, voluptate. Suscipit soluta omnis quibusdam facilis, illo voluptates odit!</p>
-						<p>
-							<a href="https://twitter.com/ettrics" target="_blank"><i class="fa fa-twitter"></i></a>
-						</p>
-					</div>
-				</div>
-			</article>
-			<i class="fa fa-close strip__close"></i>
-		</section>
-	</body>
+            </div>
+        </section>
+        <section>
+            <h2>2.2 Frontend</h2>
+        </section>
+        <section>
+            <h2>2.3 Backend</h2>
+        </section>
+    </div>
+    <div class="slides" id="Quality">
+        <section>
+            <h1>3. Quality</h1>
+        </section>
+        <section>
+            <h2>3.1 Architecture</h2>
+            <a href="https://github.com/qt1337/PlantsHub/wiki/SAD">
+                <img src="resources/SAD.png">
+            </a>
+        </section>
+        <section>
+            <h2>3.2 Testing</h2>
+            <br>
+            <img width="50%" src="resources/testing.png">
+        </section>
+    </div>
+    <div class="slides" id="HandoutOverview">
+        <!-- Headerfolie -->
+        <section>
+            <h1>&#128269; Out of Scope</h1>
+            <h1>&#128221; Handout</h1>
+        </section>
+        <!-- Time Overview -->
+        <section>
+            <h1>Time Overview</h1>
+            <table class="table table-dark table-hover" style="width: 80%">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Secound Name</th>
+                    <th scope="col">E-Mail</th>
+                    <th scope="col">Projecthours</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">Lisa</th>
+                    <td>Kletsko</td>
+                    <td>l.kletsko0202@gmail.com</td>
+                    <td style="text-align: right">~ 35</td>
+                </tr>
+                <tr>
+                    <th class="table-info" scope="row" colspan="4" style="text-align: right">Angular Frontend, Blog,
+                        Peer Reviews, YouTrack, Deployment
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="row">Paul</th>
+                    <td>Wolf</td>
+                    <td>Paul@Paul-Wolf.de</td>
+                    <td style="text-align: right">~ 15</td>
+                </tr>
+                <tr>
+                    <th class="table-info" scope="row" colspan="4" style="text-align: right">Peer
+                        Reviews, Blog Posts, NodeJS Backend
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="row">David</th>
+                    <td>Huh</td>
+                    <td>David.Huh14@gmail.com</td>
+                    <td style="text-align: right">~ 45</td>
+                </tr>
+                <tr>
+                    <th class="table-info" scope="row" colspan="4" style="text-align: right">Project Management,
+                        API-Server,
+                        Database, Peer Reviews
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+        <!-- Print it -->
+        <section>
+            <script>
+                let print = (doc) => {
+                    let objFra = document.createElement('iframe');     // Create an IFrame.
+                    objFra.style.visibility = 'hidden';                // Hide the frame.
+                    objFra.src = doc;                   // Set source.
+                    document.body.appendChild(objFra);  // Add the frame to the web page.
+                    objFra.contentWindow.focus();       // Set focus.
+                    objFra.contentWindow.print();       // Print it.
+                }
+            </script>
+            <h2>Print Handout</h2>
+            <button type="button" class="btn btn-primary btn-lg" onclick="print('resources/dummy.pdf')">Print Handout
+            </button>
+        </section>
+    </div>
+    <div class="slides" id="endslide">
+        <section>
+            <h1>Hope you enjoyed our <br> Presentation ❤️</h1>
+            <br>
+            <p>You can download our Handout here : <a href="">Click me!</a></p>
+            <br>
+            <br>
+            <p>Also feel free to look in our <a target="_blank"
+                                                href="https://github.com/qt1337/PlantsHub">GitHub Repository
+            </a> and <a target="_blank" href="https://revealjs.com/">reveal.js which we used for the presentation</a>
+            </p>
+        </section>
+    </div>
+    <!-- NO CHANGING AFTER HERE -->
+</div>
+<div id="scripts">
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+            showNotes: "true",
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+        Reveal.on('slidechanged', event => {
+            if (event.indexh == 3 || event.indexh == 5 && event.indexv == 1) {
+                document.getElementById("header").innerHTML = maintainer + headOfIT + buisnessClient + clientUser;
+            }
+            if (event.indexh == 5 && event.indexv == 3 || event.indexh == 9) {
+                document.getElementById("header").innerHTML = maintainer + headOfIT + buisnessClient;
+            }
+            if (event.indexh == 6 || event.indexh == 7 && event.indexv == 1) {
+                document.getElementById("header").innerHTML = buisnessClient + headOfIT;
+            }
+            if (event.indexh == 10) {
+                document.getElementById("header").innerHTML = maintainer + headOfIT + clientUser;
+            }
+            if (event.indexh == 11) {
+                document.getElementById("header").innerHTML = maintainer + headOfIT;
+            }
+            if (event.indexh == 2 || event.indexh == 4 || event.indexh == 8 || event.indexh == 15) {
+                document.getElementById("header").innerHTML = "";
+            }
+        });
+    </script>
+</div>
+</body>
 </html>
