@@ -1,24 +1,19 @@
-<div *ngIf="authGuard.isLoggedIn()">
-  <mat-toolbar class="app-header flex">
-    <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
-            aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>{{title}}</span>
-    <button mat-icon-button class="logout-button tr items-end" aria-label="Example icon-button with logout icon"
-            (click)="authenticationService.logout()">
-      <mat-icon>logout</mat-icon>
-    </button>
-  </mat-toolbar>
-  <mat-drawer-container class="nav-container" autosize>
-    <mat-drawer #drawer class="side-nav w5" mode="side">
-      <div class="f2 pa2">
-        <a mat-flat-button routerLink="/plants">My Plants</a>
-        <p routerLink="/plants">My Plants</p>
-      </div>
-
-    </mat-drawer>
-
-    <router-outlet></router-outlet>
-  </mat-drawer-container>
-</div>
+<mat-toolbar class="app-header flex" *ngIf="authGuard.isLoggedIn()">
+  <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
+          aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>{{title}}</span>
+  <button mat-icon-button class="logout-button tr items-end" aria-label="Example icon-button with logout icon"
+          (click)="authenticationService.logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-drawer-container class="nav-container" autosize>
+  <mat-drawer #drawer class="side-nav w5" mode="side">
+    <div class="f2 pa2">
+      <a mat-flat-button routerLink="/plants">My Plants</a>
+    </div>
+  </mat-drawer>
+  <router-outlet></router-outlet>
+</mat-drawer-container>
