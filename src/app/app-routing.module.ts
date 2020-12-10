@@ -8,7 +8,7 @@ import {PlantcardComponent} from './_components/plantcard/plantcard.component';
 import {AuthGuard} from './auth.guard';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'plants', component: PlantcardComponent, canActivate: [AuthGuard]},
   {path: 'signin', component: SignInComponent},

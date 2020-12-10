@@ -13,10 +13,12 @@
           <div class="mt3" *ngFor="let field of fields">
             <label class="db fw6 lh-copy f6"
                    for="{{field.id}}">{{field.name.toUpperCase().slice(0, 1) + field.name.slice(1)}}</label>
-            <input class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white {{field.name === 'birthday' ? 'w-auto' : 'w-100'}} br3"
-                   formControlName="{{field.name}}" type="{{field.name === 'birthday' ? 'date' : 'text'}}"
-                   name="{{field.name}}" id="{{field.id}}"
-                   [ngClass]="{ 'is-invalid': submitted && loginForm.invalid }">
+            <input
+              class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white {{field.name === 'birthday' ? 'w-auto' : 'w-100'}} br3"
+              formControlName="{{field.name}}"
+              type="{{field.name === 'birthday' ? 'date' : field.name === 'password' ? 'password' : 'text'}}"
+              name="{{field.name}}" id="{{field.id}}"
+              [ngClass]="{ 'is-invalid': submitted && loginForm.invalid }">
             <div *ngIf="submitted && loginForm.invalid" class="invalid-feedback">
               <div *ngIf="loginForm.invalid">{{field.name}} is required</div>
             </div>
