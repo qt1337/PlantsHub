@@ -1,5 +1,7 @@
+@import "/src/styles";
+
 .invalid-feedback {
-  color: #ff7675;
+  color: $red;
 }
 
 #potted-plant-img {

@@ -1,5 +1,9 @@
+@import "../styles";
+
+
+
 .app-header {
-  background-color: #00b894;
+  background-color: $teal-primary;
   position: sticky;
   display: flex;
 }

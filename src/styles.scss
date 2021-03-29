@@ -1,7 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* VARIABLES */
+
+// Fonts
+@mixin sofia-pro-regular {
+  font-family: sofia-pro, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin sofia-pro-regular-italic {
+  font-family: sofia-pro, sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+@mixin sofia-pro-bold {
+  font-family: sofia-pro, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+@mixin sofia-pro-bold-italic {
+  font-family: sofia-pro, sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+// !Fonts
+
+// Colors
+$white: #ffffff;
+$red: #ff7675;
+
+$teal-light: #439889;
+$teal-primary: #00695c;
+$teal-dark: #003d33;
+
+$blue-light: #4fb3bf;
+$blue-primary: #00838f;
+$blue-dark: #005662;
+
+//!Colors
+
+/* !VARIABLES */
+
+/* GLOBAL STYLES */
+
 body {
   margin: 0;
-  font-family: "sofia-pro", sans-serif;
+  @include sofia-pro-regular;
 }
 
 html, body { height: 100%; }
+
+/* !GLOBAL STYLES */
