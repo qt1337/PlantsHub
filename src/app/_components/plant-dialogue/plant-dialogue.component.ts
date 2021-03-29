@@ -6,7 +6,7 @@ import {PlantService} from '../../_services/plant.service';
 @Component({
   selector: 'app-plant-dialogue',
   templateUrl: './plant-dialogue.component.html',
-  styleUrls: ['./plant-dialogue.component.css']
+  styleUrls: ['./plant-dialogue.component.scss']
 })
 export class PlantDialogueComponent implements OnInit {
 

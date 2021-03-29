@@ -9,7 +9,7 @@ import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component
 @Component({
   selector: 'app-plantcard',
   templateUrl: './plantcard.component.html',
-  styleUrls: ['./plantcard.component.css']
+  styleUrls: ['./plantcard.component.scss']
 })
 export class PlantcardComponent implements OnInit {
 
