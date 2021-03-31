@@ -38,11 +38,11 @@
           </div>
         </fieldset>
         <div class="flex justify-between">
-          <button [disabled]="loading" class="input-reset f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-green">
+          <button [disabled]="loading" mat-raised-button>
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Sign In
           </button>
-          <button routerLink="/signup" class="input-reset f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-blue">Register
+          <button mat-raised-button routerLink="/signup">Register
           </button>
         </div>
         <div class="lh-copy mt3 flex justify-center">
