@@ -54,3 +54,13 @@ body {
 html, body { height: 100%; }
 
 /* !GLOBAL STYLES */
+
+/* MIXINS */
+
+// Flex Properties
+
+@mixin flexcenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
