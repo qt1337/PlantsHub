@@ -1,10 +1,62 @@
 @import "/src/styles";
-
 .invalid-feedback {
   color: $red;
 }
 
-#potted-plant-img {
-  height: 4em;
-  width: 4em;
+.signin-card-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signin-card {
+  width: min(30vw, 500px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+    mat-card-content, mat-form-field {
+      width: 100%;
+    }
+
+}
+
+.signin-card-img {
+  display: flex;
+  justify-content: center;
+  height: min(30em, 200px);
+}
+
+.signin-card-buttons {
+  margin: 1em auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signin-card-buttons-signin {
+  background-color: $teal-primary;
+  color: $white;
+}
+
+.signin-card-buttons-register {
+  background-color: $red;
+  color: $white;
+}
+
+.signin-card-forgot-password {
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
+.signin-card-links {
+  display: flex;
+  justify-content: space-around;
+  margin: 2em auto;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
 }

@@ -15,6 +15,21 @@ export class SignInComponent implements OnInit {
   loading = false;
   submitted = false;
   error: boolean;
+  value = 'Clear me';
+  links = [
+    {
+      name: 'Blog',
+      link: 'https://blog.plantshub.de/'
+    },
+    {
+      name: 'GitHub',
+      link: 'https://github.com/qt1337/PlantsHub'
+    },
+    {
+      name: 'Impressum',
+      link: '#'
+    }
+  ]
 
   constructor(
     private formBuilder: FormBuilder,

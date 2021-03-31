@@ -1,57 +1,51 @@
-<meta charset="UTF-8">
-<div class="fl w-100 h-100 pa2 flex items-center justify-center">
-  <article class="w-40-l w-100 center bg-white pa3 pa4-ns mv3">
-    <div class="f2 tc fw5">PlantsHub</div>
-    <div class="tc f1 pa2"><img id="potted-plant-img" src="assets/potted-plant.svg"/></div>
-    <main class="pa4 black-80">
-      <form class="measure center" [formGroup]="loginForm" (ngSubmit)="onLogin()">
-        <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
-          <legend class="f4 fw6 ph0 mh0">Sign In</legend>
+<div class="signin-card-container">
+<mat-card class="signin-card">
+      <mat-card-header>
+        <mat-card-title>PLANTSHUB - SIGN IN</mat-card-title>
+      </mat-card-header>
+  <div class="signin-card-img"><img src="assets/6606.jpg"/></div>
+  <mat-card-content>
+        <form (ngSubmit)="onLogin()" [formGroup]="loginForm" class="measure center">
           <div *ngIf="error" class="invalid-feedback">
             Username / Email or Password is wrong!
           </div>
-          <div class="mt3">
-            <label class="db fw6 lh-copy f6" for="email-address">Email or Username</label>
-            <input class="pa2 input-reset ba bg-transparent w-100 br3"
-                   formControlName="username" type="text"
-                   name="email-address" id="email-address"
-                   [ngClass]="{ 'is-invalid': submitted && form.username.errors }">
+          <div>
+            <mat-form-field>
+              <mat-label>E-Mail or Username</mat-label>
+              <input [ngClass]="{ 'is-invalid': submitted && form.username.errors }" formControlName="username" id="email-address" matInput
+                     name="email-address" placeholder="max@gmail.com"
+                     type="text">
+            </mat-form-field>
             <div *ngIf="submitted && form.username.errors" class="invalid-feedback">
               <div *ngIf="form.username.errors.required">Username is required</div>
             </div>
           </div>
-          <div class="mv3">
-            <label class="db fw6 lh-copy f6" for="password">Password</label>
-            <input class="b pa2 input-reset ba bg-transparent w-100 br3"
-                   formControlName="password" type="password"
-                   name="password" id="password"
-
-                   [ngClass]="{ 'is-invalid': submitted && form.password.errors }">
-
+          <div>
+            <mat-form-field class="example-full-width">
+              <mat-label>Password</mat-label>
+              <input [ngClass]="{ 'is-invalid': submitted && form.password.errors }" formControlName="password"
+                     id="password" matInput
+                     name="password" placeholder="Password"
+                     type="password">
+            </mat-form-field>
             <div *ngIf="submitted && form.password.errors" class="invalid-feedback">
               <div *ngIf="form.password.errors.required">Password is required</div>
             </div>
           </div>
-          <div class="flex justify-between">
-            <!--<label class="pa0 ma0 lh-copy f6 pointer"><input type="checkbox"> Remember me</label>-->
-            <a href="#0" class="f6 link dim black db pa4-xs">Forgot Password?</a>
+          <div class="signin-card-forgot-password">
+            <a href="#0">Forgot Password?</a>
           </div>
-        </fieldset>
-        <div class="flex justify-between">
-          <button [disabled]="loading" mat-raised-button>
+        <div class="signin-card-buttons">
+          <button class="signin-card-buttons-signin" [disabled]="loading" mat-raised-button>
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Sign In
           </button>
-          <button mat-raised-button routerLink="/signup">Register
-          </button>
+          <button class="signin-card-buttons-register" mat-raised-button routerLink="/signup">Register</button>
         </div>
-        <div class="lh-copy mt3 flex justify-center">
-          <a href="https://blog.plantshub.de/" target="_blank" class="f6 link dim black db pa3 pa4-xs">Blog</a>
-          <a href="https://github.com/qt1337/PlantsHub" target="_blank"
-             class="f6 link dim black db pa3 pa4-xs">GitHub</a>
-          <a href="#" class="f6 link dim black db pa3 pa4-xs">Impressum</a>
+        <div class="signin-card-links">
+          <a *ngFor="let link of links" href="{{link.link}}" target="_blank">{{link.name}}</a>
         </div>
       </form>
-    </main>
-  </article>
+      </mat-card-content>
+    </mat-card>
 </div>
