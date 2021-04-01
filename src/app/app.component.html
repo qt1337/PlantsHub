@@ -9,8 +9,8 @@
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
-<mat-drawer-container class="nav-container" autosize>
-  <mat-drawer #drawer class="side-nav w5" mode="side">
+<mat-drawer-container class="nav-container" autosize [hasBackdrop]="true">
+  <mat-drawer #drawer class="side-nav w5" mode="over">
     <div class="f2 pa2">
       <a mat-flat-button routerLink="/plants">My Plants</a>
     </div>
