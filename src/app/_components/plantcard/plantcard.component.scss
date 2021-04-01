@@ -1,20 +1,23 @@
-.plants-card-container {
-  display: flex;
-  flex-wrap: wrap;
+.content {
+  padding: 16px;
+}
+
+.content > mat-card {
+  width: 200px;
 }
 
 mat-card {
-  max-width: 200px;
+  padding: 0;
 
   img {
-    width: 20vw;
-    height: 20vw;
+    height: 10vw;
   }
 }
-.item {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
+
+mat-card-header {
+  padding: 1em 0 0 0;
 }
+
 
 .fill-red {
   fill: red;
@@ -24,6 +27,8 @@ mat-card {
   color: black;
 }
 
-.plants-card-card {
-  width: 20vw;
+.plant-card-toggle {
+  position: fixed;
+  right: 2em;
+  bottom: 2em;
 }
