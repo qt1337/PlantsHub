@@ -1,17 +1,14 @@
 @import "../styles";
 
-
-
 .app-header {
-  background-color: $teal-primary;
-  position: sticky;
+  background-color: $teal-light;
+  position: fixed;
   display: flex;
-}
-.container {
-  height: 100vh;
+  top: 0;
+  z-index: 2;
 }
 
 .nav-container {
   background-color: white;
-  height: 100vh;
+  height: 100%;
 }
