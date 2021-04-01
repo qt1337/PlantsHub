@@ -10,6 +10,7 @@ import {PlantService} from '../../_services/plant.service';
 })
 export class PlantDialogueComponent implements OnInit {
 
+  plantImage: File = null;
   newPlant = new Plant();
   plants: Plant[];
 
@@ -20,13 +21,18 @@ export class PlantDialogueComponent implements OnInit {
   }
 
   addPlant(): void {
+    console.log(this.plantImage);
     if (!this.authenticationService.userValue) {
       return;
     }
+    const fd = new FormData();
+    fd.append('plantImage', this.plantImage, this.plantImage.name);
     this.plantService.addPlant(
       this.authenticationService.userValue[0].username,
       this.authenticationService.userValue[0].sessionId,
-      this.newPlant)
+      this.newPlant,
+      fd
+    )
       .subscribe(plants => {
         this.plants = plants;
       });
@@ -35,4 +41,8 @@ export class PlantDialogueComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onFileSelected(event): void {
+    this.plantImage = event.target.files[0];
+    console.log(this.plantImage);
+  }
 }

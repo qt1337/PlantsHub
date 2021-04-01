@@ -47,6 +47,10 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
+  <mat-form-field appearance="fill">
+    <input matInput type="file" (change)="onFileSelected($event)">
+  </mat-form-field>
+
   <div class="button-menu">
     <button mat-flat-button id="cancel-button" class="grow" [mat-dialog-close]="true">Cancel</button>
     <button mat-flat-button id="add-button" class="grow" [mat-dialog-close]="true" (click)="addPlant()">Add Plant
