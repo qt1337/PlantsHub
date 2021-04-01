@@ -5,19 +5,18 @@
         <mat-card-header>
           <mat-card-title>{{plant.plantName}}</mat-card-title>
           <mat-card-subtitle>{{plant.family}}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="plant.family == null">Planty has no family :(</mat-card-subtitle>
         </mat-card-header>
         <img
           src="{{plant.image || 'https://images.pexels.com/photos/2302503/pexels-photo-2302503.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}}"
           alt="{{plant.plantName}}">
-      <mat-card-content>
-         <p>beautiful plant</p>
-        </mat-card-content>
-        <mat-card-actions>
+        <div class="plant-card-buttons" fxLayout="row" fxLayoutAlign="space-between center">
           <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="clickEvent(plant)"
                      [ngClass]="plant.favourite ? 'fill-red' : 'no-red'"></i-feather>
           <i-feather name="book"></i-feather>
-        </mat-card-actions>
-        </mat-card>    </div>
+        </div>
+        </mat-card>
+  </div>
   </div>
 </div>
 <button class="plant-card-toggle" (click)="openDialog()" mat-fab color="warn" aria-label="Add Plant">

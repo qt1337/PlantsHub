@@ -8,9 +8,11 @@
 
 mat-card {
   padding: 0;
+  height: 400px;
 
   img {
-    height: 10vw;
+    width: 100%;
+    height: min(17rem, 280px);
   }
 }
 
@@ -25,6 +27,10 @@ mat-card-header {
 
 .no-red {
   color: black;
+}
+
+.plant-card-buttons {
+  padding: 1em 1em 1em 1em;
 }
 
 .plant-card-toggle {
