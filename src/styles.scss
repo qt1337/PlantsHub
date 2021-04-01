@@ -32,6 +32,10 @@
 $white: #ffffff;
 $red: #ff7675;
 
+$grey-light: #fffff;
+$grey-primary: #fafafa;
+$grey-dark: #c7c7c7;
+
 $teal-light: #439889;
 $teal-primary: #00695c;
 $teal-dark: #003d33;
@@ -49,6 +53,7 @@ $blue-dark: #005662;
 body {
   margin: 0;
   font-family: Roboto, Arial, sans-serif;
+  background-color: $grey-primary;
 }
 
 html, body { height: 100%; }
