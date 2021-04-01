@@ -4,7 +4,6 @@ const utility = require("./utility");
  * Creates a plant
  */
 function createPlant(pool, req, res) {
-
   let username = req.body.username;
   let sessionId = req.body.sessionId;
   let plantName = req.body.plantName;
@@ -203,5 +202,5 @@ function getPlants(pool, req, res) {
 module.exports = {
   createPlant,
   updatePlant,
-  getPlants
+  getPlants,
 };
