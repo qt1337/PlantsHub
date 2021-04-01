@@ -14,7 +14,7 @@ function createPlant(pool, req, res) {
   let family = req.body.family || null;
   let type = req.body.type || null;
   let species = req.body.species || null;
-  let image = req.body.image || null;
+  let image = req.file.path || null;
   let lux = req.body.lux || null;
 
   pool.getConnection().then((connection) => {
