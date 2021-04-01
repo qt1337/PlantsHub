@@ -73,24 +73,26 @@ export class PlantService {
     }
   }
 
-  addPlant(username, sessionId, plant): Observable<Plant[]> {
+  addPlant(username, sessionId, plant, formData): Observable<Plant[]> {
     try {
       const plantName = plant.plantName || null;
       const family = plant.family || null;
       const wateringInterval = plant.wateringInterval || null;
       const fertilizingInterval = plant.fertilizingInterval || null;
       const plantBirthday = plant.plantBirthday || null;
+
+
+      formData.append('username', username);
+      formData.append('sessionId', sessionId);
+      formData.append('plantName', plantName);
+      formData.append('family', family);
+      formData.append('wateringInterval', wateringInterval);
+      formData.append('fertilizingInterval', fertilizingInterval);
+      formData.append('plantBirthday', plantBirthday);
+
       return this.http.post<Plant[]>(
         '/api/create-plant',
-        {
-          username,
-          sessionId,
-          plantName,
-          family,
-          wateringInterval,
-          fertilizingInterval,
-          plantBirthday
-        },
+        formData,
         {responseType: 'json'}
       ).pipe(map(plants => {
           localStorage.removeItem('plants');
