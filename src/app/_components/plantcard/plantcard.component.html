@@ -1,21 +1,23 @@
 <div class="item flex flex-row flex-wrap justify-center">
   <div *ngFor="let plant of plants">
     <div *ngIf="plant">
-      <article class="ma2 bg-white br3 pa3 pa4-ns mv3 ba b--black-10 tc">
-        <div class="tc">
-          <img
-            src="{{plant.image || 'https://images.pexels.com/photos/2302503/pexels-photo-2302503.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}}"
-            class="h4 w4 dib b--black-05" title="{{plant.plantName}}">
-          <h1 class="f3 mb2">{{plant.plantName}}</h1>
-          <h2 class="f5 fw4 gray mt0">{{plant.family}}</h2>
+      <mat-card>
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{plant.plantName}}</mat-card-title>
+          <mat-card-subtitle>{{plant.family}}</mat-card-subtitle>
+        </mat-card-header>
+        <img
+          src="{{plant.image || 'https://images.pexels.com/photos/2302503/pexels-photo-2302503.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}}"
+          alt="{{plant.plantName}}">
+      <mat-card-content>
           <div class="icon-container flex justify-between">
             <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="clickEvent(plant)"
-                       [ngClass]="plant.favourite ? 'fill-red' : 'no-red'" class="big grow"></i-feather>
+                       [ngClass]="plant.favourite ? 'fill-red' : 'no-red'"></i-feather>
             <i-feather name="book"></i-feather>
           </div>
-        </div>
-      </article>
-    </div>
+        </mat-card-content>
+        </mat-card>    </div>
   </div>
   <button (click)="openDialog()" mat-fab color="warn" aria-label="Add Plant">
   <mat-icon>add</mat-icon>

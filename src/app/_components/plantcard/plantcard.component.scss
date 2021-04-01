@@ -3,6 +3,14 @@
   flex-wrap: wrap;
 }
 
+mat-card {
+  max-width: 200px;
+
+  img {
+    width: 20vw;
+    height: 20vw;
+  }
+}
 .item {
   display: grid;
   grid-template-columns: repeat(3, auto);
