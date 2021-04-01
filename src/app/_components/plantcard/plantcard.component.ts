@@ -32,8 +32,8 @@ export class PlantcardComponent implements OnInit {
 
   icons = [
     {name: 'heart', class: 'big fill-red'},
-    {name: 'book', class: 'big fill-red'}
-
+    {name: 'book', class: 'big fill-red'},
+    {name: 'trash', class: 'big fill-red'}
   ];
 
   ngOnInit(): void {

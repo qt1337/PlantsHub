@@ -1,6 +1,6 @@
-<div class="content">
-  <div fxLayout="row wrap" fxLayoutGap="16px grid">
-  <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let plant of plants">
+<div class="content" fxLayoutAlign="center space-between" fxLayout="column">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid" fxLayoutAlign="start">
+  <div fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.xl="16%" fxFlex="25%" *ngFor="let plant of plants">
       <mat-card *ngIf="plant" class="mat-elevation-z4">
         <mat-card-header>
           <mat-card-title>{{plant.plantName}}</mat-card-title>
@@ -14,6 +14,7 @@
           <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="clickEvent(plant)"
                      [ngClass]="plant.favourite ? 'fill-red' : 'no-red'"></i-feather>
           <i-feather name="book"></i-feather>
+          <i-feather name="trash"></i-feather>
         </div>
         </mat-card>
   </div>
