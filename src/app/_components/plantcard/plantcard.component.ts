@@ -5,6 +5,7 @@ import {User} from '../../_models/user';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
+import {Plant} from '../../_models/plant';
 
 @Component({
   selector: 'app-plantcard',
@@ -62,18 +63,35 @@ export class PlantcardComponent implements OnInit {
     });
   }
 
-  updatePlantFavourite(plant): void {
-    this.plantService.updatePlantFavourite(
+  private updatePlantFavourite(plant): void {
+    plant.favourite = !plant.favourite;
+
+    this.plantService.updatePlant(
       this.user.username,
       this.user.sessionId,
-      plant.plantId,
-      !plant.favourite
+      plant
     ).subscribe(plants => {
       this.plants = plants;
     });
   }
 
-  clickEvent(plant): void {
+  private deactivatePlant(plant): void {
+    plant.active = !plant.active;
+
+    this.plantService.updatePlant(
+      this.user.username,
+      this.user.sessionId,
+      plant
+    ).subscribe(plants => {
+      this.plants = plants;
+    });
+  }
+
+  changeFavourite(plant): void {
     this.updatePlantFavourite(plant);
+  }
+
+  deletePlant(plant): void {
+    this.deactivatePlant(plant);
   }
 }

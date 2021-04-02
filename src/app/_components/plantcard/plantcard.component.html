@@ -11,10 +11,10 @@
           src="{{plant.image || 'https://images.pexels.com/photos/2302503/pexels-photo-2302503.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}}"
           alt="{{plant.plantName}}">
         <div class="plant-card-buttons" fxLayout="row" fxLayoutAlign="space-between center">
-          <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="clickEvent(plant)"
+          <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="updatePlantFavourite(plant)"
                      [ngClass]="plant.favourite ? 'fill-red' : 'no-red'"></i-feather>
           <i-feather name="book"></i-feather>
-          <i-feather name="trash"></i-feather>
+          <i-feather name="trash" (click)="deletePlant(plant)"></i-feather>
         </div>
         </mat-card>
   </div>
