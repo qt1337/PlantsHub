@@ -50,15 +50,14 @@ export class PlantService {
     }
   }
 
-  updatePlantFavourite(username, sessionId, plantId, favourite): Observable<Plant[]> {
+  updatePlant(username, sessionId, plant): Observable<Plant[]> {
     try {
       return this.http.post<Plant[]>(
         '/api/update-plant',
         {
           username,
           sessionId,
-          plantId,
-          favourite
+          plant
         },
         {responseType: 'json'}
       ).pipe(map(plants => {
@@ -80,7 +79,6 @@ export class PlantService {
       const wateringInterval = plant.wateringInterval || null;
       const fertilizingInterval = plant.fertilizingInterval || null;
       const plantBirthday = plant.plantBirthday || null;
-
 
       formData.append('username', username);
       formData.append('sessionId', sessionId);
