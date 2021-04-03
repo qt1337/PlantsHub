@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'plants', component: PlantcardComponent, canActivate: [AuthGuard]},
   {path: 'signin', component: SignInComponent},
-  {path: 'signup', component: SignUpComponent},
+  {path: 'signup', component: SignInComponent},
   {path: '404', component: PageNotFoundComponent},
 
   // '**' has to be last!

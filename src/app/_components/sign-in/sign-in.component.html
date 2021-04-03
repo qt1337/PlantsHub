@@ -4,7 +4,9 @@
         <mat-card-title>PLANTSHUB - SIGN IN</mat-card-title>
       </mat-card-header>
   <div class="signin-card-img"><img src="assets/6606.jpg"/></div>
+
   <mat-card-content>
+    <div *ngIf="router.url === '/signin' else elseBlock">
         <form (ngSubmit)="onLogin()" [formGroup]="loginForm" class="measure center">
           <div *ngIf="error" class="invalid-feedback">
             Username / Email or Password is wrong!
@@ -47,6 +49,11 @@
           <a *ngFor="let link of links" href="{{link.link}}" target="_blank">{{link.name}}</a>
         </div>
       </form>
+    </div>
+    <ng-template #elseBlock>
+      <app-sign-up></app-sign-up>
+    </ng-template>
       </mat-card-content>
+
     </mat-card>
 </div>
