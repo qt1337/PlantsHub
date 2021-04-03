@@ -5,7 +5,7 @@
 
 // Fonts
 @mixin sofia-pro-regular {
-  font-family: sofia-pro, sans-serif;
+  font-family: sofia-pro, sans-serif!important;
   font-weight: 400;
   font-style: normal;
 }
@@ -68,4 +68,8 @@ html, body { height: 100%; }
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+* {
+  @include sofia-pro-regular;
 }
