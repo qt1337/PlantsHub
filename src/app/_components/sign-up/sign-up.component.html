@@ -2,11 +2,11 @@
           <div *ngIf="error" class="invalid-feedback">
             Username or Email is already being used!
           </div>
-          <div class="mt3" *ngFor="let field of fields">
+          <ng-container *ngFor="let field of fields">
+            <mat-form-field class="signup-formfields">
             <mat-label for="{{field.id}}">{{field.name.toUpperCase().slice(0, 1) + field.name.slice(1)}}</mat-label>
             <input
               matInput
-              class="pa2 input-reset ba bg-transparent hover-bg-dark-gray hover-white {{field.name === 'birthday' ? 'w-auto' : 'w-100'}} br3"
               formControlName="{{field.name}}"
               type="{{field.name === 'birthday' ? 'date' : field.name === 'password' ? 'password' : 'text'}}"
               name="{{field.name}}" id="{{field.id}}"
@@ -14,14 +14,14 @@
             <div *ngIf="submitted && loginForm.invalid" class="invalid-feedback">
               <div *ngIf="loginForm.invalid">{{field.name}} is required</div>
             </div>
-          </div>
-
-          <div class="flex justify-between mt3">
-            <button [disabled]="loading" class="input-reset f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-blue">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-              Sign Up
-            </button>
-            <a routerLink="/signin" class="f6 link dim black db pa4-xs">Already have an account?</a>
-          </div>
+            </mat-form-field>
+          </ng-container>
+  <div class="signin-card-buttons">
+    <button class="signin-card-buttons-signin" [disabled]="loading" mat-raised-button>
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Sign Up
+    </button>
+    <button class="signin-card-buttons-register" mat-raised-button routerLink="/signin">Sign In</button>
+  </div>
 </form>
 

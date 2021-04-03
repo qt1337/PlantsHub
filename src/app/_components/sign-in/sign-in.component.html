@@ -1,13 +1,15 @@
 <div class="signin-card-container">
 <mat-card class="signin-card">
       <mat-card-header>
-        <mat-card-title>PLANTSHUB - SIGN IN</mat-card-title>
+        <mat-card-title *ngIf="router.url==='/signin'">PLANTSHUB - SIGN IN</mat-card-title>
+        <mat-card-title *ngIf="router.url==='/signup'">PLANTSHUB - SIGN UP</mat-card-title>
       </mat-card-header>
-  <div class="signin-card-img"><img src="assets/6606.jpg"/></div>
+  <div  *ngIf="router.url==='/signin'" class="signin-card-img"><img src="assets/6606.jpg"/></div>
+  <div  *ngIf="router.url==='/signup'" class="signin-card-img"><img src="assets/5236.jpg"/></div>
 
   <mat-card-content>
-    <form (ngSubmit)="onLogin()" [formGroup]="loginForm" class="measure center">
     <ng-container *ngIf="router.url === '/signin' else elseBlock">
+    <form (ngSubmit)="onLogin()" [formGroup]="loginForm" class="measure center">
           <div *ngIf="error" class="invalid-feedback">
             Username / Email or Password is wrong!
           </div>
@@ -42,17 +44,19 @@
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Sign In
           </button>
-          <button class="signin-card-buttons-register" mat-raised-button routerLink="/signup">Register</button>
+          <button class="signin-card-buttons-register" mat-raised-button routerLink="/signup">Sign Up</button>
         </div>
-    </ng-container>
-      <ng-template #elseBlock>
-        <app-sign-up></app-sign-up>
-      </ng-template>
-        <div class="signin-card-links">
-          <a *ngFor="let link of links" href="{{link.link}}" target="_blank">{{link.name}}</a>
-        </div>
-      </form>
 
+      </form>
+    </ng-container>
+
+    <ng-template #elseBlock>
+      <app-sign-up></app-sign-up>
+    </ng-template>
+
+    <div class="signin-card-links">
+      <a *ngFor="let link of links" href="{{link.link}}" target="_blank">{{link.name}}</a>
+    </div>
       </mat-card-content>
 
     </mat-card>
