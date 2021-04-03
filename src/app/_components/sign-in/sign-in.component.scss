@@ -12,9 +12,17 @@
   align-items: start;
   justify-content: center;
   margin: 10em auto auto;
-  padding: 3em;
+  padding: 3em 3em 3em 6em;
   max-width: 100%;
 }
+
+@media (max-width: 768px) {
+  .landing-page-text {
+    margin: 0;
+    padding: 3em;
+  }
+}
+
 .signin-card-container {
   height: 100%;
   @include flexcenter;
