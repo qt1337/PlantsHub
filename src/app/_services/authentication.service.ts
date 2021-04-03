@@ -4,7 +4,7 @@ import {first, map} from 'rxjs/operators';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../_models/user';
 import {Router} from '@angular/router';
-
+import { isDevMode } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 export class AuthenticationService {
   private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
+  private localURL: string;
 
   constructor(
     private http: HttpClient,
@@ -19,6 +20,12 @@ export class AuthenticationService {
   ) {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userSubject.asObservable();
+
+    if (isDevMode()) {
+      this.localURL = 'http://localhost:8080';
+    } else {
+      this.localURL = '';
+    }
   }
 
   public get userValue(): User {
@@ -73,7 +80,7 @@ export class AuthenticationService {
         const username = this.userValue[0].username;
 
         return this.http.post<User>(
-          '/api/check-session',
+          this.localURL + '/api/check-session',
           {
             sessionId,
             username
@@ -95,7 +102,7 @@ export class AuthenticationService {
   public login(username, password): Observable<User> {
     try {
       return this.http.post<User>(
-        '/api/check-credentials',
+        this.localURL + '/api/check-credentials',
         {
           username,
           password
@@ -122,7 +129,7 @@ export class AuthenticationService {
   public register(username, email, password, forename, surname, birthday): Observable<User> {
     try {
       return this.http.post<User>(
-        '/api/create-user',
+        this.localURL + '/api/create-user',
         {
           username,
           email,

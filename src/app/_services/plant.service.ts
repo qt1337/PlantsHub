@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, isDevMode} from '@angular/core';
 import {Plant} from '../_models/plant';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {AuthenticationService} from './authentication.service';
@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 export class PlantService {
   private plantsSubject: BehaviorSubject<Plant[]>;
   private plants: Observable<Plant[]>;
+  private localURL: string;
 
   constructor(
     private http: HttpClient,
@@ -20,6 +21,12 @@ export class PlantService {
   ) {
     this.plantsSubject = new BehaviorSubject<Plant[]>(JSON.parse(localStorage.getItem('plants')));
     this.plants = this.plantsSubject.asObservable();
+
+    if (isDevMode()) {
+      this.localURL = 'http://localhost:8080';
+    } else {
+      this.localURL = '';
+    }
   }
 
   public get plantsValue(): Plant[] {
@@ -33,7 +40,7 @@ export class PlantService {
         return null;
       }
       return this.http.post<Plant[]>(
-        '/api/get-plants',
+        this.localURL + '/api/get-plants',
         {
           username,
           sessionId
@@ -53,7 +60,7 @@ export class PlantService {
   updatePlant(username, sessionId, plant): Observable<Plant[]> {
     try {
       return this.http.post<Plant[]>(
-        '/api/update-plant',
+        this.localURL + '/api/update-plant',
         {
           username,
           sessionId,
@@ -89,7 +96,7 @@ export class PlantService {
       formData.append('plantBirthday', plantBirthday);
 
       return this.http.post<Plant[]>(
-        '/api/create-plant',
+        this.localURL + '/api/create-plant',
         formData,
         {responseType: 'json'}
       ).pipe(map(plants => {
