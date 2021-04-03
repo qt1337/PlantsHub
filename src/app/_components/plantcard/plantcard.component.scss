@@ -13,6 +13,7 @@ mat-card {
   img {
     width: 100%;
     height: min(17rem, 280px);
+    object-fit: cover;
   }
 }
 
