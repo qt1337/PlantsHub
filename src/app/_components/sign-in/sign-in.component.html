@@ -1,4 +1,6 @@
-<div class="signin-card-container">
+<div class="home-container" fxLayout="row" fxLayout.xs="column">
+  <div class="landing-page-text"><app-landing-page></app-landing-page></div>
+  <div class="signin-card-container">
 <mat-card class="signin-card">
       <mat-card-header>
         <mat-card-title *ngIf="router.url==='/signin'">PLANTSHUB - SIGN IN</mat-card-title>
@@ -60,4 +62,5 @@
       </mat-card-content>
 
     </mat-card>
+</div>
 </div>

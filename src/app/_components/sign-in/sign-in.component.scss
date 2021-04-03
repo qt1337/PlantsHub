@@ -1,8 +1,16 @@
 @import "/src/styles";
+
+.home-container {
+  height: 100%;
+}
 .invalid-feedback {
   color: $red;
 }
 
+.landing-page-text {
+  @include flexcenter;
+  padding: 3em;
+}
 .signin-card-container {
   height: 100%;
   @include flexcenter;
