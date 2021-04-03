@@ -8,8 +8,12 @@
 }
 
 .landing-page-text {
-  @include flexcenter;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  margin: 10em auto auto;
   padding: 3em;
+  max-width: 100%;
 }
 .signin-card-container {
   height: 100%;

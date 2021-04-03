@@ -1,0 +1,12 @@
+@import "/src/styles";
+
+.landing-page-h2 {
+  @include sofia-pro-bold;
+  font-size: 5em;
+  line-height: 1em;
+}
+
+.landing-page-p {
+  font-size: 1.2em;
+  line-height: 1.2em;
+}
