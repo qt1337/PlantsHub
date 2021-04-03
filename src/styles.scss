@@ -70,6 +70,6 @@ html, body { height: 100%; }
   justify-content: center;
 }
 
-* {
+*:not(.material-icons) {
   @include sofia-pro-regular;
 }
