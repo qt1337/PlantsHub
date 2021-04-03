@@ -6,8 +6,8 @@
   <div class="signin-card-img"><img src="assets/6606.jpg"/></div>
 
   <mat-card-content>
-    <div *ngIf="router.url === '/signin' else elseBlock">
-        <form (ngSubmit)="onLogin()" [formGroup]="loginForm" class="measure center">
+    <form (ngSubmit)="onLogin()" [formGroup]="loginForm" class="measure center">
+    <ng-container *ngIf="router.url === '/signin' else elseBlock">
           <div *ngIf="error" class="invalid-feedback">
             Username / Email or Password is wrong!
           </div>
@@ -36,7 +36,6 @@
           </div>
           <div class="signin-card-forgot-password">
             <a href="#0">Forgot Password?</a>
-            <mat-checkbox>Remember me!</mat-checkbox>
           </div>
         <div class="signin-card-buttons">
           <button class="signin-card-buttons-signin" [disabled]="loading" mat-raised-button>
@@ -45,14 +44,15 @@
           </button>
           <button class="signin-card-buttons-register" mat-raised-button routerLink="/signup">Register</button>
         </div>
+    </ng-container>
+      <ng-template #elseBlock>
+        <app-sign-up></app-sign-up>
+      </ng-template>
         <div class="signin-card-links">
           <a *ngFor="let link of links" href="{{link.link}}" target="_blank">{{link.name}}</a>
         </div>
       </form>
-    </div>
-    <ng-template #elseBlock>
-      <app-sign-up></app-sign-up>
-    </ng-template>
+
       </mat-card-content>
 
     </mat-card>
