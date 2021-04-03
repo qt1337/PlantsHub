@@ -14,24 +14,25 @@ export class PlantDialogueComponent {
   plantFormFields: PlantFormField[] = [
     {
       title: 'Plant Family',
-      name: 'family'
+      name: 'family',
+      defaultValue: ''
     },
     {
-      title: 'Plant Family',
-      name: 'plantName'
+      title: 'Plant Name',
+      name: 'plantName',
+      defaultValue: ''
     },
     {
       title: 'Watering Interval',
-      name: 'wateringInterval'
+      name: 'wateringInterval',
+      defaultValue: 0
     },
     {
       title: 'Fertilizing Interval',
-      name: 'fertilizingInterval'
+      name: 'fertilizingInterval',
+      defaultValue: 0
     },
-    {
-      title: 'Plant Birthday',
-      name: 'plantBirthday'
-    }]
+  ]
 
   plantImage: File = null;
   newPlant = new Plant();
