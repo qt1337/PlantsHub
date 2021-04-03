@@ -1,7 +1,17 @@
 <ng-container>
-  <h2>ADD PLANT</h2>
-  <!-- Family Input Field -->
-  <mat-form-field appearance="fill">
+  <h2>Add a new member to your Plant-Family</h2>
+
+  <ng-container *ngFor="let formField of plantFormFields">
+    <mat-form-field appearance="outline">
+      <mat-label>Plant Family</mat-label>
+      <input matInput type="text" [(ngModel)]="newPlant.formField">
+      <button mat-button *ngIf="newPlant.family" matSuffix mat-icon-button aria-label="Clear"
+              (click)="newPlant.family=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </ng-container>
+  <mat-form-field appearance="outline">
     <mat-label>Plant Family</mat-label>
     <input matInput type="text" [(ngModel)]="newPlant.family">
     <button mat-button *ngIf="newPlant.family" matSuffix mat-icon-button aria-label="Clear"
@@ -11,7 +21,7 @@
   </mat-form-field>
   <br>
   <!-- Name Input Field -->
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Plant Name</mat-label>
     <input matInput type="text" [(ngModel)]="newPlant.plantName">
     <button mat-button *ngIf="newPlant.plantName" matSuffix mat-icon-button aria-label="Clear"
@@ -21,7 +31,7 @@
   </mat-form-field>
   <br>
   <!-- Watering Intervals -->
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Watering Intervals (in days)</mat-label>
     <input matInput type="number" [(ngModel)]="newPlant.wateringInterval" [defaultValue]="0">
     <button mat-button *ngIf="newPlant.wateringInterval" matSuffix mat-icon-button aria-label="Clear"
@@ -30,7 +40,7 @@
     </button>
   </mat-form-field>
   <!-- Fertilizing Intervals -->
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Fertilizing Intervals (in days)</mat-label>
     <input matInput type="number" [(ngModel)]="newPlant.fertilizingInterval" [defaultValue]="0">
     <button mat-button *ngIf="newPlant.fertilizingInterval" matSuffix mat-icon-button aria-label="Clear"
@@ -39,7 +49,7 @@
     </button>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <!-- Birthday -->
     <mat-label>Birthday of the Plant</mat-label>
     <input matInput [matDatepicker]="picker" [(ngModel)]="newPlant.plantBirthday">
@@ -47,7 +57,7 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <input matInput type="file" (change)="onFileSelected($event)">
   </mat-form-field>
 

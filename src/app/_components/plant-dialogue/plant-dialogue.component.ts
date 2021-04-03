@@ -2,13 +2,36 @@ import {Component, OnInit} from '@angular/core';
 import {Plant} from '../../_models/plant';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {PlantService} from '../../_services/plant.service';
+import {PlantFormField} from "../../_models/plantFormField";
 
 @Component({
   selector: 'app-plant-dialogue',
   templateUrl: './plant-dialogue.component.html',
   styleUrls: ['./plant-dialogue.component.scss']
 })
-export class PlantDialogueComponent implements OnInit {
+export class PlantDialogueComponent {
+
+  plantFormFields: PlantFormField[] = [
+    {
+      title: 'Plant Family',
+      name: 'family'
+    },
+    {
+      title: 'Plant Family',
+      name: 'plantName'
+    },
+    {
+      title: 'Watering Interval',
+      name: 'wateringInterval'
+    },
+    {
+      title: 'Fertilizing Interval',
+      name: 'fertilizingInterval'
+    },
+    {
+      title: 'Plant Birthday',
+      name: 'plantBirthday'
+    }]
 
   plantImage: File = null;
   newPlant = new Plant();
@@ -36,9 +59,6 @@ export class PlantDialogueComponent implements OnInit {
       .subscribe(plants => {
         this.plants = plants;
       });
-  }
-
-  ngOnInit(): void {
   }
 
   onFileSelected(event): void {
