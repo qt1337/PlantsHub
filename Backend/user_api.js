@@ -46,46 +46,59 @@ function createUser(pool, req, res) {
 function checkUserSession(pool, req, res) {
   let username = req.body.username;
   let sessionId = req.body.sessionId;
-  let hashedSessionId;
+  let hashedSession;
   let now;
 
   pool
     .getConnection()
     .then((conn) => {
       conn
-        .query("SELECT salt FROM User WHERE username = (?)", [username])
+        .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
         .then((row) => {
-          let salt = row[0].salt;
-
-          hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
-          now = new Date();
-
-          conn.end();
-          return conn.query(
-            "SELECT * FROM User WHERE username = (?) and sessionId = (?) and sessionCreated > (?)",
-            [username, hashedSessionId, now]
-          );
-        })
-        .then((result) => {
-          if (!result[0]) {
-            res.status(401).send("session not valid");
+          if (!row[0]) {
+            res.status(401).send("session not valid 1");
             conn.end();
             return;
           }
-          result[0].sessionId = sessionId;
-          delete result[0].password;
-          delete result[0].salt;
-          delete result[0].userId;
+          let salt = row[0].salt;
+          let userId = row[0].userId;
 
-          res.status(202).json(result);
-          console.log(result[0].username + " logged in via sessionId.");
+          hashedSession = utility.sha512(sessionId, salt).passwordHash;
+          now = new Date();
+
           conn.end();
+          conn.query("SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSession])
+            .then((row) => {
+              if (!row[0]) {
+                res.status(401).send("session not valid 1");
+                conn.end();
+                return;
+              }
+              conn.end();
+              return conn.query(
+                "SELECT * FROM User WHERE userId = (?)",
+                [userId]
+              ).then((result) => {
+                if (!result[0]) {
+                  res.status(401).send("session not valid");
+                  conn.end();
+                  return;
+                }
+                result[0].sessionId = sessionId;
+                delete result[0].password;
+                delete result[0].salt;
+                delete result[0].userId;
+
+                res.status(202).json(result);
+                conn.end();
+              })
+                .catch((err) => {
+                  console.log(err);
+                  res.status(401).send("session not valid");
+                  conn.end();
+                });
+            })
         })
-        .catch((err) => {
-          console.log(err);
-          res.status(401).send("session not valid");
-          conn.end();
-        });
     })
     .catch((err) => {
       console.log(err);
@@ -101,7 +114,7 @@ function checkUserCredentials(pool, req, res) {
   let password = req.body.password;
   let sessionId = utility.getRandomString(64);
   let hashedPassword;
-  let hashedSessionId;
+  let hashedSession;
   let sessionExpiringDate;
 
   pool
@@ -116,7 +129,7 @@ function checkUserCredentials(pool, req, res) {
           let salt = row[0].salt;
 
           hashedPassword = utility.sha512(password, salt).passwordHash;
-          hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
+          hashedSession = utility.sha512(sessionId, salt).passwordHash;
 
           let daysUntilExpiring = 7;
 
@@ -124,62 +137,78 @@ function checkUserCredentials(pool, req, res) {
           sessionExpiringDate.setDate(
             sessionExpiringDate.getDate() + daysUntilExpiring
           );
-
+          conn.end();
           conn
-            .query(
-              "UPDATE User SET sessionId = (?), sessionCreated = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
-              [
-                hashedSessionId,
-                sessionExpiringDate,
-                username,
-                username,
-                hashedPassword,
-              ]
-            )
-            .then((result) => {
-              if (result["affectedRows"] === 0) {
-                res.clearCookie("sessionData");
+            .query("SELECT userId FROM User WHERE (username = (?) OR email = (?)) AND password = (?)", [
+              username,
+              username,
+              hashedPassword
+            ])
+            .then((row) => {
+              if (!row[0]) {
                 res.status(404).send("credentials not correct");
                 conn.end();
                 return;
               }
-              let sessionData = {
-                sessionId: sessionId,
-                username: username,
-              };
-              res.clearCookie("sessionData");
-              res.cookie("sessionData", sessionData, {
-                maxAge: 6048000,
-                secure: true,
-                sameSite: "strict",
-              });
+
+              let userId = row[0].userId;
+
               conn.end();
-              return conn
-                .query(
-                  "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and password = (?)",
-                  [username, username, hashedPassword]
+              conn
+                // .query(
+                //   "UPDATE User SET sessionId = (?), sessionCreated = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
+                .query("INSERT INTO Session (userId, sessionHash) VALUE (?,?)",
+                  [
+                    userId,
+                    hashedSession,
+                  ]
                 )
                 .then((result) => {
-                  result[0].sessionId = sessionId;
-                  delete result[0].password;
-                  delete result[0].salt;
-                  delete result[0].userId;
+                  console.log(result);
+                  if (result["affectedRows"] === 0) {
+                    res.clearCookie("sessionData");
+                    res.status(404).send("credentials not correct");
+                    conn.end();
+                    return;
+                  }
+                  let sessionData = {
+                    sessionId: sessionId,
+                    username: username,
+                  };
+                  res.clearCookie("sessionData");
+                  res.cookie("sessionData", sessionData, {
+                    maxAge: 6048000,
+                    secure: true,
+                    sameSite: "strict",
+                  });
+                  conn.end();
+                  return conn
+                    .query(
+                      "SELECT * FROM User WHERE ( username = (?) OR email = (?) ) and password = (?)",
+                      [username, username, hashedPassword]
+                    )
+                    .then((result) => {
+                      result[0].sessionId = sessionId;
+                      delete result[0].password;
+                      delete result[0].salt;
+                      delete result[0].userId;
 
-                  res.status(202).json(result);
-                  console.log(result[0].username + " logged in.");
-                  conn.end();
-                })
-                .catch((err) => {
-                  console.log(err);
-                  res.status(400).send("error occurred");
-                  conn.end();
+                      res.status(202).json(result);
+                      console.log(result[0].username + " logged in.");
+                      conn.end();
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      res.status(400).send("error occurred");
+                      conn.end();
+                    });
                 });
+            })
+            .catch((err) => {
+              console.log(err);
+              res.status(404).send("credentials not correct");
+              conn.end();
             });
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(404).send("credentials not correct");
-          conn.end();
         });
     })
     .catch((err) => {
