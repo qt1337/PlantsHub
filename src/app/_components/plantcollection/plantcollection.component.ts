@@ -9,7 +9,7 @@ export class PlantcollectionComponent implements OnInit {
 
   value: string;
 
-  valueChangeEvent($event){
+  valueChangeEvent($event): void{
     this.value = $event;
   }
 
@@ -19,7 +19,7 @@ export class PlantcollectionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setValue($event) { // @TODO Why is this not working simultaniously?
+  setValue($event): void { // @TODO Why is this not working simultaniously?
     console.log($event);
     this.value = $event;
   }

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Plant} from '../../_models/plant';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {PlantService} from '../../_services/plant.service';
-import {PlantFormField} from "../../_models/plantFormField";
+import {PlantFormField} from '../../_models/plantFormField';
 
 @Component({
   selector: 'app-plant-dialogue',
@@ -32,7 +32,7 @@ export class PlantDialogueComponent {
       name: 'fertilizingInterval',
       defaultValue: 0
     },
-  ]
+  ];
 
   plantImage: File = null;
   newPlant = new Plant();
@@ -45,12 +45,13 @@ export class PlantDialogueComponent {
   }
 
   addPlant(): void {
-    console.log(this.plantImage);
     if (!this.authenticationService.userValue) {
       return;
     }
     const fd = new FormData();
-    fd.append('plantImage', this.plantImage, this.plantImage.name);
+    if (this.plantImage) {
+      fd.append('plantImage', this.plantImage, this.plantImage.name);
+    }
     this.plantService.addPlant(
       this.authenticationService.userValue[0].username,
       this.authenticationService.userValue[0].sessionId,

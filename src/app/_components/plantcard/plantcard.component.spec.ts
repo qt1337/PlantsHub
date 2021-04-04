@@ -5,6 +5,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
 import {RouterModule} from '@angular/router';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
 
 describe('PlantcardComponent', () => {
   let component: PlantcardComponent;
@@ -18,7 +19,8 @@ describe('PlantcardComponent', () => {
         FormsModule,
         HttpClientModule,
         MatDialogModule,
-        RouterModule
+        RouterModule,
+        Ng2SearchPipeModule
       ],
     })
       .compileComponents();

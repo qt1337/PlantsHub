@@ -55,7 +55,6 @@ export class AuthenticationService {
       this.loginViaSessionId().pipe(first())
         .subscribe({
             next: (user) => {
-              console.log('session is valid.');
               this.userSubject.next(user);
             },
             error: () => {
@@ -74,8 +73,6 @@ export class AuthenticationService {
   public loginViaSessionId(): Observable<User> {
     try {
       if (this.userValue && this.userValue[0]) {
-        console.log('check for active session...');
-
         const sessionId = this.userValue[0].sessionId;
         const username = this.userValue[0].username;
 
