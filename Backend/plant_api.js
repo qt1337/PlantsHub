@@ -16,9 +16,12 @@ function createPlant(pool, req, res) {
   let species = req.body.species || null;
   let image = null;
   if (req.file) {
-    image = req.file.path || 'https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500';
+    image =
+      req.file.path ||
+      "https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
   } else {
-    image = 'https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500';
+    image =
+      "https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
   }
   let lux = req.body.lux || null;
 
@@ -37,7 +40,11 @@ function createPlant(pool, req, res) {
         let hashedSession = utility.sha512(sessionId, salt).passwordHash;
         connection.end();
 
-        connection.query("SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSession])
+        connection
+          .query(
+            "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+            [userId, hashedSession]
+          )
           .then((row) => {
             if (!row[0]) {
               res.status(401).send("session not valid");
@@ -120,7 +127,11 @@ function updatePlant(pool, req, res) {
         let hashedSession = utility.sha512(sessionId, salt).passwordHash;
         connection.end();
 
-        connection.query("SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSession])
+        connection
+          .query(
+            "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+            [userId, hashedSession]
+          )
           .then((row) => {
             if (!row[0]) {
               res.status(401).send("session not valid");
@@ -158,7 +169,7 @@ function updatePlant(pool, req, res) {
                 res.status(401).send("rows could not be updated");
                 connection.end();
               });
-          })
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -190,7 +201,11 @@ function getPlants(pool, req, res) {
         let hashedSession = utility.sha512(sessionId, salt).passwordHash;
         connection.end();
 
-        connection.query("SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSession])
+        connection
+          .query(
+            "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+            [userId, hashedSession]
+          )
           .then((row) => {
             if (!row[0]) {
               res.status(401).send("session not valid");
@@ -199,7 +214,9 @@ function getPlants(pool, req, res) {
             }
             connection.end();
             connection
-              .query("SELECT * FROM Plant WHERE userId = (?) and active = 1", [userId])
+              .query("SELECT * FROM Plant WHERE userId = (?) and active = 1", [
+                userId,
+              ])
               .then((result) => {
                 res.status(202).json(result);
               })

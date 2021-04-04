@@ -3,7 +3,7 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/form
 import {AuthenticationService} from '../../_services/authentication.service';
 import {first} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PlantDialogueComponent} from "../plant-dialogue/plant-dialogue.component";
+import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -29,7 +29,7 @@ export class SignInComponent implements OnInit {
       name: 'Impressum',
       link: '#'
     }
-  ]
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
