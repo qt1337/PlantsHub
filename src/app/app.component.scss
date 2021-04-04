@@ -1,0 +1,19 @@
+@import "../styles";
+
+.app-header {
+  background-color: $teal-light;
+  color: $white;
+  position: fixed;
+  display: flex;
+  top: 0;
+  z-index: 2;
+}
+
+mat-drawer-container {
+  top: 64px;
+  position: relative;
+  height: calc(100vh - 64px);
+}
+.nav-container {
+  background-color: $grey-light;
+}

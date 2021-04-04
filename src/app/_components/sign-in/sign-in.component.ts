@@ -3,23 +3,38 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/form
 import {AuthenticationService} from '../../_services/authentication.service';
 import {first} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PlantDialogueComponent} from "../plant-dialogue/plant-dialogue.component";
+import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
   error: boolean;
+  value = 'Clear me';
+  links = [
+    {
+      name: 'Blog',
+      link: 'https://blog.plantshub.de/'
+    },
+    {
+      name: 'GitHub',
+      link: 'https://github.com/qt1337/PlantsHub'
+    },
+    {
+      name: 'Impressum',
+      link: '#'
+    }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     private authenticationService: AuthenticationService,
   ) {
   }

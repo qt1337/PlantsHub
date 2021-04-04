@@ -15,6 +15,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PlantcardComponent} from './_components/plantcard/plantcard.component';
 import {FeatherModule} from 'angular-feather';
 import {IconsModule} from './_modules/icons/icons.module';
+import { SearchboxComponent } from './_components/searchbox/searchbox.component';
+import { PlantcollectionComponent } from './_components/plantcollection/plantcollection.component';
+import { SortbyComponent } from './_components/sortby/sortby.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,9 @@ import {IconsModule} from './_modules/icons/icons.module';
     PageNotFoundComponent,
     PlantDialogueComponent,
     PlantcardComponent,
+    SearchboxComponent,
+    PlantcollectionComponent,
+    SortbyComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +45,7 @@ import {IconsModule} from './_modules/icons/icons.module';
     DemoMaterialModule,
     FeatherModule,
     IconsModule,
+    Ng2SearchPipeModule
   ],
   providers: [
     HttpClientModule,

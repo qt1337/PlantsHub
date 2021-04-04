@@ -1,4 +1,5 @@
 export class Plant {
+  plantId: number;
   plantName: string;
   wateringInterval: number;
   fertilizingInterval: number;
@@ -10,4 +11,5 @@ export class Plant {
   image: string;
   lux: string;
   favourite: boolean;
+  active: boolean;
 }

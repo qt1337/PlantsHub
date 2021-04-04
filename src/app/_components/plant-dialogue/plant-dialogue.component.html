@@ -1,55 +1,32 @@
-<ng-container>
-  <h2>ADD PLANT</h2>
-  <!-- Family Input Field -->
-  <mat-form-field appearance="fill">
-    <mat-label>Plant Family</mat-label>
-    <input matInput type="text" [(ngModel)]="newPlant.family">
-    <button mat-button *ngIf="newPlant.family" matSuffix mat-icon-button aria-label="Clear"
-            (click)="newPlant.family=''">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-  <br>
-  <!-- Name Input Field -->
-  <mat-form-field appearance="fill">
-    <mat-label>Plant Name</mat-label>
-    <input matInput type="text" [(ngModel)]="newPlant.plantName">
-    <button mat-button *ngIf="newPlant.plantName" matSuffix mat-icon-button aria-label="Clear"
-            (click)="newPlant.plantName=''">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-  <br>
-  <!-- Watering Intervals -->
-  <mat-form-field appearance="fill">
-    <mat-label>Watering Intervals (in days)</mat-label>
-    <input matInput type="number" [(ngModel)]="newPlant.wateringInterval" [defaultValue]="0">
-    <button mat-button *ngIf="newPlant.wateringInterval" matSuffix mat-icon-button aria-label="Clear"
-            (click)="newPlant.wateringInterval=0">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-  <!-- Fertilizing Intervals -->
-  <mat-form-field appearance="fill">
-    <mat-label>Fertilizing Intervals (in days)</mat-label>
-    <input matInput type="number" [(ngModel)]="newPlant.fertilizingInterval" [defaultValue]="0">
-    <button mat-button *ngIf="newPlant.fertilizingInterval" matSuffix mat-icon-button aria-label="Clear"
-            (click)="newPlant.fertilizingInterval=0">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
+<div class="plantformfield-container" fxLayout="column" fxFlex.xs="100%">
+<h2>Add a new member to your Plant-Family</h2>
+  <ng-container *ngFor="let formField of plantFormFields">
+  <mat-form-field appearance="standard">
+      <mat-label>{{formField.title}}</mat-label>
+      <input matInput type="text" [(ngModel)]="newPlant[formField.name]">
+      <button mat-button *ngIf="newPlant[formField.name]" matSuffix mat-icon-button aria-label="Clear"
+              (click)="newPlant[formField.name]=[formField.defaultValue]">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <br>
+  </ng-container>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="standard">
     <!-- Birthday -->
     <mat-label>Birthday of the Plant</mat-label>
     <input matInput [matDatepicker]="picker" [(ngModel)]="newPlant.plantBirthday">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-
+  <!--
+  <mat-form-field appearance="outline">
+    <input matInput type="file" (change)="onFileSelected($event)">
+  </mat-form-field> @TODO Fix the File Upload to suit the other parts of Material UI
+-->
   <div class="button-menu">
-    <button mat-flat-button id="cancel-button" class="grow" [mat-dialog-close]="true">Cancel</button>
-    <button mat-flat-button id="add-button" class="grow" [mat-dialog-close]="true" (click)="addPlant()">Add Plant
+    <button mat-flat-button id="cancel-button" [mat-dialog-close]="true">Cancel</button>
+    <button mat-flat-button id="add-button" [mat-dialog-close]="true" (click)="addPlant()">Add Plant
     </button>
   </div>
-</ng-container>
+</div>

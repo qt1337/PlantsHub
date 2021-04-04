@@ -1,21 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PlantService} from '../../_services/plant.service';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {User} from '../../_models/user';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
+import {Plant} from '../../_models/plant';
+import {SearchboxComponent} from '../searchbox/searchbox.component';
 
 @Component({
   selector: 'app-plantcard',
   templateUrl: './plantcard.component.html',
-  styleUrls: ['./plantcard.component.css']
+  styleUrls: ['./plantcard.component.scss']
 })
 export class PlantcardComponent implements OnInit {
 
+  @Input() value: string;
   user: User;
   plants: any;
-
   constructor(
     private plantService: PlantService,
     private authenticationService: AuthenticationService,
@@ -32,8 +34,8 @@ export class PlantcardComponent implements OnInit {
 
   icons = [
     {name: 'heart', class: 'big fill-red'},
-    {name: 'book', class: 'big fill-red'}
-
+    {name: 'book', class: 'big fill-red'},
+    {name: 'trash', class: 'big fill-red'}
   ];
 
   ngOnInit(): void {
@@ -62,18 +64,35 @@ export class PlantcardComponent implements OnInit {
     });
   }
 
-  updatePlantFavourite(plant): void {
-    this.plantService.updatePlantFavourite(
+  private updatePlantFavourite(plant): void {
+    plant.favourite = !plant.favourite;
+
+    this.plantService.updatePlant(
       this.user.username,
       this.user.sessionId,
-      plant.plantId,
-      !plant.favourite
+      plant
     ).subscribe(plants => {
       this.plants = plants;
     });
   }
 
-  clickEvent(plant): void {
+  private deactivatePlant(plant): void {
+    plant.active = !plant.active;
+
+    this.plantService.updatePlant(
+      this.user.username,
+      this.user.sessionId,
+      plant
+    ).subscribe(plants => {
+      this.plants = plants;
+    });
+  }
+
+  changeFavourite(plant): void {
     this.updatePlantFavourite(plant);
+  }
+
+  deletePlant(plant): void {
+    this.deactivatePlant(plant);
   }
 }

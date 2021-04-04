@@ -1,0 +1,41 @@
+.content {
+  padding: 16px;
+}
+
+.content > mat-card {
+  width: 200px;
+}
+
+mat-card {
+  padding: 0 0 1em;
+  height: 400px;
+
+  img {
+    width: 100%;
+    height: min(17rem, 280px);
+    object-fit: cover;
+  }
+}
+
+mat-card-header {
+  padding: 1em 0 0;
+}
+
+
+.fill-red {
+  fill: red;
+}
+
+.no-red {
+  color: black;
+}
+
+.plant-card-buttons {
+  padding: 1em;
+}
+
+.plant-card-toggle {
+  position: fixed;
+  right: 2em;
+  bottom: 2em;
+}

@@ -6,13 +6,14 @@ import {HomeComponent} from './_components/home/home.component';
 import {PageNotFoundComponent} from './_components/page-not-found/page-not-found.component';
 import {PlantcardComponent} from './_components/plantcard/plantcard.component';
 import {AuthGuard} from './auth.guard';
+import {PlantcollectionComponent} from './_components/plantcollection/plantcollection.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
-  {path: 'plants', component: PlantcardComponent, canActivate: [AuthGuard]},
+  {path: 'plants', component: PlantcollectionComponent, canActivate: [AuthGuard]},
   {path: 'signin', component: SignInComponent},
-  {path: 'signup', component: SignUpComponent},
+  {path: 'signup', component: SignInComponent},
   {path: '404', component: PageNotFoundComponent},
 
   // '**' has to be last!

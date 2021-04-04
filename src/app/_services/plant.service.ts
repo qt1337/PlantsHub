@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, isDevMode} from '@angular/core';
 import {Plant} from '../_models/plant';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {AuthenticationService} from './authentication.service';
@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 export class PlantService {
   private plantsSubject: BehaviorSubject<Plant[]>;
   private plants: Observable<Plant[]>;
+  private localURL: string;
 
   constructor(
     private http: HttpClient,
@@ -20,6 +21,12 @@ export class PlantService {
   ) {
     this.plantsSubject = new BehaviorSubject<Plant[]>(JSON.parse(localStorage.getItem('plants')));
     this.plants = this.plantsSubject.asObservable();
+
+    if (isDevMode()) {
+      this.localURL = 'http://localhost:8080';
+    } else {
+      this.localURL = '';
+    }
   }
 
   public get plantsValue(): Plant[] {
@@ -33,7 +40,7 @@ export class PlantService {
         return null;
       }
       return this.http.post<Plant[]>(
-        '/api/get-plants',
+        this.localURL + '/api/get-plants',
         {
           username,
           sessionId
@@ -50,15 +57,14 @@ export class PlantService {
     }
   }
 
-  updatePlantFavourite(username, sessionId, plantId, favourite): Observable<Plant[]> {
+  updatePlant(username, sessionId, plant): Observable<Plant[]> {
     try {
       return this.http.post<Plant[]>(
-        '/api/update-plant',
+        this.localURL + '/api/update-plant',
         {
           username,
           sessionId,
-          plantId,
-          favourite
+          plant
         },
         {responseType: 'json'}
       ).pipe(map(plants => {
@@ -73,24 +79,25 @@ export class PlantService {
     }
   }
 
-  addPlant(username, sessionId, plant): Observable<Plant[]> {
+  addPlant(username, sessionId, plant, formData): Observable<Plant[]> {
     try {
       const plantName = plant.plantName || null;
       const family = plant.family || null;
       const wateringInterval = plant.wateringInterval || null;
       const fertilizingInterval = plant.fertilizingInterval || null;
       const plantBirthday = plant.plantBirthday || null;
+
+      formData.append('username', username);
+      formData.append('sessionId', sessionId);
+      formData.append('plantName', plantName);
+      formData.append('family', family);
+      formData.append('wateringInterval', wateringInterval);
+      formData.append('fertilizingInterval', fertilizingInterval);
+      formData.append('plantBirthday', plantBirthday);
+
       return this.http.post<Plant[]>(
-        '/api/create-plant',
-        {
-          username,
-          sessionId,
-          plantName,
-          family,
-          wateringInterval,
-          fertilizingInterval,
-          plantBirthday
-        },
+        this.localURL + '/api/create-plant',
+        formData,
         {responseType: 'json'}
       ).pipe(map(plants => {
           localStorage.removeItem('plants');
