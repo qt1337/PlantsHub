@@ -18,6 +18,7 @@ import {IconsModule} from './_modules/icons/icons.module';
 import { SearchboxComponent } from './_components/searchbox/searchbox.component';
 import { PlantcollectionComponent } from './_components/plantcollection/plantcollection.component';
 import { SortbyComponent } from './_components/sortby/sortby.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { SortbyComponent } from './_components/sortby/sortby.component';
     DemoMaterialModule,
     FeatherModule,
     IconsModule,
+    Ng2SearchPipeModule
   ],
   providers: [
     HttpClientModule,

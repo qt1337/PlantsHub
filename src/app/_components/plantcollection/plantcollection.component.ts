@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-plantcollection',
@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlantcollectionComponent implements OnInit {
 
-  constructor() { }
+  value: string;
+
+  valueChangeEvent($event){
+    this.value = $event;
+  }
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
 
+  setValue($event) { // @TODO Why is this not working simultaniously?
+    console.log($event);
+    this.value = $event;
+  }
 }

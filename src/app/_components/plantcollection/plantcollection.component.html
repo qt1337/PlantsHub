@@ -1,6 +1,7 @@
 <div class="plantcollection-searchbox" fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.xs="center center">
-<app-searchbox></app-searchbox>
-<app-sortby></app-sortby>
+  <app-searchbox (searchValue)="setValue($event)" ></app-searchbox>
+  <app-sortby></app-sortby>
+
 </div>
 
-<app-plantcard></app-plantcard>
+<app-plantcard [value]="value"></app-plantcard>

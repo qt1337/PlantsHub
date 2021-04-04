@@ -36,6 +36,7 @@
     "express-rate-limit": "^5.2.3",
     "mariadb": "^2.5.2",
     "multer": "^1.4.2",
+    "ng2-search-filter": "^0.5.1",
     "node-emoji": "^1.10.0",
     "rxjs": "~6.6.0",
     "tachyons": "^4.12.0",

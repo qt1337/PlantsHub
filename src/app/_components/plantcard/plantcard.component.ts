@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PlantService} from '../../_services/plant.service';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {User} from '../../_models/user';
@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
 import {Plant} from '../../_models/plant';
+import {SearchboxComponent} from "../searchbox/searchbox.component";
 
 @Component({
   selector: 'app-plantcard',
@@ -14,9 +15,9 @@ import {Plant} from '../../_models/plant';
 })
 export class PlantcardComponent implements OnInit {
 
+  @Input() value : string;
   user: User;
   plants: any;
-
   constructor(
     private plantService: PlantService,
     private authenticationService: AuthenticationService,
