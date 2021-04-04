@@ -6,6 +6,7 @@
     "clean": "rimraf ./dist",
     "start": "node server.js",
     "build": "ng build",
+    "heroku-postbuild": "ng build --prod",
     "build:prod": "ng build --prod",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "test:watch": "ng test",
