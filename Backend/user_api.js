@@ -56,7 +56,7 @@ function checkUserSession(pool, req, res) {
         .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
         .then((row) => {
           if (!row[0]) {
-            res.status(401).send("session not valid 1");
+            res.status(401).send("session not valid");
             conn.end();
             return;
           }
@@ -70,7 +70,7 @@ function checkUserSession(pool, req, res) {
           conn.query("SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSession])
             .then((row) => {
               if (!row[0]) {
-                res.status(401).send("session not valid 1");
+                res.status(401).send("session not valid");
                 conn.end();
                 return;
               }
