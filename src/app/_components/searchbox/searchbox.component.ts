@@ -8,7 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class SearchboxComponent  {
   // Die Pflanze die gesucht wird
   @Output() searchValue = new EventEmitter();
-  searchString: string = '';
+  searchString = '';
 
   constructor() { }
 
