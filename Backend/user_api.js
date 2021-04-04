@@ -64,7 +64,6 @@ function checkUserSession(pool, req, res) {
           let userId = row[0].userId;
 
           hashedSession = utility.sha512(sessionId, salt).passwordHash;
-          now = new Date();
 
           conn.end();
           conn.query("SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSession])
