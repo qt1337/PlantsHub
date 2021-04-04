@@ -47,7 +47,6 @@ function checkUserSession(pool, req, res) {
   let username = req.body.username;
   let sessionId = req.body.sessionId;
   let hashedSession;
-  let now;
 
   pool
     .getConnection()
