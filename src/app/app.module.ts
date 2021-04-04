@@ -15,6 +15,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PlantcardComponent} from './_components/plantcard/plantcard.component';
 import {FeatherModule} from 'angular-feather';
 import {IconsModule} from './_modules/icons/icons.module';
+import { SearchboxComponent } from './_components/searchbox/searchbox.component';
+import { PlantcollectionComponent } from './_components/plantcollection/plantcollection.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import {IconsModule} from './_modules/icons/icons.module';
     PageNotFoundComponent,
     PlantDialogueComponent,
     PlantcardComponent,
+    SearchboxComponent,
+    PlantcollectionComponent,
   ],
   imports: [
     BrowserModule,
