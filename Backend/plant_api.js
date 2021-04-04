@@ -14,7 +14,12 @@ function createPlant(pool, req, res) {
   let family = req.body.family || null;
   let type = req.body.type || null;
   let species = req.body.species || null;
-  let image = req.file.path || null;
+  let image = null;
+  if (req.file) {
+    image = req.file.path || 'https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500';
+  } else {
+    image = 'https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500';
+  }
   let lux = req.body.lux || null;
 
   pool.getConnection().then((connection) => {

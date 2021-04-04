@@ -45,12 +45,13 @@ export class PlantDialogueComponent {
   }
 
   addPlant(): void {
-    console.log(this.plantImage);
     if (!this.authenticationService.userValue) {
       return;
     }
     const fd = new FormData();
-    fd.append('plantImage', this.plantImage, this.plantImage.name);
+    if (this.plantImage) {
+      fd.append('plantImage', this.plantImage, this.plantImage.name);
+    }
     this.plantService.addPlant(
       this.authenticationService.userValue[0].username,
       this.authenticationService.userValue[0].sessionId,
