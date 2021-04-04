@@ -17,6 +17,7 @@ import {FeatherModule} from 'angular-feather';
 import {IconsModule} from './_modules/icons/icons.module';
 import { SearchboxComponent } from './_components/searchbox/searchbox.component';
 import { PlantcollectionComponent } from './_components/plantcollection/plantcollection.component';
+import { SortbyComponent } from './_components/sortby/sortby.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { PlantcollectionComponent } from './_components/plantcollection/plantcol
     PlantcardComponent,
     SearchboxComponent,
     PlantcollectionComponent,
+    SortbyComponent,
   ],
   imports: [
     BrowserModule,
