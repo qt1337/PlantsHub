@@ -1,4 +1,4 @@
 <mat-form-field class="plantcollection-searchfield">
   <mat-label>Search Plant</mat-label>
-  <input matInput type="text" [(ngModel)]="searchString" (click)="searchValue.emit(searchString)">
+  <input matInput type="text" [(ngModel)]="searchString" (keyup)="searchValue.emit(searchString)">
 </mat-form-field>
