@@ -67,7 +67,11 @@ function checkUserSession(pool, req, res) {
           now = new Date();
 
           conn.end();
-          conn.query("SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSession])
+          conn
+            .query(
+              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+              [userId, hashedSession]
+            )
             .then((row) => {
               if (!row[0]) {
                 res.status(401).send("session not valid");
@@ -75,30 +79,29 @@ function checkUserSession(pool, req, res) {
                 return;
               }
               conn.end();
-              return conn.query(
-                "SELECT * FROM User WHERE userId = (?)",
-                [userId]
-              ).then((result) => {
-                if (!result[0]) {
-                  res.status(401).send("session not valid");
-                  conn.end();
-                  return;
-                }
-                result[0].sessionId = sessionId;
-                delete result[0].password;
-                delete result[0].salt;
-                delete result[0].userId;
+              return conn
+                .query("SELECT * FROM User WHERE userId = (?)", [userId])
+                .then((result) => {
+                  if (!result[0]) {
+                    res.status(401).send("session not valid");
+                    conn.end();
+                    return;
+                  }
+                  result[0].sessionId = sessionId;
+                  delete result[0].password;
+                  delete result[0].salt;
+                  delete result[0].userId;
 
-                res.status(202).json(result);
-                conn.end();
-              })
+                  res.status(202).json(result);
+                  conn.end();
+                })
                 .catch((err) => {
                   console.log(err);
                   res.status(401).send("session not valid");
                   conn.end();
                 });
-            })
-        })
+            });
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -139,11 +142,10 @@ function checkUserCredentials(pool, req, res) {
           );
           conn.end();
           conn
-            .query("SELECT userId FROM User WHERE (username = (?) OR email = (?)) AND password = (?)", [
-              username,
-              username,
-              hashedPassword
-            ])
+            .query(
+              "SELECT userId FROM User WHERE (username = (?) OR email = (?)) AND password = (?)",
+              [username, username, hashedPassword]
+            )
             .then((row) => {
               if (!row[0]) {
                 res.status(404).send("credentials not correct");
@@ -156,12 +158,12 @@ function checkUserCredentials(pool, req, res) {
               conn.end();
               conn
                 // .query(
-                //   "UPDATE User SET sessionId = (?), sessionCreated = (?) WHERE ( username = (?) OR email = (?) ) and password = (?)",
-                .query("INSERT INTO Session (userId, sessionHash) VALUE (?,?)",
-                  [
-                    userId,
-                    hashedSession,
-                  ]
+                //   "UPDATE User SET sessionId = (?), sessionCreated =
+                //   (?) WHERE ( username = (?) OR email = (?) ) and
+                //   password = (?)",
+                .query(
+                  "INSERT INTO Session (userId, sessionHash) VALUE (?,?)",
+                  [userId, hashedSession]
                 )
                 .then((result) => {
                   console.log(result);
