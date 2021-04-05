@@ -50,6 +50,18 @@ const limiter = rateLimit({
 
 const app = express();
 
+// const forceSSL = function() {
+//   return function (req, res, next) {
+//     if (req.headers['x-forwarded-proto'] !== 'https') {
+//       return res.redirect(
+//         ['https://', req.get('Host'), req.url].join('')
+//       );
+//     }
+//     next();
+//   }
+// }
+
+// app.use(forceSSL());
 app.use(limiter);
 app.use(express.static("./dist/PlantsHub"));
 app.use(cookieParser());
@@ -86,6 +98,14 @@ app.post("/api/check-credentials", (req, res) => {
 
 app.post("/api/check-session", (req, res) => {
   user_api.checkUserSession(pool, req, res);
+});
+
+app.post("/api/request-reset-password", (req, res) => {
+  user_api.requestResetPasswordKey(pool, req, res);
+});
+
+app.post("/api/reset-password", (req, res) => {
+  user_api.resetPasswordKey(pool, req, res);
 });
 
 /**

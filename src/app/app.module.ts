@@ -19,6 +19,8 @@ import { SearchboxComponent } from './_components/searchbox/searchbox.component'
 import { PlantcollectionComponent } from './_components/plantcollection/plantcollection.component';
 import { SortbyComponent } from './_components/sortby/sortby.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     DemoMaterialModule,
     FeatherModule,
     IconsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     HttpClientModule,

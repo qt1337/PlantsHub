@@ -217,8 +217,170 @@ function checkUserCredentials(pool, req, res) {
     });
 }
 
+/**
+ * For resetting password of user
+ * Creates key and saves hashed key in database
+ * Sends unhashed key via email to user
+ * Key lasts 30 minutes until invalid
+ */
+function requestResetPasswordKey(pool, req, res) {
+  let email = req.body.email;
+  let resetPasswordKey = utility.getRandomString(64);
+
+  pool
+    .getConnection()
+    .then((conn) => {
+      conn
+        .query("SELECT salt, userId FROM User WHERE email = (?)", [email])
+        .then((row) => {
+          if (!row[0]) {
+            res.status(404).send("user does not exist");
+            conn.end();
+            return;
+          }
+          let salt = row[0].salt;
+          let userId = row[0].userId;
+          let hashedResetPasswordKey = utility.sha512(resetPasswordKey, salt)
+            .passwordHash;
+          let currentDate = new Date();
+          let resetPasswordDate = new Date(currentDate.getTime() + 30 * 60000);
+
+          conn.end();
+          conn
+            .query(
+              "UPDATE User SET resetPasswordKey = (?), resetPasswordDate = (?) WHERE userId = (?)",
+              [hashedResetPasswordKey, resetPasswordDate, userId]
+            )
+            .then((result) => {
+              if (result.affectedRows !== 1) {
+                res.status(401).send("something went wrong");
+                conn.end();
+                return;
+              }
+              console.log(resetPasswordKey); // TODO
+              // sendResetPasswordEmail(resetPasswordKey);
+              res.status(202).json("email has been sent");
+              conn.end();
+            });
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      // not connected
+    });
+}
+
+/**
+ * For resetting password of user
+ * Checks if key is valid and before resetPasswordDate
+ * Changes password of user
+ */
+function resetPasswordKey(pool, req, res) {
+  let email = req.body.email || null;
+  let resetPasswordKey = req.body.resetPasswordKey || null;
+  let password = req.body.password || null;
+
+  if (!email || !resetPasswordKey || !password) {
+    res.status(401).send("something went wrong");
+    return;
+  }
+
+  pool
+    .getConnection()
+    .then((conn) => {
+      conn
+        .query("SELECT salt, userId FROM User WHERE email = (?)", [email])
+        .then((row) => {
+          if (!row[0]) {
+            res.status(404).send("user does not exist");
+            conn.end();
+            return;
+          }
+          let userId = row[0].userId;
+          let salt = row[0].salt;
+          let hashedResetPasswordKey = utility.sha512(resetPasswordKey, salt)
+            .passwordHash;
+          let hashedPassword = utility.sha512(password, salt).passwordHash;
+
+          conn.end();
+          conn
+            .query(
+              "UPDATE User SET password = (?), resetPasswordKey = null, resetPasswordDate = NOW() WHERE userId = (?) and resetPasswordKey = (?) and resetPasswordDate > NOW()",
+              [hashedPassword, userId, hashedResetPasswordKey]
+            )
+            .then((result) => {
+              if (result.affectedRows !== 1) {
+                res.status(401).send("resetPasswordKey is not valid anymore");
+                conn.end();
+                return;
+              }
+              res.status(202).json("password has been changed"); // TODO route to login
+              // page
+              conn.end();
+            });
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      // not connected
+    });
+}
+
 module.exports = {
   createUser,
   checkUserCredentials,
   checkUserSession,
+  requestResetPasswordKey,
+  resetPasswordKey,
 };
+
+/**
+template for checking session of user
+
+ function checkUserSession(pool, req, res) {
+  let username = req.body.username;
+  let sessionId = req.body.sessionId;
+  let hashedSession;
+
+  pool
+    .getConnection()
+    .then((conn) => {
+      conn
+        .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
+        .then((row) => {
+          if (!row[0]) {
+            res.status(401).send("session not valid");
+            conn.end();
+            return;
+          }
+          let salt = row[0].salt;
+          let userId = row[0].userId;
+
+          hashedSession = utility.sha512(sessionId, salt).passwordHash;
+
+          conn.end();
+          conn
+            .query(
+              "SELECT userId FROM Session WHERE userId = (?) and sessionHash =
+(?)", [userId, hashedSession]
+            )
+            .then((row) => {
+              if (!row[0]) {
+                res.status(401).send("session not valid");
+                conn.end();
+                return;
+              }
+              conn.end();
+
+              // session is valid || userId is set
+
+            });
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      // not connected
+    });
+}
+
+ */
