@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   showFiller = false;
 
   constructor(
-    private router: Router,
+    public router: Router,
     public authGuard: AuthGuard,
     public authenticationService: AuthenticationService
   ) {
