@@ -100,6 +100,14 @@ app.post("/api/check-session", (req, res) => {
   user_api.checkUserSession(pool, req, res);
 });
 
+app.post("/api/request-reset-password", (req, res) => {
+  user_api.requestResetPasswordKey(pool, req, res);
+});
+
+app.post("/api/reset-password", (req, res) => {
+  user_api.resetPasswordKey(pool, req, res);
+});
+
 /**
  * PLANT API
  */
