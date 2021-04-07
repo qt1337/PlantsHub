@@ -121,6 +121,7 @@ export class AuthenticationService {
     localStorage.removeItem('user');
     this.userSubject.next(null);
     this.router.navigate(['/signin']);
+    window.location.reload() // Important to refresh the UI but maybe there is a better solution @TODO
   }
 
   public register(username, email, password, forename, surname, birthday): Observable<User> {
