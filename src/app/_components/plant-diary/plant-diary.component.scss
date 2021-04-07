@@ -80,3 +80,6 @@
   border-radius: 2em ;
   z-index: 5;
 }
+.mat-dialog-container {
+  height: min(600px, 80vh);
+}
