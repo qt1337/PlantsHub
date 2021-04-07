@@ -4,30 +4,39 @@
     object-fit: cover;
     position: sticky;
     top: 0;
-    height: min(300px, 20em);
+    height: min(200px, 10em);
     width: 100%;
     border-radius: 2em 2em 0 0;
 
   }
 }
-.plant-diary-dialog-container {
+.plant-diary-dialogue-container {
   padding: 0;
-
+  max-height: 80vh!important;
 }
 
 .plant-diary-dialog-content {
-  max-height: 700px;
+
+  display: flex;
+  flex-direction: column;
+
   max-width: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 2em;
-
 
 }
 
  .mat-dialog-content {
    margin: 0!important;
-}
+   height: 40vh;
+   overflow-y: auto;}
 .plant-diary-dialog-content-header {
+
+  position: sticky;
+  top: 0;
+  background-color: white;
+
   display: flex;
   align-items: start;
   line-height: 3;
@@ -42,6 +51,7 @@
 
 .plant-diary-plant-title-container {
   line-height: 0;
+
 }
 .plant-diary-plant-title {
   font-weight: 700!important;
@@ -50,10 +60,29 @@
 .plant-diary-plant-subtitle {
   font-size: 1.3em;
 }
+
+
+.plant-diary-dialog-content-otherusers-users {
+
+  display: flex;
+  max-width: 100%;
+  overflow-x: auto;
+  img {
+    max-height: min(10em, 50px);
+    padding-right: 0.5em;
+  }
+}
+
+.plant-diary-dialog-content-actions {
+  margin: 0!important;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2em;
+}
+
 .plant-diary-dialogue-container .mat-dialog-container {
   padding: 0px!important;
   border-radius: 2em ;
-  min-height: 60em;
   max-width: 90vw;
-
+  overflow: hidden;
 }
