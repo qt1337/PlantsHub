@@ -5,7 +5,7 @@
         <mat-card-title *ngIf="router.url==='/signup'">PLANTSHUB - SIGN UP</mat-card-title>
       </mat-card-header>
   <div  *ngIf="router.url==='/signin'" class="signin-card-img"><img src="assets/6606.jpg"/></div>
-  <div  *ngIf="router.url==='/signup'" class="signin-card-img"><img src="assets/5236.jpg"/></div>
+  <div  *ngIf="router.url==='/signup'"></div>
 
   <mat-card-content>
     <ng-container *ngIf="router.url === '/signin' else elseBlock">
