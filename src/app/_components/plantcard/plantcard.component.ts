@@ -103,7 +103,7 @@ export class PlantcardComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
-    this.dialog.open(PlantDiaryComponent, {data: {person: {name: 'blub', age: 32}}});
+    this.dialog.open(PlantDiaryComponent, {panelClass: 'plant-diary-dialogue-container', data: {person: {name: 'Monstera', age: 32}}}); // @TODO This is just Mock Data TBD
   }
 }
 

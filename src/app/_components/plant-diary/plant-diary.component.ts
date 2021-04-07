@@ -1,12 +1,12 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {PlantService} from "../../_services/plant.service";
-import {PlantDialogueComponent} from "../plant-dialogue/plant-dialogue.component";
+import {Component, Inject, Input, OnInit, ViewEncapsulation} from '@angular/core';
+
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-plant-diary',
   templateUrl: './plant-diary.component.html',
-  styleUrls: ['./plant-diary.component.scss']
+  styleUrls: ['./plant-diary.component.scss'],
+  encapsulation: ViewEncapsulation.None // To Remove Default Styling of the Dialog Component
 })
 export class PlantDiaryComponent implements OnInit {
 

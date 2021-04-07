@@ -1,12 +1,21 @@
-<h1 mat-dialog-title>Hi {{data.person.name}} </h1>
-<div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <mat-label>Favorite Animal</mat-label>
-    <input matInput>
-  </mat-form-field>
+<div>
+<div class="plant-diary-header-img">
+  <img src="https://images.pexels.com/photos/2302503/pexels-photo-2302503.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
+</div>
+<div mat-dialog-content class="plant-diary-dialog-content">
+  <div class="plant-diary-dialog-content-header" >
+  <div class="plant-diary-plant-title-container">
+  <h1 class="plant-diary-plant-title">{{data.person.name}} </h1>
+  <span class="plant-diary-plant-subtitle">{{data.person.name}} </span>
+  </div>
+  <div>
+    <mat-icon>favorite</mat-icon>
+    <mat-icon>share</mat-icon>
+  </div>
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button  [mat-dialog-close]="true">No Thanks</button>
   <button mat-button  [mat-dialog-close]="true">Ok</button>
+</div>
 </div>
