@@ -1,19 +1,13 @@
 .plant-diary-header-img {
-  border-radius: 2em 2em 0 0;
   img {
     object-fit: cover;
     position: sticky;
     top: 0;
-    height: min(200px, 10em);
+    height: min(200px, 15em);
     width: 100%;
     border-radius: 2em 2em 0 0;
-
   }
 }
-.plant-diary-dialogue-container {
-  padding: 0;
-}
-
 .plant-diary-dialog-content {
 
   display: flex;
@@ -22,19 +16,20 @@
   max-width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 2em;
-
 }
 
  .mat-dialog-content {
    margin: 0!important;
+   padding: 0;
    overflow-y: auto;}
 .plant-diary-dialog-content-header {
 
   position: sticky;
   top: 0;
   background-color: white;
+  border-radius: 2em 2em 0 0;
 
+  z-index: 2;
   display: flex;
   align-items: start;
   line-height: 3;
@@ -66,7 +61,7 @@
   max-width: 100%;
   overflow-x: auto;
   img {
-    max-height: min(10em, 50px);
+    max-height: min(20em, 100px);
     padding-right: 0.5em;
   }
 }

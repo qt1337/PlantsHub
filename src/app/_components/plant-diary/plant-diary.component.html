@@ -1,8 +1,8 @@
-<div>
+<div mat-dialog-content class="plant-diary-dialog-content">
+
 <div class="plant-diary-header-img">
   <img src="https://images.pexels.com/photos/2302503/pexels-photo-2302503.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
 </div>
-<div mat-dialog-content class="plant-diary-dialog-content">
   <div class="plant-diary-dialog-content-header" >
   <div class="plant-diary-plant-title-container">
   <h1 class="plant-diary-plant-title">{{data.person.name}} </h1>
@@ -58,9 +58,7 @@
     </div>
   </div>
   </div>
-
-</div>
-<div class="plant-diary-dialog-content-actions" mat-dialog-actions>
+<div class="plant-diary-dialog-content-actions">
   <button  mat-button  [mat-dialog-close]="true">Cancel</button>
-  <button dialog mat-button  [mat-dialog-close]="true">Save</button>
+  <button  mat-button  [mat-dialog-close]="true">Save</button>
 </div>
