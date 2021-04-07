@@ -1,5 +1,5 @@
-
-<mat-toolbar class="app-header flex" *ngIf="authGuard.isLoggedIn()">
+<ng-container *ngIf="authGuard.isLoggedIn()">
+<mat-toolbar class="app-header flex">
   <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
           aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
@@ -10,16 +10,14 @@
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
-<ng-container *ngIf="!authGuard.isLoggedIn()">
+<mat-drawer-container class="nav-container" autosize [hasBackdrop]="true">
+  <mat-drawer #drawer class="side-nav w5" mode="over">
+    <div class="f2 pa2">
+      <a mat-flat-button routerLink="/plants">My Plants</a>
+    </div>
+  </mat-drawer>
   <router-outlet></router-outlet>
+</mat-drawer-container>
 </ng-container>
-  <ng-container *ngIf="authGuard.isLoggedIn()">
-  <mat-drawer-container class="nav-container" autosize [hasBackdrop]="true" *ngIf="authGuard.isLoggedIn()">
-    <mat-drawer #drawer class="side-nav w5" mode="over">
-      <div class="f2 pa2">
-        <a mat-flat-button routerLink="/plants">My Plants</a>
-      </div>
-    </mat-drawer>
-    <router-outlet></router-outlet>
-  </mat-drawer-container>
-  </ng-container>
+
+<router-outlet></router-outlet>

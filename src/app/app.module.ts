@@ -21,6 +21,7 @@ import { SortbyComponent } from './_components/sortby/sortby.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { PlantDiaryComponent } from './_components/plant-diary/plant-diary.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { environment } from '../environments/environment';
     SearchboxComponent,
     PlantcollectionComponent,
     SortbyComponent,
+    PlantDiaryComponent,
   ],
   imports: [
     BrowserModule,

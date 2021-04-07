@@ -1,12 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit, Output} from '@angular/core';
 import {PlantService} from '../../_services/plant.service';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {User} from '../../_models/user';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
 import {Plant} from '../../_models/plant';
 import {SearchboxComponent} from '../searchbox/searchbox.component';
+import {PlantDiaryComponent} from "../plant-diary/plant-diary.component";
 
 @Component({
   selector: 'app-plantcard',
@@ -14,10 +15,10 @@ import {SearchboxComponent} from '../searchbox/searchbox.component';
   styleUrls: ['./plantcard.component.scss']
 })
 export class PlantcardComponent implements OnInit {
-
   @Input() value: string;
   user: User;
   plants: any;
+
   constructor(
     private plantService: PlantService,
     private authenticationService: AuthenticationService,
@@ -95,4 +96,14 @@ export class PlantcardComponent implements OnInit {
   deletePlant(plant): void {
     this.deactivatePlant(plant);
   }
+
+  openEditPlantDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    this.dialog.open(PlantDiaryComponent, {panelClass: 'plant-diary-dialogue-container', data: {person: {name: 'Monstera', age: 32}}}); // @TODO This is just Mock Data TBD
+  }
 }
+

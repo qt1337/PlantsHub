@@ -67,4 +67,5 @@ export class PlantDialogueComponent {
     this.plantImage = event.target.files[0];
     console.log(this.plantImage);
   }
+
 }
