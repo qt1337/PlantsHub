@@ -1,4 +1,6 @@
 .plant-diary-header-img {
+  border-radius: 2em 2em 0 0;
+
   img {
     object-fit: cover;
     position: sticky;
@@ -76,4 +78,5 @@
 .plant-diary-dialogue-container .mat-dialog-container {
   padding: 0px!important;
   border-radius: 2em ;
+  z-index: 5;
 }
