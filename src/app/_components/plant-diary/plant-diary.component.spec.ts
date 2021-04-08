@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlantDiaryComponent } from './plant-diary.component';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {DemoMaterialModule} from '../../material.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('PlantDiaryComponent', () => {
   let component: PlantDiaryComponent;
@@ -13,7 +15,10 @@ describe('PlantDiaryComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }
       ],
-      declarations: [ PlantDiaryComponent ]
+      declarations: [ PlantDiaryComponent ],
+      imports: [
+        DemoMaterialModule,
+        BrowserAnimationsModule]
     })
 
     .compileComponents();
