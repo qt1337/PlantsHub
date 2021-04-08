@@ -1,4 +1,5 @@
-<mat-toolbar class="app-header flex" *ngIf="authGuard.isLoggedIn()">
+<ng-container *ngIf="authGuard.isLoggedIn()">
+<mat-toolbar class="app-header flex">
   <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
           aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
@@ -17,3 +18,6 @@
   </mat-drawer>
   <router-outlet></router-outlet>
 </mat-drawer-container>
+</ng-container>
+
+<router-outlet></router-outlet>

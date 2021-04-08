@@ -1,3 +1,12 @@
+@import "/src/styles";
+
 .plantcollection-searchbox {
-  margin: 1em;
+  padding: 0 1em 0 1em;
+  top: 56px;
+  width: 100%;
+  position: fixed;
+  background-color: $white;
+  z-index: 3;
+  -webkit-box-shadow: 0px 8px 15px 6px rgba(173,173,173,0.5);
+  box-shadow: 0px 8px 15px 6px rgba(173,173,173,0.5);
 }
