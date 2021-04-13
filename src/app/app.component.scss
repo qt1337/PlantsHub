@@ -7,8 +7,13 @@
   display: flex;
   top: 0;
   z-index: 2;
+  justify-content: space-between;
 }
 
+.app-header-left-side {
+  display: flex;
+  align-items: center;
+}
 mat-drawer-container {
   top: 64px;
   position: relative;
