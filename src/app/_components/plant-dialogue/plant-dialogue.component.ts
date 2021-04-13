@@ -11,6 +11,8 @@ import {PlantFormField} from '../../_models/plantFormField';
 })
 export class PlantDialogueComponent {
 
+  plantDialogueTitle: string = 'Add a new member to your Plant-Family';
+
   plantFormFields: PlantFormField[] = [
     {
       title: 'Plant Family',

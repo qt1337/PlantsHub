@@ -11,8 +11,8 @@ export class SortbyComponent {
 
 
   foods: any[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'steak-0', viewValue: 'Name'},
+    {value: 'pizza-1', viewValue: 'Added Date'},
     {value: 'tacos-2', viewValue: 'Tacos'}
   ];
 

@@ -55,7 +55,7 @@ import { PlantDiaryComponent } from './_components/plant-diary/plant-diary.compo
   providers: [
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   bootstrap: [AppComponent]
 })

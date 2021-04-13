@@ -4,7 +4,7 @@
           aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>{{title}}</span>
+  <span routerLink="/">{{title}}</span>
   <button mat-icon-button class="logout-button tr items-end" aria-label="Example icon-button with logout icon"
           (click)="authenticationService.logout()">
     <mat-icon>logout</mat-icon>
