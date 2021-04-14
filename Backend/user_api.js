@@ -189,6 +189,8 @@ function checkUserCredentials(pool, req, res) {
                     )
                     .then((result) => {
                       result[0].sessionId = sessionId;
+                      delete result[0].resetPasswordKey;
+                      delete result[0].resetPasswordDate;
                       delete result[0].password;
                       delete result[0].salt;
                       delete result[0].userId;
@@ -335,7 +337,7 @@ module.exports = {
 };
 
 /**
-template for checking session of user
+ template for checking session of user
 
  function checkUserSession(pool, req, res) {
   let username = req.body.username;
@@ -361,8 +363,7 @@ template for checking session of user
           conn.end();
           conn
             .query(
-              "SELECT userId FROM Session WHERE userId = (?) and sessionHash =
-(?)", [userId, hashedSession]
+              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSession]
             )
             .then((row) => {
               if (!row[0]) {
