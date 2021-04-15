@@ -3,6 +3,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {SignInComponent} from './sign-in.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {DemoMaterialModule} from '../../material.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
@@ -14,7 +16,9 @@ describe('SignInComponent', () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
-        HttpClientModule
+        HttpClientModule,
+        DemoMaterialModule,
+        BrowserAnimationsModule
       ],
     })
       .compileComponents();

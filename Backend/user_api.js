@@ -54,7 +54,7 @@ function checkUserSession(pool, req, res) {
       conn
         .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
         .then((row) => {
-          if (!row[0]) {
+          if (!row || !row[0]) {
             res.status(401).send("session not valid");
             conn.end();
             return;
@@ -71,7 +71,7 @@ function checkUserSession(pool, req, res) {
               [userId, hashedSession]
             )
             .then((row) => {
-              if (!row[0]) {
+              if (!row || !row[0]) {
                 res.status(401).send("session not valid");
                 conn.end();
                 return;
@@ -127,6 +127,11 @@ function checkUserCredentials(pool, req, res) {
           username,
         ])
         .then((row) => {
+          if (!row || !row[0]) {
+            res.status(401).send("credentials not correct");
+            conn.end();
+            return;
+          }
           let salt = row[0].salt;
 
           hashedPassword = utility.sha512(password, salt).passwordHash;
@@ -146,7 +151,7 @@ function checkUserCredentials(pool, req, res) {
             )
             .then((row) => {
               if (!row[0]) {
-                res.status(404).send("credentials not correct");
+                res.status(401).send("credentials not correct");
                 conn.end();
                 return;
               }
@@ -167,7 +172,7 @@ function checkUserCredentials(pool, req, res) {
                   console.log(result);
                   if (result["affectedRows"] === 0) {
                     res.clearCookie("sessionData");
-                    res.status(404).send("credentials not correct");
+                    res.status(401).send("credentials not correct");
                     conn.end();
                     return;
                   }
@@ -189,6 +194,8 @@ function checkUserCredentials(pool, req, res) {
                     )
                     .then((result) => {
                       result[0].sessionId = sessionId;
+                      delete result[0].resetPasswordKey;
+                      delete result[0].resetPasswordDate;
                       delete result[0].password;
                       delete result[0].salt;
                       delete result[0].userId;
@@ -206,7 +213,7 @@ function checkUserCredentials(pool, req, res) {
             })
             .catch((err) => {
               console.log(err);
-              res.status(404).send("credentials not correct");
+              res.status(401).send("credentials not correct");
               conn.end();
             });
         });
@@ -335,7 +342,7 @@ module.exports = {
 };
 
 /**
-template for checking session of user
+ template for checking session of user
 
  function checkUserSession(pool, req, res) {
   let username = req.body.username;

@@ -6,6 +6,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
 import {RouterModule} from '@angular/router';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import {DemoMaterialModule} from '../../material.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('PlantcardComponent', () => {
   let component: PlantcardComponent;
@@ -20,7 +22,9 @@ describe('PlantcardComponent', () => {
         HttpClientModule,
         MatDialogModule,
         RouterModule,
-        Ng2SearchPipeModule
+        Ng2SearchPipeModule,
+        DemoMaterialModule,
+        BrowserAnimationsModule
       ],
     })
       .compileComponents();

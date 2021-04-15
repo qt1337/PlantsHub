@@ -1,13 +1,11 @@
-import {Component, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PlantService} from '../../_services/plant.service';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {User} from '../../_models/user';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
-import {Plant} from '../../_models/plant';
-import {SearchboxComponent} from '../searchbox/searchbox.component';
-import {PlantDiaryComponent} from "../plant-diary/plant-diary.component";
+import {PlantDiaryComponent} from '../plant-diary/plant-diary.component';
 
 @Component({
   selector: 'app-plantcard',
@@ -97,13 +95,13 @@ export class PlantcardComponent implements OnInit {
     this.deactivatePlant(plant);
   }
 
-  openEditPlantDialog() {
+  openEditPlantDialog(): void {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
+    // tslint:disable-next-line:max-line-length
     this.dialog.open(PlantDiaryComponent, {panelClass: 'plant-diary-dialogue-container', data: {person: {name: 'Monstera', age: 32}}}); // @TODO This is just Mock Data TBD
   }
 }
-
