@@ -276,10 +276,10 @@ function getPlantDiaryEntries(pool, req, res) {
             connection.end();
             // Check if user owns plant
             connection
-              .query("SELECT * FROM Plant WHERE userId = (?) and active = 1 and plantId = (?)", [
-                userId,
-                plantId
-              ])
+              .query(
+                "SELECT * FROM Plant WHERE userId = (?) and active = 1 and plantId = (?)",
+                [userId, plantId]
+              )
               .then((result) => {
                 if (!result[0] || !result[0].plantId) {
                   res.status(401).send("plant could not be found");
@@ -301,7 +301,6 @@ function getPlantDiaryEntries(pool, req, res) {
                     res.status(401).send("plant could not be found");
                     connection.end();
                   });
-
               })
               .catch((err) => {
                 console.log(err);
@@ -362,7 +361,8 @@ function createPlantDiaryEntry(pool, req, res) {
           conn.end();
           conn
             .query(
-              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSession]
+              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+              [userId, hashedSession]
             )
             .then((row) => {
               if (!row[0]) {
@@ -375,10 +375,10 @@ function createPlantDiaryEntry(pool, req, res) {
 
               // Now check if user owns plant
               conn
-                .query("SELECT * FROM Plant WHERE userId = (?) and active = 1 and plantId = (?)", [
-                  userId,
-                  plantDiaryEntry.plantId
-                ])
+                .query(
+                  "SELECT * FROM Plant WHERE userId = (?) and active = 1 and plantId = (?)",
+                  [userId, plantDiaryEntry.plantId]
+                )
                 .then((result) => {
                   if (!result[0] || !result[0].plantId) {
                     res.status(401).send("plant could not be found");
@@ -389,15 +389,17 @@ function createPlantDiaryEntry(pool, req, res) {
 
                   // Check if plantdiaryentry exists
 
-                  let dateWithoutTime = new Date(plantDiaryEntry.date.toString());
-                  dateWithoutTime.setHours(0,0,0,0);
+                  let dateWithoutTime = new Date(
+                    plantDiaryEntry.date.toString()
+                  );
+                  dateWithoutTime.setHours(0, 0, 0, 0);
                   plantDiaryEntry.date = dateWithoutTime;
 
                   conn
-                    .query("SELECT * FROM PlantDiary WHERE plantId = (?) AND date = (?)", [
-                      plantDiaryEntry.plantId,
-                      plantDiaryEntry.date
-                    ])
+                    .query(
+                      "SELECT * FROM PlantDiary WHERE plantId = (?) AND date = (?)",
+                      [plantDiaryEntry.plantId, plantDiaryEntry.date]
+                    )
                     .then((result) => {
                       conn.end();
                       if (!result[0] || !result[0].plantDiaryId) {
@@ -413,7 +415,7 @@ function createPlantDiaryEntry(pool, req, res) {
                               plantDiaryEntry.date,
                               plantDiaryEntry.note,
                               plantDiaryEntry.size,
-                              plantDiaryEntry.health
+                              plantDiaryEntry.health,
                             ]
                           )
                           .then((result) => {
@@ -438,7 +440,7 @@ function createPlantDiaryEntry(pool, req, res) {
                               plantDiaryEntry.note,
                               plantDiaryEntry.size,
                               plantDiaryEntry.health,
-                              result[0].plantDiaryId
+                              result[0].plantDiaryId,
                             ]
                           )
                           .then((result) => {
@@ -450,7 +452,7 @@ function createPlantDiaryEntry(pool, req, res) {
                             res.status(401).send("rows could not be created");
                           });
                       }
-                    })
+                    });
                 })
                 .catch((err) => {
                   console.log(err);
@@ -471,5 +473,5 @@ module.exports = {
   updatePlant,
   getPlants,
   getPlantDiaryEntries,
-  createPlantDiaryEntry
+  createPlantDiaryEntry,
 };

@@ -127,7 +127,7 @@ function checkUserCredentials(pool, req, res) {
           username,
         ])
         .then((row) => {
-          if(!row || !row[0]) {
+          if (!row || !row[0]) {
             res.status(401).send("credentials not correct");
             conn.end();
             return;
@@ -368,7 +368,8 @@ module.exports = {
           conn.end();
           conn
             .query(
-              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSession]
+              "SELECT userId FROM Session WHERE userId = (?) and sessionHash =
+(?)", [userId, hashedSession]
             )
             .then((row) => {
               if (!row[0]) {
