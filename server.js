@@ -122,3 +122,11 @@ app.post("/api/update-plant", (req, res) => {
 app.post("/api/get-plants", (req, res) => {
   plant_api.getPlants(pool, req, res);
 });
+
+app.post("/api/get-diary-entries", (req, res) => {
+  plant_api.getPlantDiaryEntries(pool, req, res);
+});
+
+app.post("/api/create-diary-entry", upload.single("plantImage"), (req, res) => {
+  plant_api.createPlantDiaryEntry(pool, req, res);
+});
