@@ -7,7 +7,6 @@ import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
 import {PlantDiaryComponent} from '../plant-diary/plant-diary.component';
 import {Plant} from "../../_models/plant";
-import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'app-plantcard',
@@ -16,17 +15,27 @@ import {filter} from "rxjs/operators";
 })
 export class PlantcardComponent implements OnInit {
   @Input() value: string;
-  selectedPlantsStuff: Plant;
+
+  plant: Plant;
   user: User;
   plants: any;
   dialogRef: MatDialogRef<PlantDialogueComponent>
+  selectedPlant: string;
+
+  icons = [
+    {name: 'heart', class: 'big fill-red'},
+    {name: 'book', class: 'big fill-red'},
+    {name: 'trash', class: 'big fill-red'}
+  ];
 
   constructor(
     private plantService: PlantService,
     private authenticationService: AuthenticationService,
     private router: Router,
     private route: ActivatedRoute,
+
     private dialog: MatDialog
+
   ) {
     this.authenticationService.checkForInactiveSession();
     if (this.authenticationService.userValue) {
@@ -35,15 +44,10 @@ export class PlantcardComponent implements OnInit {
     }
   }
 
-  icons = [
-    {name: 'heart', class: 'big fill-red'},
-    {name: 'book', class: 'big fill-red'},
-    {name: 'trash', class: 'big fill-red'}
-  ];
-
   ngOnInit(): void {
     this.getPlants();
   }
+
 
   getPlants(): void {
     if (!this.authenticationService.userValue) {
@@ -59,14 +63,21 @@ export class PlantcardComponent implements OnInit {
       });
   }
 
+  getCurrentPlant(plant) : any {
+    let currentPlant: Plant = this.plants[plant];
+    console.log(currentPlant);
+  }
+
   openDialog(plant?): void {
-    const dialogRef = this.dialog.open(PlantDialogueComponent, {
-      data: {
-        title: plant ? plant.title : 'blob',
-        name: plant ? plant.name : '',
-        defaultValue: plant? plant.defaultValue: ''
-      }
-    });
+
+    console.log(this.getCurrentPlant(plant));
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+
+    }
+    dialogConfig.autoFocus = true;
+
+    this.dialogRef = this.dialog.open(PlantDialogueComponent, dialogConfig)
 
     this.dialogRef.afterClosed().subscribe(() => {
       this.getPlants();
