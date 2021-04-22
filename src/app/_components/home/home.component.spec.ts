@@ -4,6 +4,8 @@ import {HomeComponent} from './home.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
+import {DemoMaterialModule} from '../../material.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -16,7 +18,9 @@ describe('HomeComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         HttpClientModule,
-        RouterModule
+        RouterModule,
+        DemoMaterialModule,
+        BrowserAnimationsModule
       ],
     })
       .compileComponents();

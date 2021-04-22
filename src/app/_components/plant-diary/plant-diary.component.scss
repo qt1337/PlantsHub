@@ -1,5 +1,5 @@
 .plant-diary-header-img {
-  border-radius: 2em 2em 0 0;
+
 
   img {
     object-fit: cover;
@@ -7,7 +7,7 @@
     top: 0;
     height: min(200px, 15em);
     width: 100%;
-    border-radius: 2em 2em 0 0;
+
   }
 }
 .plant-diary-dialog-content {
@@ -57,17 +57,6 @@
 }
 
 
-.plant-diary-dialog-content-otherusers-users {
-
-  display: flex;
-  max-width: 100%;
-  overflow-x: auto;
-  img {
-    max-height: min(20em, 100px);
-    padding-right: 0.5em;
-  }
-}
-
 .plant-diary-dialog-content-actions {
   margin: 0!important;
   display: flex;
@@ -77,7 +66,6 @@
 
 .plant-diary-dialogue-container .mat-dialog-container {
   padding: 0px!important;
-  border-radius: 2em ;
   z-index: 5;
 }
 .mat-dialog-container {

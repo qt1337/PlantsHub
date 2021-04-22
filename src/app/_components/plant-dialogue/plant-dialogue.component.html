@@ -19,11 +19,7 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <!--
-  <mat-form-field appearance="outline">
-    <input matInput type="file" (change)="onFileSelected($event)">
-  </mat-form-field> @TODO Fix the File Upload to suit the other parts of Material UI
--->
+   <input type="file" (change)="onFileSelected($event)">
   <div class="button-menu">
     <button mat-flat-button id="cancel-button" [mat-dialog-close]="true">Cancel</button>
     <button mat-flat-button id="add-button" [mat-dialog-close]="true" (click)="addPlant()">Add Plant

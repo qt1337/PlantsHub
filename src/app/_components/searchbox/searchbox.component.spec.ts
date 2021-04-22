@@ -1,6 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SearchboxComponent } from './searchbox.component';
+import {SearchboxComponent} from './searchbox.component';
+import {DemoMaterialModule} from '../../material.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('SearchboxComponent', () => {
   let component: SearchboxComponent;
@@ -8,9 +10,12 @@ describe('SearchboxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SearchboxComponent ]
+      declarations: [SearchboxComponent],
+      imports: [
+        DemoMaterialModule,
+        BrowserAnimationsModule]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

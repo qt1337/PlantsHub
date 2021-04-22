@@ -1,13 +1,13 @@
-import {Component, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PlantService} from '../../_services/plant.service';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {User} from '../../_models/user';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
-import {Plant} from '../../_models/plant';
-import {SearchboxComponent} from '../searchbox/searchbox.component';
-import {PlantDiaryComponent} from "../plant-diary/plant-diary.component";
+import {PlantDiaryComponent} from '../plant-diary/plant-diary.component';
+import {Plant} from "../../_models/plant";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'app-plantcard',
@@ -16,8 +16,10 @@ import {PlantDiaryComponent} from "../plant-diary/plant-diary.component";
 })
 export class PlantcardComponent implements OnInit {
   @Input() value: string;
+  selectedPlantsStuff: Plant;
   user: User;
   plants: any;
+  dialogRef: MatDialogRef<PlantDialogueComponent>
 
   constructor(
     private plantService: PlantService,
@@ -57,13 +59,21 @@ export class PlantcardComponent implements OnInit {
       });
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(PlantDialogueComponent);
+  openDialog(plant?): void {
+    const dialogRef = this.dialog.open(PlantDialogueComponent, {
+      data: {
+        title: plant ? plant.title : 'blob',
+        name: plant ? plant.name : '',
+        defaultValue: plant? plant.defaultValue: ''
+      }
+    });
 
-    dialogRef.afterClosed().subscribe(() => {
+    this.dialogRef.afterClosed().subscribe(() => {
       this.getPlants();
     });
   }
+
+
 
   private updatePlantFavourite(plant): void {
     plant.favourite = !plant.favourite;
@@ -97,13 +107,5 @@ export class PlantcardComponent implements OnInit {
     this.deactivatePlant(plant);
   }
 
-  openEditPlantDialog() {
-    const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-
-    this.dialog.open(PlantDiaryComponent, {panelClass: 'plant-diary-dialogue-container', data: {person: {name: 'Monstera', age: 32}}}); // @TODO This is just Mock Data TBD
-  }
 }
-

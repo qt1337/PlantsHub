@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Plant} from '../../_models/plant';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {PlantService} from '../../_services/plant.service';
 import {PlantFormField} from '../../_models/plantFormField';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-plant-dialogue',
@@ -11,6 +12,7 @@ import {PlantFormField} from '../../_models/plantFormField';
 })
 export class PlantDialogueComponent {
 
+  @Input() selectedPlant: Plant;
   plantDialogueTitle: string = 'Add a new member to your Plant-Family';
 
   plantFormFields: PlantFormField[] = [
@@ -42,7 +44,10 @@ export class PlantDialogueComponent {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private plantService: PlantService
+    private plantService: PlantService,
+    private dialogRef: MatDialogRef<PlantDialogueComponent>,
+    @Inject(MAT_DIALOG_DATA) private data
+
   ) {
   }
 

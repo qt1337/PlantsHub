@@ -1,7 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
-import {DemoMaterialModule} from "./material.module";
+import {DemoMaterialModule} from './material.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -9,7 +10,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-      imports: [HttpClientModule, DemoMaterialModule]
+      imports: [HttpClientModule, DemoMaterialModule, BrowserAnimationsModule]
     }).compileComponents();
   });
 

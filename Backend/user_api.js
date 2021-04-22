@@ -54,7 +54,7 @@ function checkUserSession(pool, req, res) {
       conn
         .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
         .then((row) => {
-          if (!row[0]) {
+          if (!row || !row[0]) {
             res.status(401).send("session not valid");
             conn.end();
             return;
@@ -71,7 +71,7 @@ function checkUserSession(pool, req, res) {
               [userId, hashedSession]
             )
             .then((row) => {
-              if (!row[0]) {
+              if (!row || !row[0]) {
                 res.status(401).send("session not valid");
                 conn.end();
                 return;
@@ -127,6 +127,11 @@ function checkUserCredentials(pool, req, res) {
           username,
         ])
         .then((row) => {
+          if (!row || !row[0]) {
+            res.status(401).send("credentials not correct");
+            conn.end();
+            return;
+          }
           let salt = row[0].salt;
 
           hashedPassword = utility.sha512(password, salt).passwordHash;
@@ -146,7 +151,7 @@ function checkUserCredentials(pool, req, res) {
             )
             .then((row) => {
               if (!row[0]) {
-                res.status(404).send("credentials not correct");
+                res.status(401).send("credentials not correct");
                 conn.end();
                 return;
               }
@@ -167,7 +172,7 @@ function checkUserCredentials(pool, req, res) {
                   console.log(result);
                   if (result["affectedRows"] === 0) {
                     res.clearCookie("sessionData");
-                    res.status(404).send("credentials not correct");
+                    res.status(401).send("credentials not correct");
                     conn.end();
                     return;
                   }
@@ -189,6 +194,8 @@ function checkUserCredentials(pool, req, res) {
                     )
                     .then((result) => {
                       result[0].sessionId = sessionId;
+                      delete result[0].resetPasswordKey;
+                      delete result[0].resetPasswordDate;
                       delete result[0].password;
                       delete result[0].salt;
                       delete result[0].userId;
@@ -206,7 +213,7 @@ function checkUserCredentials(pool, req, res) {
             })
             .catch((err) => {
               console.log(err);
-              res.status(404).send("credentials not correct");
+              res.status(401).send("credentials not correct");
               conn.end();
             });
         });
@@ -240,7 +247,8 @@ function requestResetPasswordKey(pool, req, res) {
           }
           let salt = row[0].salt;
           let userId = row[0].userId;
-          let hashedResetPasswordKey = utility.sha512(resetPasswordKey, salt).passwordHash;
+          let hashedResetPasswordKey = utility.sha512(resetPasswordKey, salt)
+            .passwordHash;
           let currentDate = new Date();
           let resetPasswordDate = new Date(currentDate.getTime() + 30 * 60000);
 
@@ -256,7 +264,8 @@ function requestResetPasswordKey(pool, req, res) {
                 conn.end();
                 return;
               }
-              console.log(resetPasswordKey); // TODO sendResetPasswordEmail(resetPasswordKey);
+              console.log(resetPasswordKey); // TODO
+              // sendResetPasswordEmail(resetPasswordKey);
               res.status(202).json("email has been sent");
               conn.end();
             });
@@ -267,7 +276,6 @@ function requestResetPasswordKey(pool, req, res) {
       // not connected
     });
 }
-
 
 /**
  * For resetting password of user
@@ -297,7 +305,8 @@ function resetPasswordKey(pool, req, res) {
           }
           let userId = row[0].userId;
           let salt = row[0].salt;
-          let hashedResetPasswordKey = utility.sha512(resetPasswordKey, salt).passwordHash;
+          let hashedResetPasswordKey = utility.sha512(resetPasswordKey, salt)
+            .passwordHash;
           let hashedPassword = utility.sha512(password, salt).passwordHash;
 
           conn.end();
@@ -312,7 +321,8 @@ function resetPasswordKey(pool, req, res) {
                 conn.end();
                 return;
               }
-              res.status(202).json("password has been changed"); // TODO route to login page
+              res.status(202).json("password has been changed"); // TODO route to login
+              // page
               conn.end();
             });
         });
@@ -323,16 +333,16 @@ function resetPasswordKey(pool, req, res) {
     });
 }
 
-
 module.exports = {
   createUser,
   checkUserCredentials,
   checkUserSession,
   requestResetPasswordKey,
-  resetPasswordKey
+  resetPasswordKey,
 };
 
-/** template for checking session of user
+/**
+ template for checking session of user
 
  function checkUserSession(pool, req, res) {
   let username = req.body.username;
@@ -358,8 +368,8 @@ module.exports = {
           conn.end();
           conn
             .query(
-              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
-              [userId, hashedSession]
+              "SELECT userId FROM Session WHERE userId = (?) and sessionHash =
+(?)", [userId, hashedSession]
             )
             .then((row) => {
               if (!row[0]) {
