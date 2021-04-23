@@ -7,6 +7,7 @@ import {PageNotFoundComponent} from './_components/page-not-found/page-not-found
 import {PlantcardComponent} from './_components/plantcard/plantcard.component';
 import {AuthGuard} from './auth.guard';
 import {PlantcollectionComponent} from './_components/plantcollection/plantcollection.component';
+import {AccountComponent} from "./account-component/account-component.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'plants', component: PlantcollectionComponent, canActivate: [AuthGuard]},
   {path: 'signin', component: SignInComponent},
   {path: 'signup', component: SignInComponent},
+  {path: 'profile', component: AccountComponent},
   {path: '404', component: PageNotFoundComponent},
 
   // '**' has to be last!
