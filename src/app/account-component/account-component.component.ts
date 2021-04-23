@@ -10,7 +10,7 @@ import {UserService} from "../_services/user.service";
 export class AccountComponent implements OnInit {
   user: User;
   isClicked: boolean;
-
+  inputFields: string[] = ['username','forename','surname','birthday','email'];
 
   constructor(private userService : UserService) {
 
@@ -20,6 +20,7 @@ export class AccountComponent implements OnInit {
     inputField[0].toggleAttribute("disabled");
     this.isClicked = !this.isClicked;
   }
+
 
   ngOnInit(): void {
     this.user = this.userService.getUser();

@@ -5,4 +5,5 @@ export class User {
   surname: string;
   birthday: string;
   sessionId: string;
+
 }
