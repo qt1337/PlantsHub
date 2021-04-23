@@ -1,5 +1,4 @@
-import { Component, OnInit, AfterContentInit } from '@angular/core';
-import {Router} from "@angular/router";
+import { Component } from '@angular/core';
 import {User} from "../_models/user";
 
 @Component({
@@ -7,17 +6,14 @@ import {User} from "../_models/user";
   templateUrl: './account-component.component.html',
   styleUrls: ['./account-component.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent  {
   user: User;
+  isClicked: boolean;
 
-  constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  editAccountData() : void{
-    const editInput : HTMLElement | any = document.getElementsByClassName('account-form-username-input');
-    console.log("changed");
-    editInput[0].toggleAttribute("disabled")
+  toggleDisabledAttributInput() : void {
+    const inputField : HTMLElement | unknown = document.getElementsByClassName('account-form-username-input');
+    inputField[0].toggleAttribute("disabled");
+    this.isClicked = !this.isClicked;
   }
 }
