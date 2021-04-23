@@ -1,2 +1,10 @@
-
-Brabus
+<form class="account-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>Username</mat-label>
+    <input matInput disabled placeholder="Ex. Pizza" value="Sushi" class="account-form-username-input">
+  </mat-form-field>
+  <div class="account-form-edit-icons">
+  <mat-icon (click)="editAccountData()" class="account-form-edit-icons-edit">edit</mat-icon>
+  <mat-icon (click)="editAccountData()">done</mat-icon>
+  </div>
+</form>

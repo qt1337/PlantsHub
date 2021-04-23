@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {User} from "../_models/user";
 
@@ -15,4 +15,9 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  editAccountData() : void{
+    const editInput : HTMLElement | any = document.getElementsByClassName('account-form-username-input');
+    console.log("changed");
+    editInput[0].toggleAttribute("disabled")
+  }
 }
