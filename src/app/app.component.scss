@@ -14,8 +14,14 @@
   display: flex;
   align-items: center;
 }
+
+.app-header-right-side {
+  display: flex;
+  align-items: center;
+}
 mat-drawer-container {
   top: 64px;
   position: relative;
   height: calc(100vh - 64px);
 }
+
