@@ -1,7 +1,7 @@
 <form class="account-form">
   <mat-form-field class="example-full-width">
     <mat-label>Username</mat-label>
-    <input matInput disabled placeholder="Ex. Pizza" value="Sushi" class="account-form-username-input">
+    <input matInput disabled placeholder="Ex. Pizza" [value]="user.forename" class="account-form-username-input">
   </mat-form-field>
   <div class="account-form-edit-icons">
   <mat-icon (click)="toggleDisabledAttributInput()" class="account-form-edit-icons-edit">{{isClicked ? 'done' : 'edit'}}</mat-icon>
