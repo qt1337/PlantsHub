@@ -3,6 +3,7 @@ import {User} from '../../_models/user';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
+import {UserService} from "../../_services/user.service";
 
 @Component({
   selector: 'app-home',
@@ -12,18 +13,17 @@ import {first} from 'rxjs/operators';
 export class HomeComponent implements OnInit {
   user: User;
 
+
   constructor(
+    private userService : UserService,
     private route: ActivatedRoute,
     private router: Router,
-    public authenticationService: AuthenticationService
   ) {
-    this.authenticationService.checkForInactiveSession();
-    if (this.authenticationService.userValue) {
-      this.user = this.authenticationService.userValue[0];
-    } else {
-    }
+
   }
 
   ngOnInit(): void {
+    this.user = this.userService.getUser();
+
   }
 }
