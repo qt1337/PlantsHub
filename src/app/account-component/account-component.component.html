@@ -2,7 +2,7 @@
   <ng-container *ngFor="let inputField of inputFields">
   <mat-form-field>
     <mat-label>{{inputField}}</mat-label>
-    <input matInput disabled [value]="user.forename" class="account-form-username-input">
+    <input matInput disabled [value]="inputField" class="account-form-input">
   </mat-form-field>
   <div class="account-form-edit-icons">
   <mat-icon (click)="toggleDisabledAttributInput()" class="account-form-edit-icons-edit">{{isClicked ? 'done' : 'edit'}}</mat-icon>

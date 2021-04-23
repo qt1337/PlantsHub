@@ -9,20 +9,25 @@ import {UserService} from "../_services/user.service";
 })
 export class AccountComponent implements OnInit {
   user: User;
+  inputFields: string[];
+  inputFieldTitles: string[] = ['Username','Email','Forename','Surname','Birthday']
+
   isClicked: boolean;
-  inputFields: string[] = ['username','forename','surname','birthday','email'];
 
   constructor(private userService : UserService) {
 
   }
   toggleDisabledAttributInput(): void {
-    const inputField: HTMLElement | unknown = document.getElementsByClassName('account-form-username-input');
-    inputField[0].toggleAttribute("disabled");
+    let inputFields: HTMLElement | any = document.getElementsByClassName('account-form-input');
+    let inputFieldsArray = [...inputFields];
+
+    inputFieldsArray.map(inputField => inputField.toggleAttribute("disabled"));
     this.isClicked = !this.isClicked;
   }
 
 
   ngOnInit(): void {
     this.user = this.userService.getUser();
+    this.inputFields = this.userService.getUserValues();
   }
 }

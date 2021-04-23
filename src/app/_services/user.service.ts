@@ -21,6 +21,10 @@ export class UserService {
     return this.user;
   }
 
+  getUserValues() {
+    return [this.user.username,this.user.email,this.user.forename,this.user.surname,this.user.birthday];
+  }
+
 
 
 }
