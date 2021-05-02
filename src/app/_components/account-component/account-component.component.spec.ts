@@ -5,6 +5,7 @@ import { AccountComponent } from './account-component.component';
 describe('AccountComponentComponent', () => {
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;
+  let inputValue: HTMLElement | any;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

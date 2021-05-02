@@ -1,4 +1,6 @@
-<form class="account-form" fxFlex="30%" fxLayout="row wrap" fxFlex.xs="100%" fxLayoutGap="16px grid" >
+<form [formGroup] = "updateUserInformationForm"
+      (ngSubmit)="onSubmit()"
+      class="account-form" fxFlex="30%" fxLayout="row wrap" fxFlex.xs="100%" fxLayoutGap="16px grid" >
   <ng-container *ngFor="let inputField of inputFields">
   <mat-form-field>
     <mat-label>{{inputField}}</mat-label>
@@ -8,5 +10,5 @@
   <mat-icon (click)="toggleDisabledAttributInput()" class="account-form-edit-icons-edit">{{isClicked ? 'done' : 'edit'}}</mat-icon>
   </div>
   </ng-container>
-  <button mat-raised-button color="accent">Save</button>
+  <button mat-raised-button color="accent" (change)="updateUserInformation()" type="submit">Save</button>
 </form>
