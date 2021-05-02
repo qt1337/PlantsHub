@@ -22,7 +22,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { PlantDiaryComponent } from './_components/plant-diary/plant-diary.component';
-import { AccountComponent } from './account-component/account-component.component';
+import { AccountComponent } from './_components/account-component/account-component.component';
 
 @NgModule({
   declarations: [

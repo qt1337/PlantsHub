@@ -7,7 +7,7 @@ import {PageNotFoundComponent} from './_components/page-not-found/page-not-found
 import {PlantcardComponent} from './_components/plantcard/plantcard.component';
 import {AuthGuard} from './auth.guard';
 import {PlantcollectionComponent} from './_components/plantcollection/plantcollection.component';
-import {AccountComponent} from "./account-component/account-component.component";
+import {AccountComponent} from "./_components/account-component/account-component.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
