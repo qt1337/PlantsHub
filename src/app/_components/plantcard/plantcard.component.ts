@@ -21,6 +21,7 @@ export class PlantcardComponent implements OnInit {
   plants: any;
   dialogRef: MatDialogRef<PlantDialogueComponent>
   selectedPlant: string;
+  isUpdatingDialogue : boolean;
 
   icons = [
     {name: 'heart', class: 'big fill-red'},
@@ -68,12 +69,13 @@ export class PlantcardComponent implements OnInit {
     console.log(currentPlant);
   }
 
-  openDialog(plant?): void {
+  openDialog(isUpdatingDialogue : boolean, plant?): void {
 
     console.log(this.getCurrentPlant(plant));
+    console.log(isUpdatingDialogue);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-
+      isUpdatingDialogue: isUpdatingDialogue
     }
     dialogConfig.autoFocus = true;
 

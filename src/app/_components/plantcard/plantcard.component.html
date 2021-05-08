@@ -13,13 +13,13 @@
         <div class="plant-card-buttons" fxLayout="row" fxLayoutAlign="space-between center">
           <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="changeFavourite(plant)"
                      [ngClass]="plant.favourite ? 'fill-red' : 'no-red'"></i-feather>
-          <i-feather name="book" (click)="openDialog(plants.indexOf(plant))"></i-feather>
+          <i-feather name="book" (click)="openDialog(true,plants.indexOf(plant))"></i-feather>
           <i-feather name="trash" (click)="deletePlant(plant)"></i-feather>
         </div>
         </mat-card>
   </div>
   </div>
 </div>
-<button class="plant-card-toggle" (click)="openDialog()" mat-fab color="warn" aria-label="Add Plant">
+<button class="plant-card-toggle" (click)="openDialog(false)" mat-fab color="warn" aria-label="Add Plant">
   <mat-icon>add</mat-icon>
 </button>

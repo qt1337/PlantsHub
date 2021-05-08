@@ -1,6 +1,6 @@
 <form class="plantformfield-container" fxLayout="column" fxFlex.xs="100%" [formGroup]="plantsDialogForm">
 
-  <h2>{{plantsDialogForm.value | json}}</h2>
+  <h2>{{plantDialogueTitle}}</h2>
   <ng-container *ngFor="let formField of plantFormFields" >
   <mat-form-field appearance="standard">
       <mat-label>{{formField.title}}</mat-label>

@@ -14,8 +14,8 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class PlantDialogueComponent implements OnInit {
 
   @Input() plant: Plant;
-  plantDialogueTitle: string = 'Add a new member to your Plant-Family';
-  isUpdatingDialogue : boolean = false;
+  plantDialogueTitle: string;
+  isUpdatingDialogue : boolean;
   plantsDialogForm : FormGroup;
   description :string;
 
@@ -67,7 +67,16 @@ export class PlantDialogueComponent implements OnInit {
       image: this.data.defaultValue ? this.data.defaultValue: '',
     })
     this.plantsDialogForm.valueChanges.subscribe(console.log); // Setting Observable to every value change
+    this.setIsUpdatingDialogue(this.data.isUpdatingDialogue);
+    this.setPlantDialogueTitle(this.data.isUpdatingDialogue);
+  }
 
+  setIsUpdatingDialogue(isUpdatingDialogue : boolean) : void {
+    this.isUpdatingDialogue = isUpdatingDialogue;
+  }
+
+  setPlantDialogueTitle(isUpdatingDialogue) {
+    isUpdatingDialogue ? (this.plantDialogueTitle = 'Update PlantInfo') : (this.plantDialogueTitle = 'Add Plant');
   }
 
   addPlant(): void {
