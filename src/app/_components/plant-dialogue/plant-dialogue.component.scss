@@ -1,14 +1,14 @@
-.button-menu {
+.plants-dialog__button-menu {
   display: flex;
   justify-content: space-evenly;
 }
 
-#cancel-button {
+.plants-dialog__button-menu--cancel-button {
   background-color: #d63031;
   color: white;
 }
 
-#add-button {
+.plants-dialog__button-menu--add-button, .plants-dialog__button-menu--update-button {
   background-color: #00b894;
   color: white;
 }

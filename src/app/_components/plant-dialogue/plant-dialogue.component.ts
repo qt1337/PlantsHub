@@ -15,9 +15,9 @@ export class PlantDialogueComponent implements OnInit {
 
   @Input() plant: Plant;
   plantDialogueTitle: string = 'Add a new member to your Plant-Family';
-
-  plantsDialogForm: FormGroup;
-  description:string;
+  isUpdatingDialogue : boolean = false;
+  plantsDialogForm : FormGroup;
+  description :string;
 
   plantFormFields: PlantFormField[] = [
     {

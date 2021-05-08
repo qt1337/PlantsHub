@@ -1,5 +1,6 @@
 <form class="plantformfield-container" fxLayout="column" fxFlex.xs="100%" [formGroup]="plantsDialogForm">
-<h2>{{plantsDialogForm.value | json}}</h2>
+
+  <h2>{{plantsDialogForm.value | json}}</h2>
   <ng-container *ngFor="let formField of plantFormFields" >
   <mat-form-field appearance="standard">
       <mat-label>{{formField.title}}</mat-label>
@@ -20,9 +21,18 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
    <input type="file" (change)="onFileSelected($event)">
-  <div class="button-menu">
-    <button mat-flat-button id="cancel-button" [mat-dialog-close]="true">Cancel</button>
-    <button mat-flat-button id="add-button" [mat-dialog-close]="true" type="submit" (click)="addPlant()">Add Plant
-    </button>
+  <div class="plants-dialog__button-menu">
+    <button mat-flat-button class="plants-dialog__button-menu--cancel-button" [mat-dialog-close]="true">Cancel</button>
+    <ng-container>
+    <ng-template *ngIf="isUpdatingDialogue; else addPlantBlock">
+      <button mat-flat-button class="plants-dialog__button-menu--update-button"
+              [mat-dialog-close]="true" type="submit">Update Plant</button>
+    </ng-template>
+    <ng-template #addPlantBlock>
+      <button mat-flat-button class="plants-dialog__button-menu--add-button"
+              [mat-dialog-close]="true" type="submit" (click)="addPlant()">Add Plant
+      </button>
+    </ng-template>
+    </ng-container>
   </div>
 </form>

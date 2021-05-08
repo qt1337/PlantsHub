@@ -1,5 +1,10 @@
 const utility = require("./utility");
 
+
+/**
+ * Updates User Information
+ */
+
 /**
  * Creates a user
  */
