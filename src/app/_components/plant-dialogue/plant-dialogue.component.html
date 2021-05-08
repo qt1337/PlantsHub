@@ -23,16 +23,8 @@
    <input type="file" (change)="onFileSelected($event)">
   <div class="plants-dialog__button-menu">
     <button mat-flat-button class="plants-dialog__button-menu--cancel-button" [mat-dialog-close]="true">Cancel</button>
-    <ng-container>
-    <ng-template *ngIf="isUpdatingDialogue; else addPlantBlock">
-      <button mat-flat-button class="plants-dialog__button-menu--update-button"
-              [mat-dialog-close]="true" type="submit">Update Plant</button>
-    </ng-template>
-    <ng-template #addPlantBlock>
       <button mat-flat-button class="plants-dialog__button-menu--add-button"
-              [mat-dialog-close]="true" type="submit" (click)="addPlant()">Add Plant
+              [mat-dialog-close]="true" type="submit" (click)="addPlant()">{{plantDialogueButton}}
       </button>
-    </ng-template>
-    </ng-container>
   </div>
 </form>

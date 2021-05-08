@@ -45,6 +45,7 @@ export class PlantDialogueComponent implements OnInit {
   plantImage: File = null;
   newPlant = new Plant();
   plants: Plant[];
+  plantDialogueButton: string;
 
 
   constructor(
@@ -69,6 +70,8 @@ export class PlantDialogueComponent implements OnInit {
     this.plantsDialogForm.valueChanges.subscribe(console.log); // Setting Observable to every value change
     this.setIsUpdatingDialogue(this.data.isUpdatingDialogue);
     this.setPlantDialogueTitle(this.data.isUpdatingDialogue);
+    this.setPlantDialogueActionButtonText(this.data.isUpdatingDialogue);
+
   }
 
   setIsUpdatingDialogue(isUpdatingDialogue : boolean) : void {
@@ -77,6 +80,11 @@ export class PlantDialogueComponent implements OnInit {
 
   setPlantDialogueTitle(isUpdatingDialogue) {
     isUpdatingDialogue ? (this.plantDialogueTitle = 'Update PlantInfo') : (this.plantDialogueTitle = 'Add Plant');
+  }
+
+  setPlantDialogueActionButtonText(isUpdatingDialogue) {
+    isUpdatingDialogue ? (this.plantDialogueButton = 'Update Plant') : (this.plantDialogueButton = 'Add Plant');
+
   }
 
   addPlant(): void {
