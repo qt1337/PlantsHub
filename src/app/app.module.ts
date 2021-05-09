@@ -52,6 +52,7 @@ import { PlantDiaryComponent } from './_components/plant-diary/plant-diary.compo
     Ng2SearchPipeModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
+  entryComponents: [PlantDialogueComponent],
   providers: [
     HttpClientModule,
     FormsModule,

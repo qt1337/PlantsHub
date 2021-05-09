@@ -70,10 +70,14 @@ export class PlantcardComponent implements OnInit {
 
   openDialog(isUpdatingDialogue : boolean, plant? : Plant): void {
 
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       isUpdatingDialogue: isUpdatingDialogue,
-      plantName : (plant.plantName) ? (plant.plantName) : ""
+      plantName : plant ? plant.plantName : "",
+      family : plant ? plant.family : "",
+      wateringInterval : plant ? plant.wateringInterval : "",
+      fertilizingInterval : plant ? plant.fertilizingInterval : ""
 
     }
     console.log(plant.plantName);
@@ -81,11 +85,12 @@ export class PlantcardComponent implements OnInit {
 
     this.dialogRef = this.dialog.open(PlantDialogueComponent, dialogConfig)
 
-    this.dialogRef.afterClosed().subscribe(() => {
+    this.dialogRef
+      .afterClosed()
+      .subscribe(() => {
       this.getPlants();
     });
   }
-
 
 
   private updatePlantFavourite(plant): void {

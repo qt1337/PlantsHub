@@ -4,19 +4,19 @@ import {AuthenticationService} from '../../_services/authentication.service';
 import {PlantService} from '../../_services/plant.service';
 import {PlantFormField} from '../../_models/plantFormField';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-plant-dialogue',
   templateUrl: './plant-dialogue.component.html',
   styleUrls: ['./plant-dialogue.component.scss']
 })
-export class PlantDialogueComponent implements OnInit, AfterViewInit {
+export class PlantDialogueComponent implements OnInit {
 
   @Input() plant: Plant;
   plantDialogueTitle: string;
   isUpdatingDialogue : boolean;
-  plantsDialogForm : FormGroup;
+  form : FormGroup;
   plantName;
 
   plantFormFields: PlantFormField[] = [
@@ -46,23 +46,33 @@ export class PlantDialogueComponent implements OnInit, AfterViewInit {
   newPlant = new Plant();
   plants: Plant[];
   plantDialogueButton: string;
+
   constructor(
     private authenticationService: AuthenticationService,
     private plantService: PlantService,
-
+    private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<PlantDialogueComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {
 
   }
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+      plantName: this.data ? this.data.plantName : "",
+      family : this.data ? this.data.family : "",
+      wateringInterval : this.data ? this.data.wateringInterval : "",
+      fertilizingInterval : this.data ? this.data.fertilizingInterval : '',
+    })
+
+
     console.log(this.data);
     this.setIsUpdatingDialogue(this.data.isUpdatingDialogue);
     this.setPlantDialogueTitle(this.data.isUpdatingDialogue);
     this.setPlantDialogueActionButtonText(this.data.isUpdatingDialogue);
   }
 
-  ngAfterViewInit() {
-    this.setPlantName()
+  submit(form) {
+    this.dialogRef.close(`${form.value.plantName}`);
   }
 
   setPlantName() {
