@@ -13,7 +13,7 @@
         <div class="plant-card-buttons" fxLayout="row" fxLayoutAlign="space-between center">
           <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="changeFavourite(plant)"
                      [ngClass]="plant.favourite ? 'fill-red' : 'no-red'"></i-feather>
-          <i-feather name="book" (click)="openDialog(true,plants.indexOf(plant))"></i-feather>
+          <i-feather name="book" (click)="openDialog(true, plant);"></i-feather>
           <i-feather name="trash" (click)="deletePlant(plant)"></i-feather>
         </div>
         </mat-card>

@@ -64,19 +64,18 @@ export class PlantcardComponent implements OnInit {
       });
   }
 
-  getCurrentPlant(plant) : any {
-    let currentPlant: Plant = this.plants[plant];
-    console.log(currentPlant);
+  getCurrentPlant(plant) : Plant {
+    return this.plants[plant];
   }
 
-  openDialog(isUpdatingDialogue : boolean, plant?): void {
+  openDialog(isUpdatingDialogue : boolean, plant? : Plant): void {
 
-    console.log(this.getCurrentPlant(plant));
-    console.log(isUpdatingDialogue);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      isUpdatingDialogue: isUpdatingDialogue
+      isUpdatingDialogue: isUpdatingDialogue,
+
     }
+    console.log(dialogConfig.data);
     dialogConfig.autoFocus = true;
 
     this.dialogRef = this.dialog.open(PlantDialogueComponent, dialogConfig)
