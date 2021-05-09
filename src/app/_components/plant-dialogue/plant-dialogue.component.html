@@ -1,10 +1,11 @@
-<form class="plantformfield-container" fxLayout="column" fxFlex.xs="100%" [formGroup]="plantsDialogForm">
+<div class="plantformfield-container" fxLayout="column" fxFlex.xs="100%">
 
   <h2>{{plantDialogueTitle}}</h2>
-  <ng-container *ngFor="let formField of plantFormFields" >
+  <ng-container *ngFor="let formField of plantFormFields">
   <mat-form-field appearance="standard">
       <mat-label>{{formField.title}}</mat-label>
-      <input matInput type="text" [(ngModel)]="newPlant[formField.name]" [formControlName]="formField.name" [value]="plantsDialogForm.value.defaultValue">
+      <input matInput type="text" [(ngModel)]="newPlant[formField.name]" [value]="plantName">
+
       <button mat-button *ngIf="newPlant[formField.name]" matSuffix mat-icon-button aria-label="Clear"
               (click)="newPlant[formField.name]=[formField.defaultValue]">
         <mat-icon>close</mat-icon>
@@ -12,7 +13,6 @@
     </mat-form-field>
     <br>
   </ng-container>
-
   <mat-form-field appearance="standard">
     <!-- Birthday -->
     <mat-label>Birthday of the Plant</mat-label>
@@ -27,4 +27,4 @@
               [mat-dialog-close]="true" type="submit" (click)="addPlant()">{{plantDialogueButton}}
       </button>
   </div>
-</form>
+</div>

@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {PlantService} from '../../_services/plant.service';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {User} from '../../_models/user';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
 import {PlantDiaryComponent} from '../plant-diary/plant-diary.component';
 import {Plant} from "../../_models/plant";
@@ -35,7 +35,7 @@ export class PlantcardComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
 
-    private dialog: MatDialog
+    private dialog: MatDialog,
 
   ) {
     this.authenticationService.checkForInactiveSession();
@@ -73,9 +73,10 @@ export class PlantcardComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       isUpdatingDialogue: isUpdatingDialogue,
+      plantName : (plant.plantName) ? (plant.plantName) : ""
 
     }
-    console.log(dialogConfig.data);
+    console.log(plant.plantName);
     dialogConfig.autoFocus = true;
 
     this.dialogRef = this.dialog.open(PlantDialogueComponent, dialogConfig)

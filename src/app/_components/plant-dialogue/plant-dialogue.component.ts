@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input, OnInit} from '@angular/core';
 import {Plant} from '../../_models/plant';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {PlantService} from '../../_services/plant.service';
@@ -11,13 +11,13 @@ import {FormBuilder, FormGroup} from "@angular/forms";
   templateUrl: './plant-dialogue.component.html',
   styleUrls: ['./plant-dialogue.component.scss']
 })
-export class PlantDialogueComponent implements OnInit {
+export class PlantDialogueComponent implements OnInit, AfterViewInit {
 
   @Input() plant: Plant;
   plantDialogueTitle: string;
   isUpdatingDialogue : boolean;
   plantsDialogForm : FormGroup;
-  description :string;
+  plantName;
 
   plantFormFields: PlantFormField[] = [
     {
@@ -46,32 +46,27 @@ export class PlantDialogueComponent implements OnInit {
   newPlant = new Plant();
   plants: Plant[];
   plantDialogueButton: string;
-
-
   constructor(
     private authenticationService: AuthenticationService,
     private plantService: PlantService,
-    private dialogRef: MatDialogRef<PlantDialogueComponent>,
-    private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) private data
 
-  ) {
+    @Inject(MAT_DIALOG_DATA) public data) {
+
   }
 
   ngOnInit() {
-    this.plantsDialogForm = this.formBuilder.group({
-      plantName: this.data.defaultValue ? this.data.defaultValue: '',
-      wateringInterval: this.data.defaultValue ? this.data.defaultValue: '',
-      fertilizingInterval: this.data.defaultValue ? this.data.defaultValue: '',
-      plantBirthday: this.data.defaultValue ? this.data.defaultValue: '',
-      family: this.data.defaultValue ? this.data.defaultValue: '',
-      image: this.data.defaultValue ? this.data.defaultValue: '',
-    })
-    this.plantsDialogForm.valueChanges.subscribe(console.log); // Setting Observable to every value change
+    console.log(this.data);
     this.setIsUpdatingDialogue(this.data.isUpdatingDialogue);
     this.setPlantDialogueTitle(this.data.isUpdatingDialogue);
     this.setPlantDialogueActionButtonText(this.data.isUpdatingDialogue);
+  }
 
+  ngAfterViewInit() {
+    this.setPlantName()
+  }
+
+  setPlantName() {
+    this.plantName = this.data.plantName;
   }
 
   setIsUpdatingDialogue(isUpdatingDialogue : boolean) : void {
