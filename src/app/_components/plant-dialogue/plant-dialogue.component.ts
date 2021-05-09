@@ -60,8 +60,8 @@ export class PlantDialogueComponent implements OnInit {
     this.form = this.formBuilder.group({
       plantName: this.data ? this.data.plantName : "",
       family : this.data ? this.data.family : "",
-      wateringInterval : this.data ? this.data.wateringInterval : "",
-      fertilizingInterval : this.data ? this.data.fertilizingInterval : '',
+      wateringInterval : this.data ? this.data.wateringInterval : 0,
+      fertilizingInterval : this.data ? this.data.fertilizingInterval : 0,
     })
 
 
