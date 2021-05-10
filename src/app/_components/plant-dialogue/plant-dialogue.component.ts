@@ -93,10 +93,12 @@ export class PlantDialogueComponent implements OnInit {
     if (!this.authenticationService.userValue) {
       return;
     }
+
     const fd = new FormData();
     if (this.plantImage) {
       fd.append('plantImage', this.plantImage, this.plantImage.name);
     }
+
     if (!this.isUpdatingDialogue) {
       this.plantService.addPlant(
         username,

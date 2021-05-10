@@ -13,13 +13,13 @@ import {Plant} from "../../_models/plant";
   styleUrls: ['./plantcard.component.scss']
 })
 export class PlantcardComponent implements OnInit {
+
   @Input() value: string;
 
   plant: Plant;
   user: User;
   plants: any;
   dialogRef: MatDialogRef<PlantDialogueComponent>
-  selectedPlant: string;
   isUpdatingDialogue : boolean;
 
   icons = [
@@ -39,7 +39,6 @@ export class PlantcardComponent implements OnInit {
     this.authenticationService.checkForInactiveSession();
     if (this.authenticationService.userValue) {
       this.user = this.authenticationService.userValue[0];
-    } else {
     }
   }
 
@@ -62,13 +61,7 @@ export class PlantcardComponent implements OnInit {
       });
   }
 
-  getCurrentPlant(plant) : Plant {
-    return this.plants[plant];
-  }
-
   openDialog(isUpdatingDialogue : boolean, plant? : Plant): void {
-
-    console.log(plant);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       isUpdatingDialogue: isUpdatingDialogue,
@@ -93,21 +86,8 @@ export class PlantcardComponent implements OnInit {
     });
   }
 
-
   private updatePlantFavourite(plant): void {
     plant.favourite = !plant.favourite;
-
-    this.plantService.updatePlant(
-      this.user.username,
-      this.user.sessionId,
-      plant
-    ).subscribe(plants => {
-      this.plants = plants;
-    });
-  }
-
-  private deactivatePlant(plant): void {
-    plant.active = !plant.active;
 
     this.plantService.updatePlant(
       this.user.username,
@@ -122,9 +102,21 @@ export class PlantcardComponent implements OnInit {
     this.updatePlantFavourite(plant);
   }
 
+  private deactivatePlant(plant): void {
+
+    plant.active = !plant.active;
+
+    this.plantService.updatePlant(
+      this.user.username,
+      this.user.sessionId,
+      plant
+    ).subscribe(plants => {
+      this.plants = plants;
+    });
+  }
+
   deletePlant(plant): void {
     this.deactivatePlant(plant);
   }
-
 
 }
