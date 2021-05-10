@@ -64,19 +64,9 @@ export class PlantDialogueComponent implements OnInit {
       fertilizingInterval : this.data ? this.data.fertilizingInterval : 0,
     })
 
-
-    console.log(this.data);
     this.setIsUpdatingDialogue(this.data.isUpdatingDialogue);
     this.setPlantDialogueTitle(this.data.isUpdatingDialogue);
     this.setPlantDialogueActionButtonText(this.data.isUpdatingDialogue);
-  }
-
-  submit(form) {
-    this.dialogRef.close(`${form.value.plantName}`);
-  }
-
-  setPlantName() {
-    this.plantName = this.data.plantName;
   }
 
   setIsUpdatingDialogue(isUpdatingDialogue : boolean) : void {

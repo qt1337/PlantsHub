@@ -1,11 +1,10 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PlantService} from '../../_services/plant.service';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {User} from '../../_models/user';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
-import {PlantDiaryComponent} from '../plant-diary/plant-diary.component';
 import {Plant} from "../../_models/plant";
 
 @Component({
@@ -34,7 +33,6 @@ export class PlantcardComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private router: Router,
     private route: ActivatedRoute,
-
     private dialog: MatDialog,
 
   ) {
@@ -77,10 +75,10 @@ export class PlantcardComponent implements OnInit {
       plantName : plant ? plant.plantName : "",
       family : plant ? plant.family : "",
       wateringInterval : plant ? plant.wateringInterval : "",
-      fertilizingInterval : plant ? plant.fertilizingInterval : ""
+      fertilizingInterval : plant ? plant.fertilizingInterval : "",
+      plantBirthday : plant ? plant.plantBirthday : "",
 
     }
-    console.log(plant.plantName);
     dialogConfig.autoFocus = true;
 
     this.dialogRef = this.dialog.open(PlantDialogueComponent, dialogConfig)
