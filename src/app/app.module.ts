@@ -54,10 +54,11 @@ import { AccountComponent } from './_components/account-component/account-compon
     Ng2SearchPipeModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
+  entryComponents: [PlantDialogueComponent],
   providers: [
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   bootstrap: [AppComponent]
 })
