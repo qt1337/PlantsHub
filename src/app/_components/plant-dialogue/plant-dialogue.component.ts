@@ -4,7 +4,7 @@ import {AuthenticationService} from '../../_services/authentication.service';
 import {PlantService} from '../../_services/plant.service';
 import {PlantFormField} from '../../_models/plantFormField';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-plant-dialogue',
@@ -15,8 +15,8 @@ export class PlantDialogueComponent implements OnInit {
 
   @Input() plant: Plant;
   plantDialogueTitle: string;
-  isUpdatingDialogue : boolean;
-  form : FormGroup;
+  isUpdatingDialogue: boolean;
+  form: FormGroup;
   plantName;
 
   plantFormFields: PlantFormField[] = [
@@ -58,10 +58,14 @@ export class PlantDialogueComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      plantId : this.data ? this.data.plantId : "",
       plantName: this.data ? this.data.plantName : "",
-      family : this.data ? this.data.family : "",
-      wateringInterval : this.data ? this.data.wateringInterval : 0,
-      fertilizingInterval : this.data ? this.data.fertilizingInterval : 0,
+      family: this.data ? this.data.family : "",
+      wateringInterval: this.data ? this.data.wateringInterval : 0,
+      fertilizingInterval: this.data ? this.data.fertilizingInterval : 0,
+      plantBirthday: this.data ? this.data.plantBirthday : '2020-12-12',
+      active: this.data ? this.data.active : true,
+      favourite : this.data ? this.data.favourite : false
     })
 
     this.setIsUpdatingDialogue(this.data.isUpdatingDialogue);
@@ -69,7 +73,7 @@ export class PlantDialogueComponent implements OnInit {
     this.setPlantDialogueActionButtonText(this.data.isUpdatingDialogue);
   }
 
-  setIsUpdatingDialogue(isUpdatingDialogue : boolean) : void {
+  setIsUpdatingDialogue(isUpdatingDialogue: boolean): void {
     this.isUpdatingDialogue = isUpdatingDialogue;
   }
 
@@ -82,7 +86,9 @@ export class PlantDialogueComponent implements OnInit {
 
   }
 
-  addPlant(): void {
+  submitPlantDialogueInformation(): void {
+    console.log(this.form.value);
+
     if (!this.authenticationService.userValue) {
       return;
     }
@@ -90,20 +96,34 @@ export class PlantDialogueComponent implements OnInit {
     if (this.plantImage) {
       fd.append('plantImage', this.plantImage, this.plantImage.name);
     }
-    this.plantService.addPlant(
-      this.authenticationService.userValue[0].username,
-      this.authenticationService.userValue[0].sessionId,
-      this.newPlant,
-      fd
-    )
-      .subscribe(plants => {
-        this.plants = plants;
-      });
+    if (!this.isUpdatingDialogue) {
+      this.plantService.addPlant(
+        this.authenticationService.userValue[0].username,
+        this.authenticationService.userValue[0].sessionId,
+        this.form.value,
+        fd
+      )
+        .subscribe(plants => {
+          this.plants = plants;
+        });
+    } else {
+
+      this.plantService.updatePlant(
+        this.authenticationService.userValue[0].username,
+        this.authenticationService.userValue[0].sessionId,
+        this.form.value,
+      )
+        .subscribe(plants => {
+          this.plants = plants;
+        });
+    }
+
   }
 
   onFileSelected(event): void {
     this.plantImage = event.target.files[0];
     console.log(this.plantImage);
   }
+
 
 }

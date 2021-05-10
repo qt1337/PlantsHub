@@ -68,15 +68,18 @@ export class PlantcardComponent implements OnInit {
 
   openDialog(isUpdatingDialogue : boolean, plant? : Plant): void {
 
-
+    console.log(plant);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       isUpdatingDialogue: isUpdatingDialogue,
+      plantId : plant ? plant.plantId : "",
       plantName : plant ? plant.plantName : "",
       family : plant ? plant.family : "",
       wateringInterval : plant ? plant.wateringInterval : "",
       fertilizingInterval : plant ? plant.fertilizingInterval : "",
-      plantBirthday : plant ? plant.plantBirthday : "",
+      plantBirthday : plant ? plant.plantBirthday : "5/21/2021",
+      active : plant ? plant.active : true,
+      favourite : plant ? plant.favourite : 0
 
     }
     dialogConfig.autoFocus = true;

@@ -1,4 +1,4 @@
-<form [formGroup]="form" class="plantformfield-container" fxLayout="column" fxFlex.xs="100%" (ngSubmit)="addPlant()">
+<form [formGroup]="form" class="plantformfield-container" fxLayout="column" fxFlex.xs="100%" (ngSubmit)="submitPlantDialogueInformation()">
 
   <h2>{{plantDialogueTitle}}</h2>
   <ng-container *ngFor="let formField of plantFormFields">
@@ -15,7 +15,7 @@
   <mat-form-field appearance="standard">
     <!-- Birthday -->
     <mat-label>Birthday of the Plant</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="newPlant.plantBirthday">
+    <input matInput [matDatepicker]="picker" formControlName="plantBirthday">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
