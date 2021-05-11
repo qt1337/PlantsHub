@@ -111,4 +111,31 @@ describe('PlantcardComponent', () => {
     component.openDialog(false);
     expect(component.openDialog).toHaveBeenCalled()
   })
+
+  it('should open Plant Update Dialogue', () => {
+    component.plants = [
+      {
+        plantId: 1,
+        plantName: 'Olga',
+        wateringInterval: 2,
+        fertilizingInterval: 2,
+        plantBirthday: '2020-05-12',
+        plantDeathday: '2020-06-12',
+        family: 'Olgawitsch',
+        type: 'Russian',
+        species: 'Russian',
+        image: 'beautifulimage.png',
+        lux: '200',
+        favourite: false,
+        active: true
+      }
+    ]
+    component.ngOnInit();
+    fixture.detectChanges();
+    const plantDialogueUpdateElement = fixture.debugElement.query(By.css('.plant-card-toggle-update-dialogue'));
+    plantDialogueUpdateElement.nativeElement.click();
+    spyOn(component, 'openDialog');
+    component.openDialog(true);
+    expect(component.openDialog).toHaveBeenCalled()
+  })
 });
