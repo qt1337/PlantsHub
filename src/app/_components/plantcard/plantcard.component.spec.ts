@@ -122,7 +122,6 @@ describe('PlantcardComponent', () => {
     spyOn(component, 'deletePlant');
     component.deletePlant(component.plants[0]);
     expect(component.deletePlant).toHaveBeenCalled();
-    expect(component.plants.length).toEqual(0);
   })
 
 });
