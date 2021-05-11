@@ -9,6 +9,15 @@ const { SpecReporter, StacktraceOption } = require('jasmine-spec-reporter');
  */
 exports.config = {
   allScriptsTimeout: 11000,
+  // path relative to the current config file
+  frameworkPath: require.resolve('protractor-cucumber-framework'),
+
+  cucumberOpts: {
+    // require step definitions
+    require: [
+      './src/steps/*.steps.ts' // accepts a glob
+    ]
+  },
   specs: [
     './src/**/*.e2e-spec.ts'
   ],
@@ -18,6 +27,7 @@ exports.config = {
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
+
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000,

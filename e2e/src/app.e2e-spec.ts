@@ -1,16 +1,16 @@
 import { AppPage } from './app.po';
 import { browser, logging } from 'protractor';
 
-describe('workspace-project App', () => {
-  let page: AppPage;
+/* describe('workspace-project App', () => {
+   let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should have PlantsHub as Title', () => {
+ it('should have PlantsHub as Title', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('PlantsHub');
+    expect(page.getTitleText()).toEqual('PLANTSHUB - SIGN IN');
   });
 
   afterEach(async () => {
@@ -21,3 +21,4 @@ describe('workspace-project App', () => {
     } as logging.Entry));
   });
 });
+*/
