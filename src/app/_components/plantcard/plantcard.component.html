@@ -14,7 +14,7 @@
           <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="changeFavourite(plant)"
                      [ngClass]="plant.favourite ? 'fill-red' : 'no-red'"></i-feather>
           <i-feather name="book" class="plant-card-toggle-update-dialogue" (click)="openDialog(true, plant);"></i-feather>
-          <i-feather name="trash" (click)="deletePlant(plant)"></i-feather>
+          <i-feather name="trash" class="plant-card-button__delete-dialogue" (click)="deletePlant(plant)"></i-feather>
         </div>
         </mat-card>
   </div>

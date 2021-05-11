@@ -12,7 +12,6 @@ import {AbstractMockObservableService} from "../../_services/mocks/mock.service"
 import {Plant} from "../../_models/plant";
 import {PlantService} from "../../_services/plant.service";
 import {By} from "@angular/platform-browser";
-import any = jasmine.any;
 
 class MockService extends AbstractMockObservableService {
   updatePlant(plant : Plant) {
@@ -69,6 +68,24 @@ describe('PlantcardComponent', () => {
     fixture = TestBed.createComponent(PlantcardComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+    component.plants = [
+      {
+        plantId: 1,
+        plantName: 'Olga',
+        wateringInterval: 2,
+        fertilizingInterval: 2,
+        plantBirthday: '2020-05-12',
+        plantDeathday: '2020-06-12',
+        family: 'Olgawitsch',
+        type: 'Russian',
+        species: 'Russian',
+        image: 'beautifulimage.png',
+        lux: '200',
+        favourite: false,
+        active: true
+      }
+    ]
+    component.ngOnInit();
     fixture.detectChanges();
   });
 
@@ -77,34 +94,12 @@ describe('PlantcardComponent', () => {
   });
 
   it('should update the favourite value', () => {
-
-    component.plants = [
-      {
-        plantId: 1,
-        plantName: 'Olga',
-        wateringInterval: 2,
-        fertilizingInterval: 2,
-        plantBirthday: '2020-05-12',
-        plantDeathday: '2020-06-12',
-        family: 'Olgawitsch',
-        type: 'Russian',
-        species: 'Russian',
-        image: 'beautifulimage.png',
-        lux: '200',
-        favourite: false,
-        active: true
-      }
-    ]
-    component.ngOnInit();
-    fixture.detectChanges();
     const favouriteButtonElement = fixture.debugElement.query(By.css('[name=heart]'));
     favouriteButtonElement.nativeElement.click();
     expect(component.plants[0].favourite).toBe(true);
   });
 
   it('should open AddPlant Dialogue', () => {
-    component.ngOnInit();
-    fixture.detectChanges();
     const plantDialogueToggleElement = fixture.debugElement.query(By.css('.plant-card-toggle'));
     plantDialogueToggleElement.nativeElement.click();
     spyOn(component, 'openDialog');
@@ -113,29 +108,21 @@ describe('PlantcardComponent', () => {
   })
 
   it('should open Plant Update Dialogue', () => {
-    component.plants = [
-      {
-        plantId: 1,
-        plantName: 'Olga',
-        wateringInterval: 2,
-        fertilizingInterval: 2,
-        plantBirthday: '2020-05-12',
-        plantDeathday: '2020-06-12',
-        family: 'Olgawitsch',
-        type: 'Russian',
-        species: 'Russian',
-        image: 'beautifulimage.png',
-        lux: '200',
-        favourite: false,
-        active: true
-      }
-    ]
-    component.ngOnInit();
-    fixture.detectChanges();
     const plantDialogueUpdateElement = fixture.debugElement.query(By.css('.plant-card-toggle-update-dialogue'));
     plantDialogueUpdateElement.nativeElement.click();
     spyOn(component, 'openDialog');
     component.openDialog(true);
     expect(component.openDialog).toHaveBeenCalled()
   })
+
+
+  it('should delete Plant', () => {
+    const plantDialogueDeleteElement = fixture.debugElement.query(By.css('.plant-card-button__delete-dialogue'));
+    plantDialogueDeleteElement.nativeElement.click();
+    spyOn(component, 'deletePlant');
+    component.deletePlant(component.plants[0]);
+    expect(component.deletePlant).toHaveBeenCalled();
+    expect(component.plants.length).toEqual(0);
+  })
+
 });
