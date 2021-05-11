@@ -101,4 +101,14 @@ describe('PlantcardComponent', () => {
     favouriteButtonElement.nativeElement.click();
     expect(component.plants[0].favourite).toBe(true);
   });
+
+  it('should open AddPlant Dialogue', () => {
+    component.ngOnInit();
+    fixture.detectChanges();
+    const plantDialogueToggleElement = fixture.debugElement.query(By.css('.plant-card-toggle'));
+    plantDialogueToggleElement.nativeElement.click();
+    spyOn(component, 'openDialog');
+    component.openDialog(false);
+    expect(component.openDialog).toHaveBeenCalled()
+  })
 });
