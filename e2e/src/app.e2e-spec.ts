@@ -8,9 +8,9 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should have PlantsHub as Title', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('PlantsHub app is running!');
+    expect(page.getTitleText()).toEqual('PlantsHub');
   });
 
   afterEach(async () => {
