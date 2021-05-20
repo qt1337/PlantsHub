@@ -3,7 +3,7 @@
   <div class="plant-dialog__title-section">
   <h2>{{plantDialogueTitle}}</h2>
 
-  <mat-icon *ngIf="isUpdatingDialogue">event</mat-icon>
+  <mat-icon *ngIf="isUpdatingDialogue" (click)="displayPlantDiary()">event</mat-icon>
   </div>
   <ng-container *ngFor="let formField of plantFormFields">
   <mat-form-field appearance="standard">

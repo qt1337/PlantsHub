@@ -16,6 +16,7 @@ export class PlantDialogueComponent implements OnInit {
   @Input() plant: Plant;
   plantDialogueTitle: string;
   isUpdatingDialogue: boolean;
+  isPlantDiaryDialogue: boolean;
   form: FormGroup;
   plantName;
 
@@ -86,6 +87,11 @@ export class PlantDialogueComponent implements OnInit {
 
   }
 
+  setIsPlantDiaryDialogue() {
+    this.isPlantDiaryDialogue = !this.isPlantDiaryDialogue;
+    console.log(this.isPlantDiaryDialogue);
+  }
+
   submitPlantDialogueInformation(): void {
     console.log(this.form.value);
 
@@ -126,4 +132,7 @@ export class PlantDialogueComponent implements OnInit {
   }
 
 
+  displayPlantDiary() {
+    this.setIsPlantDiaryDialogue();
+  }
 }
