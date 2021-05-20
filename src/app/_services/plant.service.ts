@@ -136,4 +136,42 @@ export class PlantService {
     }
   }
 
+  createPlantDiaryEntry(username, sessionId, plantDiaryEntry, formData): Observable<PlantDiaryEntry[]> {
+    try {
+      const plantId = plantDiaryEntry.plantId || null;
+      const watered = plantDiaryEntry.watered || false;
+      const fertilized = plantDiaryEntry.fertilized || false;
+      const date = plantDiaryEntry.date || null;
+      const note = plantDiaryEntry.note || null;
+      const size = plantDiaryEntry.size || null;
+      const health = plantDiaryEntry.health || null;
+
+      plantDiaryEntry = {
+        plantId,
+        watered,
+        fertilized,
+        date,
+        note,
+        size,
+        health,
+      };
+
+      formData.append('plantDiaryEntry', plantDiaryEntry);
+
+      return this.http.post<PlantDiaryEntry[]>(
+        this.localURL + '/api/create-diary-entry',
+        formData,
+        {responseType: 'json'}
+      ).pipe(map(plantDiaryEntries => {
+          localStorage.removeItem('plantDiaryEntries');
+          localStorage.setItem('plantDiaryEntries', JSON.stringify(plantDiaryEntries));
+          this.plantDiaryEntriesSubject.next(plantDiaryEntries);
+          return plantDiaryEntries;
+        })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 }
