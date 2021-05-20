@@ -30,7 +30,7 @@ const fileFilter = (req, file, cb) => {
 };
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1024 * 1024 * 10 },
+  limits: {fileSize: 1024 * 1024 * 10},
   fileFilter: fileFilter,
 });
 // const cors = require('cors');
@@ -78,7 +78,7 @@ app.use(function (req, res, next) {
 app.use("/uploads", express.static("uploads"));
 
 app.get("/*", (req, res) =>
-  res.sendFile("index.html", { root: "dist/PlantsHub/" })
+  res.sendFile("index.html", {root: "dist/PlantsHub/"})
 );
 
 app.listen(process.env.PORT || 8080, () => {
@@ -106,6 +106,14 @@ app.post("/api/request-reset-password", (req, res) => {
 
 app.post("/api/reset-password", (req, res) => {
   user_api.resetPasswordKey(pool, req, res);
+});
+
+app.post("/api/update-user", (req, res) => {
+  user_api.updateUser(pool, req, res);
+});
+
+app.post("/api/delete-user", (req, res) => {
+  user_api.deleteUser(pool, req, res);
 });
 
 /**
