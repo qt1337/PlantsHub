@@ -104,9 +104,11 @@ function updateUser(pool, req, res) {
                     conn.end();
                     return;
                   }
-
-                  res.status(202).json("user has been updated");
                   conn.end();
+
+                  req.body.username = newUsername || username
+
+                  return checkUserSession(pool, req, res)
                 });
 
             });
