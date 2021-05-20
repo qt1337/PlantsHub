@@ -3,7 +3,7 @@
       class="account-form" fxFlex="30%" fxLayout="row wrap" fxFlex.xs="100%" fxLayoutGap="16px grid" >
   <ng-container *ngFor="let inputField of inputFields">
   <mat-form-field>
-    <mat-label>{{inputField}}</mat-label>
+    <mat-label>{{inputFieldTitles[inputFields.indexOf(inputField)]}}</mat-label>
     <input matInput disabled [value]="inputField" class="account-form-input">
   </mat-form-field>
   <div class="account-form-edit-icons">
