@@ -16,7 +16,7 @@ export class PlantDialogueComponent implements OnInit {
   @Input() plant: Plant;
   plantDialogueTitle: string;
   isUpdatingDialogue: boolean;
-  isPlantDiaryDialogue: boolean;
+  isPlantDiaryDialogue: boolean = false;
   form: FormGroup;
   plantName;
 
