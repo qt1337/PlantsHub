@@ -45,7 +45,6 @@ export class AccountComponent implements OnInit {
     //tbd
   }
 
-
   // TODO: Lisa pls implement these two functions [update, delete]
   deleteUser(): void {
     this.authenticationService.deleteUser();
