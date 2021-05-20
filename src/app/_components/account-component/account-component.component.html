@@ -10,5 +10,6 @@
   <mat-icon (click)="toggleDisabledAttributInput()" class="account-form-edit-icons-edit">{{isClicked ? 'done' : 'edit'}}</mat-icon>
   </div>
   </ng-container>
-  <button mat-raised-button color="accent" (change)="updateUserInformation()" type="submit">Save</button>
+  <button mat-raised-button color="primary" (change)="updateUserInformation()" type="submit">Save Changes</button>
+  <button mat-raised-button color="warn" type="submit">Delete User</button>
 </form>
