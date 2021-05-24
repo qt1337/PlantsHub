@@ -41,16 +41,11 @@ export class AccountComponent implements OnInit {
     this.inputFields = this.userService.getUserValues();
   }
 
-  updateUserInformation() {
-    //tbd
-  }
-
-  // TODO: Lisa pls implement these two functions [update, delete]
   deleteUser(): void {
     this.authenticationService.deleteUser();
   }
 
-  updateUser(): void {
+  updateUserInformation(): void {
     this.authenticationService.updateUser(
       this.inputFields[0],
       this.inputFields[1],
