@@ -457,7 +457,7 @@ function createPlantDiaryEntry(pool, req, res) {
                 .catch((err) => {
                   console.log(err);
                   res.status(401).send("rows could not be found");
-                  connection.end();
+                  conn.end();
                 });
             });
         });
