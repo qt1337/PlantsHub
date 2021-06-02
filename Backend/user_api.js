@@ -5,46 +5,6 @@ const utility = require("./utility");
  * Updates User Information
  */
 
-/**
- * Creates a user
- */
-function createUser(pool, req, res) {
-  let [salt, hashedPassword] = utility.getSaltHashPassword(req.body.password);
-
-  pool
-    .getConnection()
-    .then((connection) => {
-      connection
-        .query(
-          "INSERT INTO User(username, email, password, forename, surname, birthday, salt) value (?, ?, ?, ?, ?, ?, ?)",
-          [
-            req.body.username,
-            req.body.email,
-            hashedPassword,
-            req.body.forename,
-            req.body.surname,
-            req.body.birthday,
-            salt,
-          ]
-        )
-        .then((result) => {
-          if (result === 0) {
-            return;
-          }
-          return checkUserCredentials(pool, req, res);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(401).send("rows could not be created");
-          connection.end();
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-      // not connected
-    });
-}
-
 
 /**
  * Updates information of user
@@ -477,6 +437,48 @@ function resetPasswordKey(pool, req, res) {
       // not connected
     });
 }
+
+
+/**
+ * Creates a user
+ */
+function createUser(pool, req, res) {
+  let [salt, hashedPassword] = utility.getSaltHashPassword(req.body.password);
+
+  pool
+    .getConnection()
+    .then((connection) => {
+      connection
+        .query(
+          "INSERT INTO User(username, email, password, forename, surname, birthday, salt) value (?, ?, ?, ?, ?, ?, ?)",
+          [
+            req.body.username,
+            req.body.email,
+            hashedPassword,
+            req.body.forename,
+            req.body.surname,
+            req.body.birthday,
+            salt,
+          ]
+        )
+        .then((result) => {
+          if (result === 0) {
+            return;
+          }
+          return checkUserCredentials(pool, req, res);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(401).send("rows could not be created");
+          connection.end();
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      // not connected
+    });
+}
+
 
 module.exports = {
   createUser,
