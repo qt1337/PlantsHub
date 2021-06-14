@@ -44,7 +44,6 @@ function createUser(pool, req, res) {
     });
 }
 
-
 /**
  * Updates information of user
  */
@@ -64,10 +63,7 @@ function updateUser(pool, req, res) {
     .getConnection()
     .then((conn) => {
       conn
-        .query(
-          "SELECT salt, userId FROM User WHERE username = (?)",
-          [username]
-        )
+        .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
         .then((row) => {
           if (!row[0]) {
             res.status(404).send("user does not exist");
@@ -81,7 +77,8 @@ function updateUser(pool, req, res) {
           conn.end();
           conn
             .query(
-              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSessionId]
+              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+              [userId, hashedSessionId]
             )
             .then((row) => {
               if (!row[0]) {
@@ -95,7 +92,14 @@ function updateUser(pool, req, res) {
               conn
                 .query(
                   "UPDATE User SET username =  COALESCE((?),username), email = COALESCE((?), email), forename = COALESCE((?), forename), surname = COALESCE((?), surname), birthday = COALESCE((?), birthday) WHERE userId = (?)",
-                  [newUsername, newEmail, newForename, newSurname, newBirthday, userId]
+                  [
+                    newUsername,
+                    newEmail,
+                    newForename,
+                    newSurname,
+                    newBirthday,
+                    userId,
+                  ]
                 )
                 .then((result) => {
                   if (result.affectedRows !== 1) {
@@ -105,11 +109,10 @@ function updateUser(pool, req, res) {
                   }
                   conn.end();
 
-                  req.body.username = newUsername || username
+                  req.body.username = newUsername || username;
 
-                  return checkUserSession(pool, req, res)
+                  return checkUserSession(pool, req, res);
                 });
-
             });
         });
     })
@@ -132,10 +135,7 @@ function deleteUser(pool, req, res) {
     .getConnection()
     .then((conn) => {
       conn
-        .query(
-          "SELECT salt, userId FROM User WHERE username = (?)",
-          [username]
-        )
+        .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
         .then((row) => {
           if (!row[0]) {
             res.status(404).send("user does not exist");
@@ -149,7 +149,8 @@ function deleteUser(pool, req, res) {
           conn.end();
           conn
             .query(
-              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)", [userId, hashedSessionId]
+              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+              [userId, hashedSessionId]
             )
             .then((row) => {
               if (!row[0]) {
@@ -161,9 +162,7 @@ function deleteUser(pool, req, res) {
               // session is valid || userId is set
 
               conn
-                .query("DELETE FROM User WHERE userId = (?)",
-                  [userId]
-                )
+                .query("DELETE FROM User WHERE userId = (?)", [userId])
                 .then((result) => {
                   if (result.affectedRows !== 1) {
                     res.status(401).send("something went wrong");
@@ -174,7 +173,6 @@ function deleteUser(pool, req, res) {
                   res.status(202).json("user has been deleted");
                   conn.end();
                 });
-
             });
         });
     })
@@ -484,7 +482,7 @@ module.exports = {
   requestResetPasswordKey,
   resetPasswordKey,
   updateUser,
-  deleteUser
+  deleteUser,
 };
 
 /**
