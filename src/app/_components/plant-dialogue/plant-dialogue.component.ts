@@ -58,14 +58,14 @@ export class PlantDialogueComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      plantId : this.data ? this.data.plantId : "",
+      plantId: this.data ? this.data.plantId : "",
       plantName: this.data ? this.data.plantName : "",
       family: this.data ? this.data.family : "",
       wateringInterval: this.data ? this.data.wateringInterval : 0,
       fertilizingInterval: this.data ? this.data.fertilizingInterval : 0,
       plantBirthday: this.data ? this.data.plantBirthday : '2020-12-12',
       active: this.data ? this.data.active : true,
-      favourite : this.data ? this.data.favourite : false
+      favourite: this.data ? this.data.favourite : false
     })
 
     this.setIsUpdatingDialogue(this.data.isUpdatingDialogue);
@@ -87,19 +87,22 @@ export class PlantDialogueComponent implements OnInit {
   }
 
   submitPlantDialogueInformation(): void {
-    console.log(this.form.value);
+    let username = this.authenticationService.userValue[0].username;
+    let sessionId = this.authenticationService.userValue[0].sessionId;
 
     if (!this.authenticationService.userValue) {
       return;
     }
+
     const fd = new FormData();
     if (this.plantImage) {
       fd.append('plantImage', this.plantImage, this.plantImage.name);
     }
+
     if (!this.isUpdatingDialogue) {
       this.plantService.addPlant(
-        this.authenticationService.userValue[0].username,
-        this.authenticationService.userValue[0].sessionId,
+        username,
+        sessionId,
         this.form.value,
         fd
       )
@@ -109,8 +112,8 @@ export class PlantDialogueComponent implements OnInit {
     } else {
 
       this.plantService.updatePlant(
-        this.authenticationService.userValue[0].username,
-        this.authenticationService.userValue[0].sessionId,
+        username,
+        sessionId,
         this.form.value,
       )
         .subscribe(plants => {

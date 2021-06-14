@@ -1,0 +1,21 @@
+@import "/src/styles";
+
+.signup-formfields {
+  width: 100%;
+}
+
+.signin-card-buttons {
+  margin: 3em auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signin-card-buttons-signin {
+  background-color: $teal-primary;
+  color: $white;
+}
+
+.signin-card-buttons-register {
+  background-color: $red;
+  color: $white;
+}

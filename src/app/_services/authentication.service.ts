@@ -4,7 +4,7 @@ import {first, map} from 'rxjs/operators';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../_models/user';
 import {Router} from '@angular/router';
-import { isDevMode } from '@angular/core';
+import {isDevMode} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -96,6 +96,66 @@ export class AuthenticationService {
     }
   }
 
+  public updateUser(newUsername, newEmail, newForename, newSurname, newBirthday): Observable<User> {
+    try {
+      if (this.userValue && this.userValue[0]) {
+        const sessionId = this.userValue[0].sessionId;
+        const username = this.userValue[0].username;
+
+        return this.http.post<User>(
+          this.localURL + '/api/update-user',
+          {
+            sessionId,
+            username,
+            newUsername,
+            newEmail,
+            newForename,
+            newSurname,
+            newBirthday
+          },
+          {responseType: 'json'}
+        ).pipe(map(user => {
+            localStorage.setItem('user', JSON.stringify(user));
+            this.userSubject.next(user);
+            return user;
+          })
+        );
+      }
+    } catch (error) {
+      localStorage.removeItem('user');
+      console.log(error);
+    }
+  }
+
+  public deleteUser(): void {
+    try {
+      if (this.userValue && this.userValue[0]) {
+        const sessionId = this.userValue[0].sessionId;
+        const username = this.userValue[0].username;
+
+        this.http.post<User>(
+          this.localURL + '/api/delete-user',
+          {
+            sessionId,
+            username
+          },
+          {responseType: 'json'}
+        ).pipe(map(user => {
+            localStorage.removeItem('user');
+
+            // localStorage.setItem('user', JSON.stringify(user));
+            // this.userSubject.next(user);
+            // return user;
+          })
+        );
+        this.routeToHome();
+      }
+    } catch (error) {
+      localStorage.removeItem('user');
+      console.log(error);
+    }
+  }
+
   public login(username, password): Observable<User> {
     try {
       return this.http.post<User>(
@@ -121,7 +181,7 @@ export class AuthenticationService {
     localStorage.removeItem('user');
     this.userSubject.next(null);
     this.router.navigate(['/signin']);
-    window.location.reload() // Important to refresh the UI but maybe there is a better solution @TODO
+    window.location.reload(); // Important to refresh the UI but maybe there is a better solution @TODO
   }
 
   public register(username, email, password, forename, surname, birthday): Observable<User> {

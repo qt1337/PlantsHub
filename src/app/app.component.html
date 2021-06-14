@@ -4,18 +4,25 @@
   <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
           aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
+
   </button>
   <span routerLink="/">{{title}}</span>
   </div>
-  <button mat-icon-button class="logout-button tr items-end" aria-label="Example icon-button with logout icon"
+  <div class="app-header-right-side">
+  <mat-icon routerLink="/profile">face</mat-icon>
+  <button mat-icon-button class="logout-button tr"
           (click)="authenticationService.logout()">
     <mat-icon>logout</mat-icon>
   </button>
+  </div>
 </mat-toolbar>
 <mat-drawer-container class="nav-container" autosize [hasBackdrop]="true">
   <mat-drawer #drawer class="side-nav w5" mode="over">
     <div class="f2 pa2">
       <a mat-flat-button routerLink="/plants">My Plants</a>
+    </div>
+    <div class="f2 pa2">
+      <a mat-flat-button routerLink="/profile">Your Account</a>
     </div>
   </mat-drawer>
   <router-outlet></router-outlet>
