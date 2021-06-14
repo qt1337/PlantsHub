@@ -9,7 +9,7 @@ function createPlant(pool, req, res) {
   let plantName = req.body.plantName;
   let wateringInterval = req.body.wateringInterval || null;
   let fertilizingInterval = req.body.fertilizingInterval || null;
-  let plantBirthday = req.body.plantBirthday || null;
+  let plantBirthday = new Date(Date.parse(req.body.plantBirthday)) || null;
   let plantDeathday = req.body.plantDeathday || null;
   let family = req.body.family || null;
   let type = req.body.type || null;
@@ -102,7 +102,7 @@ function updatePlant(pool, req, res) {
   let plantName = req.body.plant.plantName || null;
   let wateringInterval = req.body.plant.wateringInterval || null;
   let fertilizingInterval = req.body.plant.fertilizingInterval || null;
-  let plantBirthday = req.body.plant.plantBirthday || null;
+  let plantBirthday = new Date(Date.parse(req.body.plantBirthday)) || null;
   let plantDeathday = req.body.plant.plantDeathday || null;
   let family = req.body.plant.family || null;
   let type = req.body.plant.type || null;
