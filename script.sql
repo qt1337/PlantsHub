@@ -54,4 +54,3 @@ CREATE TABLE Session (
     sessionCreated timestamp DEFAULT CURRENT_TIMESTAMP NULL,
     CONSTRAINT Session_User_userId FOREIGN KEY (userId) REFERENCES USER (userId) ON DELETE CASCADE
 );
-
