@@ -1,73 +1,56 @@
-create table User
-(
-    userId            int auto_increment
-        primary key,
-    username          varchar(255)                        not null,
-    email             varchar(255)                        not null,
-    password          text                                not null,
-    forename          text                                not null,
-    surname           text                                not null,
-    birthday          date                                not null,
-    salt              text                                not null,
-    userCreated       timestamp default CURRENT_TIMESTAMP not null,
-    resetPasswordKey  text                                null,
-    resetPasswordDate timestamp                           null,
-    constraint User_email_uindex
-        unique (email),
-    constraint User_username_uindex
-        unique (username)
+CREATE TABLE USER (
+    userId int AUTO_INCREMENT PRIMARY KEY,
+    username varchar(255) NOT NULL,
+    email varchar(255) NOT NULL,
+    PASSWORD text NOT NULL,
+    forename text NOT NULL,
+    surname text NOT NULL,
+    birthday date NOT NULL,
+    salt text NOT NULL,
+    userCreated timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    resetPasswordKey text NULL,
+    resetPasswordDate timestamp NULL,
+    CONSTRAINT User_email_uindex UNIQUE (email),
+    CONSTRAINT User_username_uindex UNIQUE (username)
 );
 
-create table Plant
-(
-    plantId             int auto_increment
-        primary key,
-    plantName           varchar(255)         not null,
-    wateringInterval    int                  null,
-    fertilizingInterval int                  null,
-    plantBirthday       date                 null,
-    plantDeathday       date                 null,
-    family              text                 null,
-    type                text                 null,
-    species             text                 null,
-    image               text                 null,
-    lux                 int                  null,
-    userId              int                  null,
-    favourite           tinyint(1) default 0 null,
-    lastTimeWater       date                 null,
-    lastTimeFertilize   date                 null,
-    active              tinyint(1) default 1 not null,
-    constraint Plant_User_userId_fk
-        foreign key (userId) references User (userId)
-            on delete cascade
+CREATE TABLE Plant (
+    plantId int AUTO_INCREMENT PRIMARY KEY,
+    plantName varchar(255) NOT NULL,
+    wateringInterval int NULL,
+    fertilizingInterval int NULL,
+    plantBirthday date NULL,
+    plantDeathday date NULL,
+    family text NULL,
+    TYPE text NULL,
+    species text NULL,
+    image text NULL,
+    lux int NULL,
+    userId int NULL,
+    favourite tinyint (1) DEFAULT 0 NULL,
+    lastTimeWater date NULL,
+    lastTimeFertilize date NULL,
+    active tinyint (1) DEFAULT 1 NOT NULL,
+    CONSTRAINT Plant_User_userId_fk FOREIGN KEY (userId) REFERENCES USER (userId) ON DELETE CASCADE
 );
 
-create table PlantDiary
-(
-    plantDiaryId int auto_increment
-        primary key,
-    plantId      int                  null,
-    watered      tinyint(1) default 0 null,
-    fertilized   tinyint(1) default 0 null,
-    image        text                 null,
-    date         date                 not null,
-    note         text                 null,
-    size         float                null,
-    health       text                 null,
-    constraint PlantDiary_Plant_plantId_fk
-        foreign key (plantId) references Plant (plantId)
-            on update cascade on delete cascade
+CREATE TABLE PlantDiary (
+    plantDiaryId int AUTO_INCREMENT PRIMARY KEY,
+    plantId int NULL,
+    watered tinyint (1) DEFAULT 0 NULL,
+    fertilized tinyint (1) DEFAULT 0 NULL,
+    image text NULL,
+    date date NOT NULL,
+    note text NULL,
+    size float NULL,
+    health text NULL,
+    CONSTRAINT PlantDiary_Plant_plantId_fk FOREIGN KEY (plantId) REFERENCES Plant (plantId) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-create table Session
-(
-    sessionId      int auto_increment
-        primary key,
-    userId         int                                 not null,
-    sessionHash    text                                not null,
-    sessionCreated timestamp default CURRENT_TIMESTAMP null,
-    constraint Session_User_userId
-        foreign key (userId) references User (userId)
-            on delete cascade
+CREATE TABLE Session (
+    sessionId int AUTO_INCREMENT PRIMARY KEY,
+    userId int NOT NULL,
+    sessionHash text NOT NULL,
+    sessionCreated timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+    CONSTRAINT Session_User_userId FOREIGN KEY (userId) REFERENCES USER (userId) ON DELETE CASCADE
 );
-
