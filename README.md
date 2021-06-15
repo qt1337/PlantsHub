@@ -7,6 +7,8 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/qt1337/PlantsHub?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/qt1337/PlantsHub?style=for-the-badge)
 
+[![Code Coverage](https://img.shields.io/badge/coverage-71%25-green)](https://app.plantshub.de)
+
 # 🌱 🌻 PlantsHub 🌻 🌱 – Keep Your Plants alive!
 
 This is a <a href="https://www.karlsruhe.dhbw.de/startseite.html">DHBW
