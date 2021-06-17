@@ -96,30 +96,32 @@ export class AuthenticationService {
     }
   }
 
-  public updateUser(newUsername, newEmail, newForename, newSurname, newBirthday): Observable<User> {
+  public updateUser(userValues): Observable<User> {
     try {
       if (this.userValue && this.userValue[0]) {
         const sessionId = this.userValue[0].sessionId;
         const username = this.userValue[0].username;
-
-        return this.http.post<User>(
+        const updateUserRequest = this.http.post<User>(
           this.localURL + '/api/update-user',
           {
             sessionId,
             username,
-            newUsername,
-            newEmail,
-            newForename,
-            newSurname,
-            newBirthday
+            newUsername : userValues.username,
+            newEmail : userValues.email,
+            newForename : userValues.forename,
+            newSurname: userValues.surname,
+            newBirthday : userValues.birthday
           },
           {responseType: 'json'}
         ).pipe(map(user => {
             localStorage.setItem('user', JSON.stringify(user));
             this.userSubject.next(user);
+            console.log(user);
             return user;
           })
         );
+        updateUserRequest.subscribe();
+        return updateUserRequest;
       }
     } catch (error) {
       localStorage.removeItem('user');

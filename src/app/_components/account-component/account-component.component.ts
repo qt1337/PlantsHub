@@ -60,19 +60,10 @@ export class AccountComponent implements OnInit {
   }
 
   updateUserInformation = () : void => {
-
-    console.log('updateUserInformation works');
-    console.warn(this.updateUserInformationForm.value);
-
        this.authenticationService.updateUser(
-          this.inputFields[0],
-          this.inputFields[1],
-          this.inputFields[2],
-          this.inputFields[3],
-          this.inputFields[4]
+          this.updateUserInformationForm.value
         );
 
-    console.warn(this.updateUserInformationForm.value);
 
   }
 }

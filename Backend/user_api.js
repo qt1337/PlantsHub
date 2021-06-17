@@ -48,6 +48,8 @@ function createUser(pool, req, res) {
  * Updates information of user
  */
 function updateUser(pool, req, res) {
+  console.log('updateUser is working');
+  console.log(req.body);
   let hashedSessionId;
 
   let username = req.body.username;
