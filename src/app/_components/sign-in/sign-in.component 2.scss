@@ -1,0 +1,72 @@
+@import "/src/styles";
+.invalid-feedback {
+  color: $red;
+}
+
+.signin-card-container {
+  height: 100%;
+  @include flexcenter;
+}
+.signin-card {
+  width: min(80%, 500px);
+  @include flexcenter;
+  flex-direction: column;
+
+    mat-card-content, mat-form-field {
+      width: 100%;
+    }
+
+    form {
+      margin-top: 2em;
+    }
+
+}
+
+.signin-card-img {
+  display: flex;
+  justify-content: center;
+  height: min(30em, 200px);
+  width: min(80%,240px);
+}
+
+.signin-card-buttons {
+  margin: 3em auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signin-card-buttons-signin {
+  background-color: $teal-primary;
+  color: $white;
+}
+
+.signin-card-buttons-register {
+  background-color: $red;
+  color: $white;
+}
+
+.signin-card-forgot-password {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 2em;
+  mat-checkbox {
+    margin: 1em 0 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
+.signin-card-links {
+  display: flex;
+  justify-content: center;
+  margin: 2em auto;
+  a {
+    text-decoration: none;
+    color: black;
+    margin-right: 1em;
+  }
+
+}

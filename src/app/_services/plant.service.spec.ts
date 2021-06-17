@@ -10,6 +10,9 @@ describe('PlantService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule
+      ],
+      providers: [
+        HttpClientModule
       ]
     });
     service = TestBed.inject(PlantService);

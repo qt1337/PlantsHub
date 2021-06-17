@@ -11,15 +11,15 @@
           src="{{plant.image || 'https://images.pexels.com/photos/2302503/pexels-photo-2302503.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}}"
           alt="{{plant.plantName}}">
         <div class="plant-card-buttons" fxLayout="row" fxLayoutAlign="space-between center">
-          <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="changeFavourite(plant)"
+          <i-feather id="heart-icon-{{ plant.plantId }}" name="heart" (click)="updatePlantFavourite(plant)"
                      [ngClass]="plant.favourite ? 'fill-red' : 'no-red'"></i-feather>
-          <i-feather name="book" (click)="openEditPlantDialog()"></i-feather>
-          <i-feather name="trash" (click)="deletePlant(plant)"></i-feather>
+          <i-feather name="book" class="plant-card-toggle-update-dialogue" (click)="openDialog(true, plant);"></i-feather>
+          <i-feather name="trash" class="plant-card-button__delete-dialogue" (click)="deletePlant(plant)"></i-feather>
         </div>
         </mat-card>
   </div>
   </div>
 </div>
-<button class="plant-card-toggle" (click)="openDialog()" mat-fab color="warn" aria-label="Add Plant">
+<button class="plant-card-toggle" (click)="openDialog(false)" mat-fab color="warn" aria-label="Add Plant">
   <mat-icon>add</mat-icon>
 </button>

@@ -1,4 +1,4 @@
-export class Plant {
+export class PlantDiaryEntry {
   plantDiaryId: number;
   plantId: number;
   watered: boolean;

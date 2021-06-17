@@ -1,6 +1,10 @@
 const utility = require("./utility");
 
 /**
+ * Updates User Information
+ */
+
+/**
  * Creates a user
  */
 function createUser(pool, req, res) {
@@ -32,6 +36,146 @@ function createUser(pool, req, res) {
           console.log(err);
           res.status(401).send("rows could not be created");
           connection.end();
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      // not connected
+    });
+}
+
+/**
+ * Updates information of user
+ */
+function updateUser(pool, req, res) {
+  console.log("updateUser is working");
+  console.log(req.body);
+  let hashedSessionId;
+
+  let username = req.body.username;
+  let sessionId = req.body.sessionId;
+
+  let newUsername = req.body.newUsername || null;
+  let newEmail = req.body.newEmail || null;
+  let newForename = req.body.newForename || null;
+  let newSurname = req.body.newSurname || null;
+  let newBirthday = req.body.newBirthday || null;
+
+  pool
+    .getConnection()
+    .then((conn) => {
+      conn
+        .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
+        .then((row) => {
+          if (!row[0]) {
+            res.status(404).send("user does not exist");
+            conn.end();
+            return;
+          }
+          let salt = row[0].salt;
+          let userId = row[0].userId;
+          hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
+
+          conn.end();
+          conn
+            .query(
+              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+              [userId, hashedSessionId]
+            )
+            .then((row) => {
+              if (!row[0]) {
+                res.status(401).send("session not valid");
+                conn.end();
+                return;
+              }
+              conn.end();
+              // session is valid || userId is set
+
+              conn
+                .query(
+                  "UPDATE User SET username =  COALESCE((?),username), email = COALESCE((?), email), forename = COALESCE((?), forename), surname = COALESCE((?), surname), birthday = COALESCE((?), birthday) WHERE userId = (?)",
+                  [
+                    newUsername,
+                    newEmail,
+                    newForename,
+                    newSurname,
+                    newBirthday,
+                    userId,
+                  ]
+                )
+                .then((result) => {
+                  if (result.affectedRows !== 1) {
+                    res.status(401).send("something went wrong");
+                    conn.end();
+                    return;
+                  }
+                  conn.end();
+
+                  req.body.username = newUsername || username;
+
+                  return checkUserSession(pool, req, res);
+                });
+            });
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      // not connected
+    });
+}
+
+/**
+ * Delete user
+ */
+function deleteUser(pool, req, res) {
+  let hashedSessionId;
+
+  let username = req.body.username;
+  let sessionId = req.body.sessionId;
+
+  pool
+    .getConnection()
+    .then((conn) => {
+      conn
+        .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
+        .then((row) => {
+          if (!row[0]) {
+            res.status(404).send("user does not exist");
+            conn.end();
+            return;
+          }
+          let salt = row[0].salt;
+          let userId = row[0].userId;
+          hashedSessionId = utility.sha512(sessionId, salt).passwordHash;
+
+          conn.end();
+          conn
+            .query(
+              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+              [userId, hashedSessionId]
+            )
+            .then((row) => {
+              if (!row[0]) {
+                res.status(401).send("session not valid");
+                conn.end();
+                return;
+              }
+              conn.end();
+              // session is valid || userId is set
+
+              conn
+                .query("DELETE FROM User WHERE userId = (?)", [userId])
+                .then((result) => {
+                  if (result.affectedRows !== 1) {
+                    res.status(401).send("something went wrong");
+                    conn.end();
+                    return;
+                  }
+
+                  res.status(202).json("user has been deleted");
+                  conn.end();
+                });
+            });
         });
     })
     .catch((err) => {
@@ -339,6 +483,8 @@ module.exports = {
   checkUserSession,
   requestResetPasswordKey,
   resetPasswordKey,
+  updateUser,
+  deleteUser,
 };
 
 /**

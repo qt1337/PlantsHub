@@ -1,0 +1,20 @@
+<div class="account-form-div" fxLayout="column" fxFlex.lg="50%">
+<h2>Update Your Personal Information</h2>
+  <form [formGroup] = "updateUserInformationForm"
+      (ngSubmit)="updateUserInformation()"
+      class="account-form" fxFlex="50%" fxLayout="row wrap" fxFlex.xs="100%" fxLayoutGap="16px grid" >
+  <ng-container *ngFor="let inputField of inputFields; let indexOfelement=index;">
+  <mat-form-field>
+    <mat-label>{{getInputFieldTitles(indexOfelement)}}</mat-label>
+    <input matInput disabled [value]="inputField" [formControlName]="inputFieldsForms[indexOfelement]" class="account-form-input">
+  </mat-form-field>
+  <div class="account-form-edit-icons">
+  <mat-icon (click)="toggleDisabledAttributInput()" class="account-form-edit-icons-edit">{{isClicked ? 'done' : 'edit'}}</mat-icon>
+  </div>
+  </ng-container>
+    <div fxLayout="row">
+      <button mat-raised-button color="primary" (change)="updateUserInformation()" type="submit" class="account-form-buttons">Save Changes</button>
+      <button mat-raised-button color="warn" type="submit" (click)="deleteUser()" class="account-form-buttons">Delete User</button>
+    </div>
+</form>
+</div>

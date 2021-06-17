@@ -3,9 +3,9 @@ import {PlantService} from '../../_services/plant.service';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {User} from '../../_models/user';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
-import {PlantDiaryComponent} from '../plant-diary/plant-diary.component';
+import {Plant} from '../../_models/plant';
 
 @Component({
   selector: 'app-plantcard',
@@ -13,23 +13,14 @@ import {PlantDiaryComponent} from '../plant-diary/plant-diary.component';
   styleUrls: ['./plantcard.component.scss']
 })
 export class PlantcardComponent implements OnInit {
+
   @Input() value: string;
+
+  plant: Plant;
   user: User;
   plants: any;
-
-  constructor(
-    private plantService: PlantService,
-    private authenticationService: AuthenticationService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private dialog: MatDialog
-  ) {
-    this.authenticationService.checkForInactiveSession();
-    if (this.authenticationService.userValue) {
-      this.user = this.authenticationService.userValue[0];
-    } else {
-    }
-  }
+  dialogRef: MatDialogRef<PlantDialogueComponent>;
+  isUpdatingDialogue: boolean;
 
   icons = [
     {name: 'heart', class: 'big fill-red'},
@@ -37,9 +28,24 @@ export class PlantcardComponent implements OnInit {
     {name: 'trash', class: 'big fill-red'}
   ];
 
+  constructor(
+    private plantService: PlantService,
+    private authenticationService: AuthenticationService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+
+  ) {
+    this.authenticationService.checkForInactiveSession();
+    if (this.authenticationService.userValue) {
+      this.user = this.authenticationService.userValue[0];
+    }
+  }
+
   ngOnInit(): void {
     this.getPlants();
   }
+
 
   getPlants(): void {
     if (!this.authenticationService.userValue) {
@@ -55,10 +61,27 @@ export class PlantcardComponent implements OnInit {
       });
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(PlantDialogueComponent);
+  openDialog(isUpdatingDialogue: boolean, plant?: Plant): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      isUpdatingDialogue,
+      plantId : plant ? plant.plantId : '',
+      plantName : plant ? plant.plantName : '',
+      family : plant ? plant.family : '',
+      wateringInterval : plant ? plant.wateringInterval : '',
+      fertilizingInterval : plant ? plant.fertilizingInterval : '',
+      plantBirthday : plant ? plant.plantBirthday : '5/21/2021',
+      active : plant ? plant.active : true,
+      favourite : plant ? plant.favourite : 0
 
-    dialogRef.afterClosed().subscribe(() => {
+    };
+    dialogConfig.autoFocus = true;
+
+    this.dialogRef = this.dialog.open(PlantDialogueComponent, dialogConfig);
+
+    this.dialogRef
+      .afterClosed()
+      .subscribe(() => {
       this.getPlants();
     });
   }
@@ -75,7 +98,12 @@ export class PlantcardComponent implements OnInit {
     });
   }
 
+  changeFavourite(plant): void {
+    this.updatePlantFavourite(plant);
+  }
+
   private deactivatePlant(plant): void {
+
     plant.active = !plant.active;
 
     this.plantService.updatePlant(
@@ -87,21 +115,8 @@ export class PlantcardComponent implements OnInit {
     });
   }
 
-  changeFavourite(plant): void {
-    this.updatePlantFavourite(plant);
-  }
-
   deletePlant(plant): void {
     this.deactivatePlant(plant);
   }
 
-  openEditPlantDialog(): void {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-
-    // tslint:disable-next-line:max-line-length
-    this.dialog.open(PlantDiaryComponent, {panelClass: 'plant-diary-dialogue-container', data: {person: {name: 'Monstera', age: 32}}}); // @TODO This is just Mock Data TBD
-  }
 }

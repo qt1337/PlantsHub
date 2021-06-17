@@ -5,12 +5,14 @@ import {AuthenticationService} from './authentication.service';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {PlantDiaryEntry} from '../_models/plantDiaryEntry';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlantService {
   private plantsSubject: BehaviorSubject<Plant[]>;
+  private plantDiaryEntriesSubject: BehaviorSubject<PlantDiaryEntry[]>;
   private plants: Observable<Plant[]>;
   private localURL: string;
 
@@ -20,6 +22,7 @@ export class PlantService {
     private authenticationService: AuthenticationService
   ) {
     this.plantsSubject = new BehaviorSubject<Plant[]>(JSON.parse(localStorage.getItem('plants')));
+    this.plantDiaryEntriesSubject = new BehaviorSubject<PlantDiaryEntry[]>(JSON.parse(localStorage.getItem('plantDiaryEntries')));
     this.plants = this.plantsSubject.asObservable();
 
     if (isDevMode()) {
@@ -110,4 +113,65 @@ export class PlantService {
       console.log(e);
     }
   }
+
+  getPlantDiaryEntries(username, sessionId, plantId): Observable<PlantDiaryEntry[]> {
+    try {
+      return this.http.post<PlantDiaryEntry[]>(
+        this.localURL + '/api/get-diary-entries',
+        {
+          username,
+          sessionId,
+          plantId,
+        },
+        {responseType: 'json'}
+      ).pipe(map(plantDiaryEntries => {
+          localStorage.removeItem('plantDiaryEntries');
+          localStorage.setItem('plantDiaryEntries', JSON.stringify(plantDiaryEntries));
+          this.plantDiaryEntriesSubject.next(plantDiaryEntries);
+          return plantDiaryEntries;
+        })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  createPlantDiaryEntry(username, sessionId, plantDiaryEntry, formData): Observable<PlantDiaryEntry[]> {
+    try {
+      const plantId = plantDiaryEntry.plantId || null;
+      const watered = plantDiaryEntry.watered || false;
+      const fertilized = plantDiaryEntry.fertilized || false;
+      const date = plantDiaryEntry.date || null;
+      const note = plantDiaryEntry.note || null;
+      const size = plantDiaryEntry.size || null;
+      const health = plantDiaryEntry.health || null;
+
+      plantDiaryEntry = {
+        plantId,
+        watered,
+        fertilized,
+        date,
+        note,
+        size,
+        health,
+      };
+
+      formData.append('plantDiaryEntry', plantDiaryEntry);
+
+      return this.http.post<PlantDiaryEntry[]>(
+        this.localURL + '/api/create-diary-entry',
+        formData,
+        {responseType: 'json'}
+      ).pipe(map(plantDiaryEntries => {
+          localStorage.removeItem('plantDiaryEntries');
+          localStorage.setItem('plantDiaryEntries', JSON.stringify(plantDiaryEntries));
+          this.plantDiaryEntriesSubject.next(plantDiaryEntries);
+          return plantDiaryEntries;
+        })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 }

@@ -22,6 +22,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { PlantDiaryComponent } from './_components/plant-diary/plant-diary.component';
+import { AccountComponent } from './_components/account-component/account-component.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { PlantDiaryComponent } from './_components/plant-diary/plant-diary.compo
     PlantcollectionComponent,
     SortbyComponent,
     PlantDiaryComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,10 +54,11 @@ import { PlantDiaryComponent } from './_components/plant-diary/plant-diary.compo
     Ng2SearchPipeModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
+  entryComponents: [PlantDialogueComponent],
   providers: [
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   bootstrap: [AppComponent]
 })

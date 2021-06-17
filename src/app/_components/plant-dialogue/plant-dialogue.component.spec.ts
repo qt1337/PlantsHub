@@ -4,8 +4,11 @@ import {PlantDialogueComponent} from './plant-dialogue.component';
 import {HttpClientModule} from '@angular/common/http';
 import {DemoMaterialModule} from '../../material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {PlantcardComponent} from '../plantcard/plantcard.component';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 
 describe('PlantDialogueComponent', () => {
+  let dialog: MatDialog;
   let component: PlantDialogueComponent;
   let fixture: ComponentFixture<PlantDialogueComponent>;
 
@@ -13,9 +16,10 @@ describe('PlantDialogueComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientModule,
         DemoMaterialModule,
-        BrowserAnimationsModule],
-      declarations: [PlantDialogueComponent]
-    })
+        BrowserAnimationsModule, MatDialogModule],
+      declarations: [PlantcardComponent, PlantDialogueComponent]
+    });
+    dialog = TestBed.get(MatDialog)
       .compileComponents();
   });
 
@@ -27,5 +31,10 @@ describe('PlantDialogueComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('Should have the Title Update your Plant', () => {
+    const appComponent = fixture.debugElement.componentInstance;
+    expect(appComponent.plantDialogueTitle).toEqual('Update PlantInfo');
   });
 });

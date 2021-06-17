@@ -1,9 +1,11 @@
-<div class="plantformfield-container" fxLayout="column" fxFlex.xs="100%">
-<h2>Add a new member to your Plant-Family</h2>
+<form [formGroup]="form" class="plantformfield-container" fxLayout="column" fxFlex.xs="100%"
+      (ngSubmit)="submitPlantDialogueInformation()">
+
+  <h2>{{plantDialogueTitle}}</h2>
   <ng-container *ngFor="let formField of plantFormFields">
-  <mat-form-field appearance="standard">
+    <mat-form-field appearance="standard">
       <mat-label>{{formField.title}}</mat-label>
-      <input matInput type="text" [(ngModel)]="newPlant[formField.name]">
+      <input matInput type="text" [formControlName]="formField.name" [value]="formField.name">
       <button mat-button *ngIf="newPlant[formField.name]" matSuffix mat-icon-button aria-label="Clear"
               (click)="newPlant[formField.name]=[formField.defaultValue]">
         <mat-icon>close</mat-icon>
@@ -11,22 +13,18 @@
     </mat-form-field>
     <br>
   </ng-container>
-
   <mat-form-field appearance="standard">
     <!-- Birthday -->
     <mat-label>Birthday of the Plant</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="newPlant.plantBirthday">
+    <input matInput [matDatepicker]="picker" formControlName="plantBirthday">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <!--
-  <mat-form-field appearance="outline">
-    <input matInput type="file" (change)="onFileSelected($event)">
-  </mat-form-field> @TODO Fix the File Upload to suit the other parts of Material UI
--->
-  <div class="button-menu">
-    <button mat-flat-button id="cancel-button" [mat-dialog-close]="true">Cancel</button>
-    <button mat-flat-button id="add-button" [mat-dialog-close]="true" (click)="addPlant()">Add Plant
+  <input type="file" (change)="onFileSelected($event)">
+  <div class="plants-dialog__button-menu">
+    <button mat-flat-button class="plants-dialog__button-menu--cancel-button" [mat-dialog-close]="true">Cancel</button>
+    <button mat-flat-button class="plants-dialog__button-menu--add-button"
+            [mat-dialog-close]="true" type="submit">{{plantDialogueButton}}
     </button>
   </div>
-</div>
+</form>

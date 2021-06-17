@@ -108,6 +108,14 @@ app.post("/api/reset-password", (req, res) => {
   user_api.resetPasswordKey(pool, req, res);
 });
 
+app.post("/api/update-user", (req, res) => {
+  user_api.updateUser(pool, req, res);
+});
+
+app.post("/api/delete-user", (req, res) => {
+  user_api.deleteUser(pool, req, res);
+});
+
 /**
  * PLANT API
  */
