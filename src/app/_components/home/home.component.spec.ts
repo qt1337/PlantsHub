@@ -6,7 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {DemoMaterialModule} from '../../material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {By} from "@angular/platform-browser";
+import {By} from '@angular/platform-browser';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
