@@ -3,6 +3,7 @@ import {User} from '../../_models/user';
 import {UserService} from '../../_services/user.service';
 import {FormBuilder, FormGroup, FormControl, ReactiveFormsModule} from '@angular/forms';
 import {AuthenticationService} from '../../_services/authentication.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-account-component',
@@ -23,6 +24,7 @@ export class AccountComponent implements OnInit {
   constructor(
     private userService: UserService,
     private authenticationService: AuthenticationService,
+    private _snackBar: MatSnackBar
   ) {
 
   }
@@ -54,9 +56,12 @@ export class AccountComponent implements OnInit {
     this.isClicked = !this.isClicked;
   }
 
-
   deleteUser(): void {
     this.authenticationService.deleteUser();
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message);
   }
 
   updateUserInformation = async (): Promise<void> => {
@@ -64,7 +69,9 @@ export class AccountComponent implements OnInit {
     await this.authenticationService.updateUser(
       this.updateUserInformationForm.value
     );
-    window.location.reload();
+
+    await this.openSnackBar("You've successfully changed your User Information");
+    setTimeout(() => window.location.reload(), 700);
 
 
   }
