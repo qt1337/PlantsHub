@@ -13,12 +13,12 @@ export class AccountComponent implements OnInit {
   nameChangeLog: string[] = [];
   user: User;
   inputFields: string[];
-  inputFieldsForms: string[] = ['username','email','forename','surname','birthday'];
+  inputFieldsForms: string[] = ['username', 'email', 'forename', 'surname', 'birthday'];
   inputFieldTitles: string[] = ['Username', 'Email', 'Forename', 'Surname', 'Birthday'];
 
   SERVER_URL = 'http://localhost:8080/profile';
   isClicked: boolean;
-  updateUserInformationForm : FormGroup;
+  updateUserInformationForm: FormGroup;
 
   constructor(
     private userService: UserService,
@@ -42,7 +42,7 @@ export class AccountComponent implements OnInit {
     console.log(this.updateUserInformationForm);
   }
 
-  getInputFieldTitles(index : number) : string {
+  getInputFieldTitles(index: number): string {
     return this.inputFieldTitles[index];
   }
 
@@ -59,10 +59,12 @@ export class AccountComponent implements OnInit {
     this.authenticationService.deleteUser();
   }
 
-  updateUserInformation = () : void => {
-       this.authenticationService.updateUser(
-          this.updateUserInformationForm.value
-        );
+  updateUserInformation = async (): Promise<void> => {
+
+    await this.authenticationService.updateUser(
+      this.updateUserInformationForm.value
+    );
+    window.location.reload();
 
 
   }
