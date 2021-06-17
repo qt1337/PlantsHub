@@ -12,6 +12,7 @@ import {UserService} from "../../_services/user.service";
 })
 export class HomeComponent implements OnInit {
   user: User;
+  todoList: string[] = ['Water your Plant Gertrude', 'Fertilize Olga'];
 
 
   constructor(

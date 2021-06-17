@@ -6,6 +6,7 @@ import {DemoMaterialModule} from '../../material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PlantcardComponent} from '../plantcard/plantcard.component';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 describe('PlantDialogueComponent', () => {
   let dialog: MatDialog;
@@ -16,7 +17,8 @@ describe('PlantDialogueComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientModule,
         DemoMaterialModule,
-        BrowserAnimationsModule, MatDialogModule],
+        BrowserAnimationsModule, MatDialogModule,
+        FormsModule, ReactiveFormsModule],
       declarations: [PlantcardComponent, PlantDialogueComponent]
     });
     dialog = TestBed.get(MatDialog)
