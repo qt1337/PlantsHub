@@ -8,19 +8,19 @@ import {RouterModule} from '@angular/router';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {DemoMaterialModule} from '../../material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AbstractMockObservableService} from "../../_services/mocks/mock.service";
-import {Plant} from "../../_models/plant";
-import {PlantService} from "../../_services/plant.service";
-import {By} from "@angular/platform-browser";
+import {AbstractMockObservableService} from '../../_services/mocks/mock.service';
+import {Plant} from '../../_models/plant';
+import {PlantService} from '../../_services/plant.service';
+import {By} from '@angular/platform-browser';
 
 class MockService extends AbstractMockObservableService {
-  updatePlant(plant : Plant) {
+  updatePlant(plant: Plant) {
     this.content = [plant];
     return this;
   }
 
   getPlants() {
-    let mockPlant = {
+    const mockPlant = {
       plantId: 1,
       plantName: 'Olga',
       wateringInterval: 2,
@@ -34,7 +34,7 @@ class MockService extends AbstractMockObservableService {
       lux: '200',
       favourite: false,
       active: true
-    }
+    };
     this.content = [mockPlant];
   }
 }
@@ -84,7 +84,7 @@ describe('PlantcardComponent', () => {
         favourite: false,
         active: true
       }
-    ]
+    ];
     component.ngOnInit();
     fixture.detectChanges();
   });
@@ -104,16 +104,16 @@ describe('PlantcardComponent', () => {
     plantDialogueToggleElement.nativeElement.click();
     spyOn(component, 'openDialog');
     component.openDialog(false);
-    expect(component.openDialog).toHaveBeenCalled()
-  })
+    expect(component.openDialog).toHaveBeenCalled();
+  });
 
   it('should open Plant Update Dialogue', () => {
     const plantDialogueUpdateElement = fixture.debugElement.query(By.css('.plant-card-toggle-update-dialogue'));
     plantDialogueUpdateElement.nativeElement.click();
     spyOn(component, 'openDialog');
     component.openDialog(true);
-    expect(component.openDialog).toHaveBeenCalled()
-  })
+    expect(component.openDialog).toHaveBeenCalled();
+  });
 
 
   it('should delete Plant', () => {
@@ -122,6 +122,6 @@ describe('PlantcardComponent', () => {
     spyOn(component, 'deletePlant');
     component.deletePlant(component.plants[0]);
     expect(component.deletePlant).toHaveBeenCalled();
-  })
+  });
 
 });

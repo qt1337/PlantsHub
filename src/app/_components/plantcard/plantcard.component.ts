@@ -5,7 +5,7 @@ import {User} from '../../_models/user';
 import {ActivatedRoute, Router} from '@angular/router';
 import { MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {PlantDialogueComponent} from '../plant-dialogue/plant-dialogue.component';
-import {Plant} from "../../_models/plant";
+import {Plant} from '../../_models/plant';
 
 @Component({
   selector: 'app-plantcard',
@@ -19,8 +19,8 @@ export class PlantcardComponent implements OnInit {
   plant: Plant;
   user: User;
   plants: any;
-  dialogRef: MatDialogRef<PlantDialogueComponent>
-  isUpdatingDialogue : boolean;
+  dialogRef: MatDialogRef<PlantDialogueComponent>;
+  isUpdatingDialogue: boolean;
 
   icons = [
     {name: 'heart', class: 'big fill-red'},
@@ -61,23 +61,23 @@ export class PlantcardComponent implements OnInit {
       });
   }
 
-  openDialog(isUpdatingDialogue : boolean, plant? : Plant): void {
+  openDialog(isUpdatingDialogue: boolean, plant?: Plant): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      isUpdatingDialogue: isUpdatingDialogue,
-      plantId : plant ? plant.plantId : "",
-      plantName : plant ? plant.plantName : "",
-      family : plant ? plant.family : "",
-      wateringInterval : plant ? plant.wateringInterval : "",
-      fertilizingInterval : plant ? plant.fertilizingInterval : "",
-      plantBirthday : plant ? plant.plantBirthday : "5/21/2021",
+      isUpdatingDialogue,
+      plantId : plant ? plant.plantId : '',
+      plantName : plant ? plant.plantName : '',
+      family : plant ? plant.family : '',
+      wateringInterval : plant ? plant.wateringInterval : '',
+      fertilizingInterval : plant ? plant.fertilizingInterval : '',
+      plantBirthday : plant ? plant.plantBirthday : '5/21/2021',
       active : plant ? plant.active : true,
       favourite : plant ? plant.favourite : 0
 
-    }
+    };
     dialogConfig.autoFocus = true;
 
-    this.dialogRef = this.dialog.open(PlantDialogueComponent, dialogConfig)
+    this.dialogRef = this.dialog.open(PlantDialogueComponent, dialogConfig);
 
     this.dialogRef
       .afterClosed()
