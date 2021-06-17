@@ -17,77 +17,76 @@ function createPlant(pool, req, res) {
   let image = null;
   if (req.file) {
     image =
-      req.file.path ||
-      "https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+        req.file.path ||
+        "https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
   } else {
     image =
-      "https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+        "https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
   }
   let lux = req.body.lux || null;
 
   pool.getConnection().then((connection) => {
     connection
-      .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
-      .then((row) => {
-        if (!row[0]) {
-          res.status(401).send("session not valid");
-          conn.end();
-          return;
-        }
-        let salt = row[0].salt;
-        let userId = row[0].userId;
+        .query("SELECT salt, userId FROM User WHERE username = (?)",
+               [ username ])
+        .then((row) => {
+          if (!row[0]) {
+            res.status(401).send("session not valid");
+            conn.end();
+            return;
+          }
+          let salt = row[0].salt;
+          let userId = row[0].userId;
 
-        let hashedSession = utility.sha512(sessionId, salt).passwordHash;
-        connection.end();
+          let hashedSession = utility.sha512(sessionId, salt).passwordHash;
+          connection.end();
 
-        connection
-          .query(
-            "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
-            [userId, hashedSession]
-          )
-          .then((row) => {
-            if (!row[0]) {
-              res.status(401).send("session not valid");
-              connection.end();
-              return;
-            }
-            connection.end();
-
-            connection
+          connection
               .query(
-                "INSERT INTO Plant (plantName,userId,wateringInterval,fertilizingInterval,plantBirthday,plantDeathday,family,type,species,image,lux) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-                [
-                  plantName,
-                  userId,
-                  wateringInterval,
-                  fertilizingInterval,
-                  plantBirthday,
-                  plantDeathday,
-                  family,
-                  type,
-                  species,
-                  image,
-                  lux,
-                ]
-              )
-              .then((result) => {
+                  "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+                  [ userId, hashedSession ])
+              .then((row) => {
+                if (!row[0]) {
+                  res.status(401).send("session not valid");
+                  connection.end();
+                  return;
+                }
                 connection.end();
-                return this.getPlants(pool, req, res);
+
+                connection
+                    .query(
+                        "INSERT INTO Plant (plantName,userId,wateringInterval,fertilizingInterval,plantBirthday,plantDeathday,family,type,species,image,lux) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                        [
+                          plantName,
+                          userId,
+                          wateringInterval,
+                          fertilizingInterval,
+                          plantBirthday,
+                          plantDeathday,
+                          family,
+                          type,
+                          species,
+                          image,
+                          lux,
+                        ])
+                    .then((result) => {
+                      connection.end();
+                      return this.getPlants(pool, req, res);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      res.status(401).send("rows could not be created");
+                    });
               })
               .catch((err) => {
                 console.log(err);
-                res.status(401).send("rows could not be created");
+                res.status(401).send("rows could not be found");
               });
-          })
-          .catch((err) => {
-            console.log(err);
-            res.status(401).send("rows could not be found");
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        // not connected
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+          // not connected
+        });
     connection.end();
   });
 }
@@ -103,7 +102,7 @@ function updatePlant(pool, req, res) {
   let wateringInterval = req.body.plant.wateringInterval || null;
   let fertilizingInterval = req.body.plant.fertilizingInterval || null;
   let plantBirthday =
-    new Date(Date.parse(req.body.plant.plantBirthday)) || null;
+      new Date(Date.parse(req.body.plant.plantBirthday)) || null;
   let plantDeathday = req.body.plant.plantDeathday || null;
   let family = req.body.plant.family || null;
   let type = req.body.plant.type || null;
@@ -115,67 +114,66 @@ function updatePlant(pool, req, res) {
 
   pool.getConnection().then((connection) => {
     connection
-      .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
-      .then((row) => {
-        if (!row[0]) {
-          res.status(401).send("session not valid");
-          conn.end();
-          return;
-        }
-        let salt = row[0].salt;
-        let userId = row[0].userId;
+        .query("SELECT salt, userId FROM User WHERE username = (?)",
+               [ username ])
+        .then((row) => {
+          if (!row[0]) {
+            res.status(401).send("session not valid");
+            conn.end();
+            return;
+          }
+          let salt = row[0].salt;
+          let userId = row[0].userId;
 
-        let hashedSession = utility.sha512(sessionId, salt).passwordHash;
-        connection.end();
+          let hashedSession = utility.sha512(sessionId, salt).passwordHash;
+          connection.end();
 
-        connection
-          .query(
-            "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
-            [userId, hashedSession]
-          )
-          .then((row) => {
-            if (!row[0]) {
-              res.status(401).send("session not valid");
-              connection.end();
-              return;
-            }
-            connection.end();
-
-            connection
+          connection
               .query(
-                "UPDATE Plant SET plantName = COALESCE((?),plantName),userId = COALESCE((?),userId),wateringInterval = COALESCE((?),wateringInterval),fertilizingInterval = COALESCE((?),fertilizingInterval),plantBirthday = COALESCE((?),plantBirthday),plantDeathday = COALESCE((?),plantDeathday),family = COALESCE((?),family),type = COALESCE((?),type),species = COALESCE((?),species),image = COALESCE((?),image),lux = COALESCE((?),lux), favourite = COALESCE((?),favourite), active = COALESCE((?),active) WHERE plantId = (?)",
-                [
-                  plantName,
-                  userId,
-                  wateringInterval,
-                  fertilizingInterval,
-                  plantBirthday,
-                  plantDeathday,
-                  family,
-                  type,
-                  species,
-                  image,
-                  lux,
-                  favourite,
-                  active,
-                  plantId,
-                ]
-              )
-              .then(() => {
+                  "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+                  [ userId, hashedSession ])
+              .then((row) => {
+                if (!row[0]) {
+                  res.status(401).send("session not valid");
+                  connection.end();
+                  return;
+                }
                 connection.end();
-                return this.getPlants(pool, req, res);
-              })
-              .catch((err) => {
-                console.log(err);
-                res.status(401).send("rows could not be updated");
-                connection.end();
+
+                connection
+                    .query(
+                        "UPDATE Plant SET plantName = COALESCE((?),plantName),userId = COALESCE((?),userId),wateringInterval = COALESCE((?),wateringInterval),fertilizingInterval = COALESCE((?),fertilizingInterval),plantBirthday = COALESCE((?),plantBirthday),plantDeathday = COALESCE((?),plantDeathday),family = COALESCE((?),family),type = COALESCE((?),type),species = COALESCE((?),species),image = COALESCE((?),image),lux = COALESCE((?),lux), favourite = COALESCE((?),favourite), active = COALESCE((?),active) WHERE plantId = (?)",
+                        [
+                          plantName,
+                          userId,
+                          wateringInterval,
+                          fertilizingInterval,
+                          plantBirthday,
+                          plantDeathday,
+                          family,
+                          type,
+                          species,
+                          image,
+                          lux,
+                          favourite,
+                          active,
+                          plantId,
+                        ])
+                    .then(() => {
+                      connection.end();
+                      return this.getPlants(pool, req, res);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      res.status(401).send("rows could not be updated");
+                      connection.end();
+                    });
               });
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        // not connected
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+          // not connected
+        });
     connection.end();
   });
 }
@@ -189,52 +187,52 @@ function getPlants(pool, req, res) {
 
   pool.getConnection().then((connection) => {
     connection
-      .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
-      .then((row) => {
-        if (!row[0]) {
-          res.status(401).send("session not valid");
-          conn.end();
-          return;
-        }
-        let salt = row[0].salt;
-        let userId = row[0].userId;
+        .query("SELECT salt, userId FROM User WHERE username = (?)",
+               [ username ])
+        .then((row) => {
+          if (!row[0]) {
+            res.status(401).send("session not valid");
+            conn.end();
+            return;
+          }
+          let salt = row[0].salt;
+          let userId = row[0].userId;
 
-        let hashedSession = utility.sha512(sessionId, salt).passwordHash;
-        connection.end();
+          let hashedSession = utility.sha512(sessionId, salt).passwordHash;
+          connection.end();
 
-        connection
-          .query(
-            "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
-            [userId, hashedSession]
-          )
-          .then((row) => {
-            if (!row[0]) {
-              res.status(401).send("session not valid");
-              connection.end();
-              return;
-            }
-            connection.end();
-            connection
-              .query("SELECT * FROM Plant WHERE userId = (?) and active = 1", [
-                userId,
-              ])
-              .then((result) => {
-                res.status(202).json(result);
+          connection
+              .query(
+                  "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+                  [ userId, hashedSession ])
+              .then((row) => {
+                if (!row[0]) {
+                  res.status(401).send("session not valid");
+                  connection.end();
+                  return;
+                }
+                connection.end();
+                connection
+                    .query(
+                        "SELECT * FROM Plant WHERE userId = (?) and active = 1",
+                        [
+                          userId,
+                        ])
+                    .then((result) => { res.status(202).json(result); })
+                    .catch((err) => {
+                      console.log(err);
+                      res.status(401).send("rows could not be updated");
+                    });
               })
               .catch((err) => {
                 console.log(err);
-                res.status(401).send("rows could not be updated");
+                res.status(401).send("rows could not be found");
               });
-          })
-          .catch((err) => {
-            console.log(err);
-            res.status(401).send("rows could not be found");
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        // not connected
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+          // not connected
+        });
 
     connection.end();
   });
@@ -250,75 +248,75 @@ function getPlantDiaryEntries(pool, req, res) {
 
   pool.getConnection().then((connection) => {
     connection
-      .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
-      .then((row) => {
-        if (!row[0]) {
-          res.status(401).send("session not valid");
-          conn.end();
-          return;
-        }
-        let salt = row[0].salt;
-        let userId = row[0].userId;
+        .query("SELECT salt, userId FROM User WHERE username = (?)",
+               [ username ])
+        .then((row) => {
+          if (!row[0]) {
+            res.status(401).send("session not valid");
+            conn.end();
+            return;
+          }
+          let salt = row[0].salt;
+          let userId = row[0].userId;
 
-        let hashedSession = utility.sha512(sessionId, salt).passwordHash;
-        connection.end();
+          let hashedSession = utility.sha512(sessionId, salt).passwordHash;
+          connection.end();
 
-        connection
-          .query(
-            "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
-            [userId, hashedSession]
-          )
-          .then((row) => {
-            if (!row[0]) {
-              res.status(401).send("session not valid");
-              connection.end();
-              return;
-            }
-            connection.end();
-            // Check if user owns plant
-            connection
+          connection
               .query(
-                "SELECT * FROM Plant WHERE userId = (?) and active = 1 and plantId = (?)",
-                [userId, plantId]
-              )
-              .then((result) => {
-                if (!result[0] || !result[0].plantId) {
-                  res.status(401).send("plant could not be found");
+                  "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+                  [ userId, hashedSession ])
+              .then((row) => {
+                if (!row[0]) {
+                  res.status(401).send("session not valid");
                   connection.end();
                   return;
                 }
-
                 connection.end();
+                // Check if user owns plant
                 connection
-                  .query("SELECT * FROM PlantDiary WHERE plantId = (?)", [
-                    plantId,
-                  ])
-                  .then((result) => {
-                    res.status(202).json(result);
-                    connection.end();
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                    res.status(401).send("plant could not be found");
-                    connection.end();
-                  });
+                    .query(
+                        "SELECT * FROM Plant WHERE userId = (?) and active = 1 and plantId = (?)",
+                        [ userId, plantId ])
+                    .then((result) => {
+                      if (!result[0] || !result[0].plantId) {
+                        res.status(401).send("plant could not be found");
+                        connection.end();
+                        return;
+                      }
+
+                      connection.end();
+                      connection
+                          .query("SELECT * FROM PlantDiary WHERE plantId = (?)",
+                                 [
+                                   plantId,
+                                 ])
+                          .then((result) => {
+                            res.status(202).json(result);
+                            connection.end();
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                            res.status(401).send("plant could not be found");
+                            connection.end();
+                          });
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      res.status(401).send("rows could not be found");
+                      connection.end();
+                    });
               })
               .catch((err) => {
                 console.log(err);
                 res.status(401).send("rows could not be found");
                 connection.end();
               });
-          })
-          .catch((err) => {
-            console.log(err);
-            res.status(401).send("rows could not be found");
-            connection.end();
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        // not connected
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+          // not connected
+        });
 
     connection.end();
   });
@@ -332,141 +330,136 @@ function createPlantDiaryEntry(pool, req, res) {
 
   if (req.file) {
     plantDiaryEntry.image =
-      req.file.path ||
-      "https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+        req.file.path ||
+        "https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
   } else {
     plantDiaryEntry.image =
-      "https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
+        "https://images.pexels.com/photos/6847584/pexels-photo-6847584.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
   }
 
   let username = req.body.username;
   let sessionId = req.body.sessionId;
   let hashedSession;
 
-  pool
-    .getConnection()
-    .then((conn) => {
-      conn
-        .query("SELECT salt, userId FROM User WHERE username = (?)", [username])
-        .then((row) => {
-          if (!row[0]) {
-            res.status(401).send("session not valid");
-            conn.end();
-            return;
-          }
-          let salt = row[0].salt;
-          let userId = row[0].userId;
-
-          hashedSession = utility.sha512(sessionId, salt).passwordHash;
-
-          conn.end();
-          conn
-            .query(
-              "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
-              [userId, hashedSession]
-            )
+  pool.getConnection()
+      .then((conn) => {
+        conn.query("SELECT salt, userId FROM User WHERE username = (?)",
+                   [ username ])
             .then((row) => {
               if (!row[0]) {
                 res.status(401).send("session not valid");
                 conn.end();
                 return;
               }
+              let salt = row[0].salt;
+              let userId = row[0].userId;
+
+              hashedSession = utility.sha512(sessionId, salt).passwordHash;
+
               conn.end();
-              // session is valid || userId is set
-
-              // Now check if user owns plant
-              conn
-                .query(
-                  "SELECT * FROM Plant WHERE userId = (?) and active = 1 and plantId = (?)",
-                  [userId, plantDiaryEntry.plantId]
-                )
-                .then((result) => {
-                  if (!result[0] || !result[0].plantId) {
-                    res.status(401).send("plant could not be found");
-                    conn.end();
-                    return;
-                  }
-                  conn.end();
-
-                  // Check if plantdiaryentry exists
-
-                  let dateWithoutTime = new Date(
-                    plantDiaryEntry.date.toString()
-                  );
-                  dateWithoutTime.setHours(0, 0, 0, 0);
-                  plantDiaryEntry.date = dateWithoutTime;
-
-                  conn
-                    .query(
-                      "SELECT * FROM PlantDiary WHERE plantId = (?) AND date = (?)",
-                      [plantDiaryEntry.plantId, plantDiaryEntry.date]
-                    )
-                    .then((result) => {
+              conn.query(
+                      "SELECT userId FROM Session WHERE userId = (?) and sessionHash = (?)",
+                      [ userId, hashedSession ])
+                  .then((row) => {
+                    if (!row[0]) {
+                      res.status(401).send("session not valid");
                       conn.end();
-                      if (!result[0] || !result[0].plantDiaryId) {
-                        // plantdiaryentry does not exist -> create
-                        conn
-                          .query(
-                            "INSERT INTO PlantDiary (plantId, watered, fertilized, image, date, note, size, health) VALUES (?,?,?,?,?,?,?,?)",
-                            [
-                              plantDiaryEntry.plantId,
-                              plantDiaryEntry.watered,
-                              plantDiaryEntry.fertilized,
-                              plantDiaryEntry.image,
-                              plantDiaryEntry.date,
-                              plantDiaryEntry.note,
-                              plantDiaryEntry.size,
-                              plantDiaryEntry.health,
-                            ]
-                          )
-                          .then((result) => {
+                      return;
+                    }
+                    conn.end();
+                    // session is valid || userId is set
+
+                    // Now check if user owns plant
+                    conn.query(
+                            "SELECT * FROM Plant WHERE userId = (?) and active = 1 and plantId = (?)",
+                            [ userId, plantDiaryEntry.plantId ])
+                        .then((result) => {
+                          if (!result[0] || !result[0].plantId) {
+                            res.status(401).send("plant could not be found");
                             conn.end();
-                            return this.getPlantDiaryEntries(pool, req, res);
-                          })
-                          .catch((err) => {
-                            console.log(err);
-                            res.status(401).send("rows could not be created");
-                          });
-                      } else {
-                        // plantdiaryentry does exist -> update
-                        conn
-                          .query(
-                            "UPDATE PlantDiary SET plantId = (?), watered = (?), fertilized = (?), image = (?), date = (?), note = (?), size = (?), health = (?) WHERE plantDiaryId = (?)",
-                            [
-                              plantDiaryEntry.plantId,
-                              plantDiaryEntry.watered,
-                              plantDiaryEntry.fertilized,
-                              plantDiaryEntry.image,
-                              plantDiaryEntry.date,
-                              plantDiaryEntry.note,
-                              plantDiaryEntry.size,
-                              plantDiaryEntry.health,
-                              result[0].plantDiaryId,
-                            ]
-                          )
-                          .then((result) => {
-                            conn.end();
-                            return this.getPlantDiaryEntries(pool, req, res);
-                          })
-                          .catch((err) => {
-                            console.log(err);
-                            res.status(401).send("rows could not be created");
-                          });
-                      }
-                    });
-                })
-                .catch((err) => {
-                  console.log(err);
-                  res.status(401).send("rows could not be found");
-                  connection.end();
-                });
+                            return;
+                          }
+                          conn.end();
+
+                          // Check if plantdiaryentry exists
+
+                          let dateWithoutTime =
+                              new Date(plantDiaryEntry.date.toString());
+                          dateWithoutTime.setHours(0, 0, 0, 0);
+                          plantDiaryEntry.date = dateWithoutTime;
+
+                          conn.query(
+                                  "SELECT * FROM PlantDiary WHERE plantId = (?) AND date = (?)",
+                                  [
+                                    plantDiaryEntry.plantId,
+                                    plantDiaryEntry.date
+                                  ])
+                              .then((result) => {
+                                conn.end();
+                                if (!result[0] || !result[0].plantDiaryId) {
+                                  // plantdiaryentry does not exist -> create
+                                  conn.query(
+                                          "INSERT INTO PlantDiary (plantId, watered, fertilized, image, date, note, size, health) VALUES (?,?,?,?,?,?,?,?)",
+                                          [
+                                            plantDiaryEntry.plantId,
+                                            plantDiaryEntry.watered,
+                                            plantDiaryEntry.fertilized,
+                                            plantDiaryEntry.image,
+                                            plantDiaryEntry.date,
+                                            plantDiaryEntry.note,
+                                            plantDiaryEntry.size,
+                                            plantDiaryEntry.health,
+                                          ])
+                                      .then((result) => {
+                                        conn.end();
+                                        return this.getPlantDiaryEntries(
+                                            pool, req, res);
+                                      })
+                                      .catch((err) => {
+                                        console.log(err);
+                                        res.status(401).send(
+                                            "rows could not be created");
+                                      });
+                                } else {
+                                  // plantdiaryentry does exist -> update
+                                  conn.query(
+                                          "UPDATE PlantDiary SET plantId = (?), watered = (?), fertilized = (?), image = (?), date = (?), note = (?), size = (?), health = (?) WHERE plantDiaryId = (?)",
+                                          [
+                                            plantDiaryEntry.plantId,
+                                            plantDiaryEntry.watered,
+                                            plantDiaryEntry.fertilized,
+                                            plantDiaryEntry.image,
+                                            plantDiaryEntry.date,
+                                            plantDiaryEntry.note,
+                                            plantDiaryEntry.size,
+                                            plantDiaryEntry.health,
+                                            result[0].plantDiaryId,
+                                          ])
+                                      .then((result) => {
+                                        conn.end();
+                                        return this.getPlantDiaryEntries(
+                                            pool, req, res);
+                                      })
+                                      .catch((err) => {
+                                        console.log(err);
+                                        res.status(401).send(
+                                            "rows could not be created");
+                                      });
+                                }
+                              });
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                          res.status(401).send("rows could not be found");
+                          connection.end();
+                        });
+                  });
             });
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-      // not connected
-    });
+      })
+      .catch((err) => {
+        console.log(err);
+        // not connected
+      });
 }
 
 module.exports = {
