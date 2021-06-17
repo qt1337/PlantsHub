@@ -3,8 +3,8 @@ import {Plant} from '../../_models/plant';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {PlantService} from '../../_services/plant.service';
 import {PlantFormField} from '../../_models/plantFormField';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-plant-dialogue',
@@ -58,15 +58,15 @@ export class PlantDialogueComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      plantId: this.data ? this.data.plantId : "",
-      plantName: this.data ? this.data.plantName : "",
-      family: this.data ? this.data.family : "",
+      plantId: this.data ? this.data.plantId : '',
+      plantName: this.data ? this.data.plantName : '',
+      family: this.data ? this.data.family : '',
       wateringInterval: this.data ? this.data.wateringInterval : 0,
       fertilizingInterval: this.data ? this.data.fertilizingInterval : 0,
       plantBirthday: this.data ? this.data.plantBirthday : '2020-12-12',
       active: this.data ? this.data.active : true,
       favourite: this.data ? this.data.favourite : false
-    })
+    });
 
     this.setIsUpdatingDialogue(this.data.isUpdatingDialogue);
     this.setPlantDialogueTitle(this.data.isUpdatingDialogue);
@@ -87,8 +87,8 @@ export class PlantDialogueComponent implements OnInit {
   }
 
   submitPlantDialogueInformation(): void {
-    let username = this.authenticationService.userValue[0].username;
-    let sessionId = this.authenticationService.userValue[0].sessionId;
+    const username = this.authenticationService.userValue[0].username;
+    const sessionId = this.authenticationService.userValue[0].sessionId;
 
     if (!this.authenticationService.userValue) {
       return;

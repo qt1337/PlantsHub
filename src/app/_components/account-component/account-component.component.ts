@@ -40,7 +40,7 @@ export class AccountComponent implements OnInit {
       forename: new FormControl(this.inputFields[2]),
       surname: new FormControl(this.inputFields[3]),
       birthday: new FormControl(this.inputFields[4]),
-    })
+    });
     console.log(this.updateUserInformationForm);
   }
 
@@ -70,7 +70,7 @@ export class AccountComponent implements OnInit {
       this.updateUserInformationForm.value
     );
 
-    await this.openSnackBar("You've successfully changed your User Information");
+    await this.openSnackBar('You\'ve successfully changed your User Information');
     setTimeout(() => window.location.reload(), 700);
 
 
